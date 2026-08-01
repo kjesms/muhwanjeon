@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>무환전 (武幻傳)</title>
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#16130f">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="무환전">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="icon-192.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Song+Myung&family=Noto+Serif+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16130f;
+    --ink-2:#1e1a14;
+    --paper:#e9dfc4;
+    --paper-dark:#d9c9a0;
+    --seal:#9c2b2b;
+    --seal-dark:#7a1f1f;
+    --gold:#c9a24b;
+    --jade:#4f6b58;
+    --text-dark:#2b241a;
+    --text-light:#efe6cf;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;height:100%;}
+  body{
+    background:
+      radial-gradient(ellipse at 20% 10%, rgba(201,162,75,0.06), transparent 55%),
+      radial-gradient(ellipse at 80% 90%, rgba(79,107,88,0.08), transparent 55%),
+      var(--ink);
+    font-family:'Noto Serif KR', serif;
+    color:var(--text-light);
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px 14px;
+  }
+  .stage{
+    width:100%;
+    max-width:640px;
+    position:relative;
+  }
+  .titlebar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:10px;
+    padding:0 4px;
+  }
+  .gametitle{
+    font-family:'Song Myung', serif;
+    font-size:22px;
+    letter-spacing:4px;
+    color:var(--gold);
+    text-shadow:0 0 18px rgba(201,162,75,0.25);
+  }
+  .seal{
+    width:46px;height:46px;
+    border:2px solid var(--seal);
+    border-radius:6px;
+    background:rgba(156,43,43,0.12);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Song Myung', serif;
+    font-size:22px;
+    color:var(--seal);
+    transform:rotate(-3deg);
+    flex-shrink:0;
+  }
+  .card{
+    background:
+      linear-gradient(180deg, var(--paper) 0%, var(--paper-dark) 100%);
+    color:var(--text-dark);
+    border-radius:3px;
+    box-shadow:0 18px 40px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(43,36,26,0.15);
+    padding:26px 24px 22px;
+    position:relative;
+    overflow:hidden;
+  }
+  .card::before{
+    content:"";
+    position:absolute; inset:8px;
+    border:1px solid rgba(43,36,26,0.18);
+    pointer-events:none;
+  }
+  .chapter-eyebrow{
+    font-size:12px;
+    letter-spacing:3px;
+    color:var(--seal-dark);
+    font-weight:600;
+    margin-bottom:4px;
+  }
+  .chapter-title{
+    font-family:'Song Myung', serif;
+    font-size:21px;
+    margin:0 0 14px;
+    color:var(--text-dark);
+    border-bottom:1px solid rgba(43,36,26,0.25);
+    padding-bottom:10px;
+  }
+  .narrative p{
+    line-height:1.85;
+    font-size:15.5px;
+    margin:0 0 14px;
+    color:var(--text-dark);
+  }
+  .stats-row{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:8px;
+    margin:18px 0 6px;
+  }
+  .stat{
+    background:rgba(43,36,26,0.06);
+    border:1px solid rgba(43,36,26,0.15);
+    border-radius:4px;
+    padding:8px 6px;
+    text-align:center;
+  }
+  .stat .label{font-size:11px;color:var(--seal-dark);letter-spacing:1px;font-weight:600;}
+  .stat .value{font-family:'Song Myung',serif;font-size:18px;margin-top:2px;color:var(--text-dark);}
+  .stat.up .value{color:var(--jade);}
+  .actions{
+    margin-top:20px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .btn{
+    font-family:'Noto Serif KR', serif;
+    text-align:left;
+    background:var(--ink-2);
+    color:var(--text-light);
+    border:1px solid rgba(201,162,75,0.35);
+    padding:13px 16px;
+    border-radius:3px;
+    cursor:pointer;
+    font-size:14.5px;
+    line-height:1.5;
+    transition:background .15s ease, border-color .15s ease, transform .1s ease;
+    position:relative;
+  }
+  .btn:hover{background:#282019;border-color:var(--gold);}
+  .btn:active{transform:scale(0.99);}
+  .btn .tag{
+    display:inline-block;
+    font-size:11px;
+    color:var(--gold);
+    margin-right:8px;
+    letter-spacing:1px;
+  }
+  .btn.primary{
+    background:var(--seal-dark);
+    border-color:var(--seal);
+    text-align:center;
+    font-weight:600;
+  }
+  .btn.primary:hover{background:var(--seal);}
+  .btn.ghost{
+    background:transparent;
+    border-color:rgba(43,36,26,0.3);
+    color:var(--text-dark);
+  }
+  /* combat */
+  .combat-wrap{margin-top:6px;}
+  .vs-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:16px;
+  }
+  .fighter{flex:1;text-align:center;}
+  .fighter .name{font-family:'Song Myung',serif;font-size:15px;color:var(--text-dark);margin-bottom:6px;}
+  .fighter.enemy .name{color:var(--seal-dark);}
+  .hpbar-outer{
+    height:12px;background:rgba(43,36,26,0.15);
+    border-radius:8px;overflow:hidden;
+    border:1px solid rgba(43,36,26,0.25);
+  }
+  .hpbar-inner{
+    height:100%;
+    background:linear-gradient(90deg, var(--jade), #6b8f76);
+    transition:width .35s ease;
+  }
+  .fighter.enemy .hpbar-inner{background:linear-gradient(90deg, var(--seal-dark), var(--seal));}
+  .hp-num{font-size:11px;margin-top:4px;color:rgba(43,36,26,0.7);}
+  .vs-mark{font-family:'Song Myung',serif;font-size:20px;color:var(--seal-dark);}
+  .log{
+    background:rgba(43,36,26,0.06);
+    border:1px solid rgba(43,36,26,0.15);
+    border-radius:4px;
+    padding:10px 12px;
+    height:96px;
+    overflow-y:auto;
+    font-size:13px;
+    line-height:1.6;
+    color:var(--text-dark);
+    margin-bottom:14px;
+  }
+  .log div{margin-bottom:2px;}
+  .combat-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:8px;
+  }
+  .combat-actions .btn{text-align:center;font-size:13.5px;padding:12px 6px;}
+  .combat-actions .btn:disabled{opacity:0.4;cursor:not-allowed;}
+  .footer-note{
+    text-align:center;
+    font-size:11.5px;
+    color:rgba(239,230,207,0.35);
+    margin-top:14px;
+    letter-spacing:0.5px;
+  }
+  .fade-in{animation:fadeIn .45s ease both;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+  @media (prefers-reduced-motion: reduce){.fade-in{animation:none;}}
+  @media (max-width:480px){
+    .gametitle{font-size:18px;letter-spacing:2px;}
+    .stats-row{grid-template-columns:repeat(2,1fr);}
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="titlebar">
+    <div class="gametitle">武幻傳 · 무환전</div>
+    <div class="seal" id="sealMark">少</div>
+  </div>
+  <div class="card fade-in" id="card"></div>
+  <div class="footer-note">선택은 무환의 삶을 바꾼다 · 강호는 기억한다</div>
+</div>
+
+<script>
+(function(){
+
+  // ---------- 상태 ----------
+  const state = {
+    stats: { 내공: 10, 무공: 10, 명성: 5, 의리: 5 },
+    chapterIdx: 0,
+    nodeIdx: 0,
+    combat: null,
+  };
+
+  const sealChars = ["少","出","鬪","亂","決","終"];
+
+  function clamp(n){ return Math.max(0, Math.min(99, n)); }
+
+  function applyEffects(effects){
+    if(!effects) return;
+    for(const k in effects){
+      state.stats[k] = clamp(state.stats[k] + effects[k]);
+    }
+  }
+
+  // ---------- 챕터 스크립트 ----------
+  // node types: text, choice, combat, ending
+  const chapters = [
+    { // 0
+      title: "제1장 · 몰락한 문파의 마지막 후예",
+      nodes: [
+        { type:"text", body:[
+          "십오 년 전, 청운문(靑雲門)은 하룻밤 사이에 잿더미가 되었다. 그날의 화염과 비명 속에서 살아남은 것은 갓난아기 한 명뿐이었다.",
+          "은거도인(隱居道人)은 그 아이를 거두어 무환(武幻)이라는 이름을 지어주었다. 부모의 얼굴도, 문파가 왜 무너졌는지도 모른 채, 무환은 스승의 산장에서 열여덟 해를 보냈다.",
+          "이제 하산의 날이 머지않았다. 스승은 마지막으로 묻는다 — \"네가 이 산을 내려가 강호에서 살아남으려면, 무엇을 갈고닦아야겠느냐?\""
+        ]},
+        { type:"choice", prompt:"수련의 방향을 정하라", options:[
+          { label:"단전에 내공을 쌓는다", tag:"내공", effects:{내공:6, 무공:1}, result:"무환은 삼 년간 폐관에 들어가 단전의 내식을 다스렸다. 몸속 깊은 곳에서 뜨거운 기운이 소용돌이친다." },
+          { label:"실전 초식과 몸놀림을 갈고닦는다", tag:"무공", effects:{무공:6, 내공:1}, result:"무환은 매일 새벽 검을 뽑고 해가 질 때까지 초식을 반복했다. 손끝의 감각이 검과 하나가 되어간다." },
+          { label:"산 아래 마을 사람들과 어울리며 세상 물정을 익힌다", tag:"의리·명성", effects:{의리:4, 명성:3}, result:"무환은 종종 산을 내려가 상인, 낭인, 떠돌이 무인들과 어울렸다. 강호의 인심과 소문을 몸으로 익혔다." },
+        ]},
+        { type:"text", body:[
+          "수련이 끝난 밤, 스승은 낡은 목검 한 자루를 내밀었다. \"이 검은 청운문의 마지막 유품이다. 강호로 나가거든, 네가 어디서 왔는지를 스스로 찾아라.\"",
+          "무환은 목검을 허리에 차고 새벽안개 속으로 산을 내려갔다."
+        ]},
+      ]
+    },
+    { // 1
+      title: "제2장 · 하산 — 첫 걸음",
+      nodes:[
+        { type:"text", body:[
+          "산 아래 관도(官道)에 이르렀을 때, 무환은 화물 수레가 도적떼에게 둘러싸인 것을 보았다. 상인은 바닥에 무릎을 꿇고 있었고, 도적 두목 흑아(黑牙)가 칼을 겨누고 있었다.",
+          "\"돈을 내놓든가, 목을 내놓든가.\" 흑아가 웃으며 말했다.",
+        ]},
+        { type:"combat", enemy:{ name:"산적 두목 흑아", hp:36, atk:6 }, onWin:"흑아는 칼을 떨어뜨리고 산속으로 도망쳤다. 상인은 놀란 가슴을 쓸어내리며 무환을 올려다보았다.", onLoseText:"무환은 크게 다쳤지만, 흑아의 부하들이 관군의 징소리에 놀라 흩어진 덕에 간신히 위기를 넘겼다." },
+        { type:"choice", prompt:"상인이 사례금을 내밀며 고개를 숙인다", options:[
+          { label:"대가를 거절하고 조용히 떠난다", tag:"의리", effects:{의리:5}, result:"상인은 무환의 이름을 몇 번이고 되뇌었다. \"무환… 청운의 협객이 강호에 나타났다\"는 소문이 서서히 퍼지기 시작했다." },
+          { label:"사례금을 받아 여비로 삼는다", tag:"명성", effects:{명성:4, 내공:1}, result:"무환은 실리를 챙겼다. 넉넉해진 여비 덕에 이후의 여정이 한결 수월해졌다." },
+        ]},
+      ]
+    },
+    { // 2
+      title: "제3장 · 낙양 비무대회",
+      nodes:[
+        { type:"text", body:[
+          "낙양에 이르니 마침 십 년에 한 번 열리는 비무대회(比武大會)가 한창이었다. 각지의 후기지수들이 모여 실력을 겨루는 자리, 그 중심에는 패도적인 검을 쓰는 사공위(司空衛)가 있었다.",
+          "사공위는 무환의 낡은 목검을 보고 코웃음 쳤다. \"그런 나무토막으로 이 사공위에게 도전하겠다는 것이냐?\""
+        ]},
+        { type:"combat", enemy:{ name:"패검 사공위", hp:44, atk:8 }, onWin:"목검이 부러졌지만, 무환의 마지막 일격이 사공위의 검을 튕겨냈다. 대회장이 술렁였다.", onLoseText:"무환은 패했지만 물러서지 않는 기세만으로 관중들의 마음을 얻었다." },
+        { type:"choice", prompt:"쓰러진 사공위를 앞에 두고", options:[
+          { label:"손을 내밀어 일으켜준다", tag:"의리", effects:{의리:5, 명성:2}, result:"사공위는 얼굴을 붉히며 손을 잡았다. \"오늘의 빚, 잊지 않겠다.\" 훗날 그는 무환의 든든한 동료가 된다." },
+          { label:"승부의 결과를 당당히 선언한다", tag:"명성", effects:{명성:6}, result:"무환의 이름이 낙양 전체에 퍼졌다. \"청운의 후예, 무환\" — 그 이름이 강호의 화제가 되었다." },
+        ]},
+      ]
+    },
+    { // 3
+      title: "제4장 · 배신의 그림자",
+      nodes:[
+        { type:"text", body:[
+          "낙양을 떠나던 밤, 무환은 우연히 흑풍채(黑風寨)의 서신을 손에 넣었다. 서신에는 놀라운 이름이 적혀 있었다 — 청운문을 불태운 자는 다름 아닌, 스승의 옛 사형 사마경(司馬鯨)이었다.",
+          "그리고 지금, 사마경은 흑풍채의 채주가 되어 다시 무환을 노리고 있었다."
+        ]},
+        { type:"choice", prompt:"진실 앞에서 무환은 어떻게 움직일 것인가", options:[
+          { label:"홀로 흑풍채에 잠입해 증거를 모은다", tag:"무공", effects:{무공:5, 내공:2}, result:"위험천만한 잠입이었지만, 무환은 은밀히 실력을 갈고닦으며 사마경의 무공 초식을 파악해냈다." },
+          { label:"강호의 동료들에게 도움을 청한다", tag:"의리", effects:{의리:6, 명성:2}, result:"사공위를 비롯한 여러 협객들이 무환의 곁에 모였다. 혼자가 아니라는 사실이 큰 힘이 되었다." },
+          { label:"침착하게 내공을 다스리며 결전을 준비한다", tag:"내공", effects:{내공:6, 무공:2}, result:"무환은 폐관에 들어 마지막 내식을 완성했다. 단전 깊숙한 곳에서 청운문의 심법이 온전히 깨어났다." },
+        ]},
+      ]
+    },
+    { // 4
+      title: "제5장 · 최종 결전",
+      nodes:[
+        { type:"text", body:[
+          "흑풍채의 본거지, 불타버린 청운문의 옛터에서 사마경이 무환을 기다리고 있었다.",
+          "\"네 부모를 죽인 것도, 문파를 태운 것도 나다. 그날 살아남은 것이 실수였구나.\" 사마경이 차갑게 웃었다.",
+          "십오 년의 세월이 이 한 번의 검격으로 응축된다."
+        ]},
+        { type:"combat", enemy:{ name:"흑풍채주 사마경", hp:58, atk:9 }, onWin:"__ENDING__", onLoseText:"__ENDING_LOSE__" },
+      ]
+    },
+  ];
+
+  // ---------- 엔딩 판정 ----------
+  function computeEnding(won){
+    const s = state.stats;
+    if(!won){
+      return {
+        title:"엔딩 · 미완의 협객",
+        text:[
+          "무환은 결국 사마경을 넘어서지 못했다. 하지만 그의 이야기는 여기서 끝나지 않는다.",
+          "\"아직… 끝나지 않았다.\" 무환은 마지막 숨을 몰아쉬며 다시 검을 쥐었다. 강호는 그를 '미완의 협객'이라 부르며, 언젠가 돌아올 그의 재기를 기다렸다.",
+        ]
+      };
+    }
+    const entries = Object.entries(s).sort((a,b)=>b[1]-a[1]);
+    const top = entries[0][0];
+    const spread = entries[0][1] - entries[3][1];
+    if(spread <= 4){
+      return {
+        title:"엔딩 · 진정한 협객",
+        text:[
+          "사마경은 무너졌고, 청운문의 원한은 풀렸다. 무환은 내공, 무공, 명성, 의리 그 어느 것에도 치우치지 않은 채 자신만의 길을 완성했다.",
+          "강호는 그를 이렇게 기록했다 — \"무공과 인품을 모두 갖춘 자, 청운의 진정한 후예 무환.\" 그의 이야기는 이후 백 년간 무협지에 전해졌다."
+        ]
+      };
+    }
+    const map = {
+      내공:{ title:"엔딩 · 은둔의 대종사", text:[
+        "무환은 사마경을 제압한 후, 명예도 세력도 취하지 않고 조용히 산으로 돌아갔다.",
+        "깊은 내공을 지닌 그는 이후 스스로 문파를 열지 않았지만, 강호에서는 \"백 년에 한 번 나올 내가고수\"로 전설처럼 회자되었다."
+      ]},
+      무공:{ title:"엔딩 · 무림지존", text:[
+        "무환의 검은 이제 그 누구도 넘볼 수 없는 경지에 이르렀다. 사마경을 꺾은 그날부터, 그는 천하제일검으로 불리게 되었다.",
+        "수많은 후기지수들이 그의 문하로 들어오길 청했고, 무환은 마침내 새로운 청운문을 재건했다."
+      ]},
+      명성:{ title:"엔딩 · 강호제일 풍운아", text:[
+        "무환의 이름은 낙양에서 장안까지, 강호 전역에 울려 퍼졌다. 그는 협객이자 영웅으로, 어느 문파에서든 환영받는 존재가 되었다.",
+        "다만 그 화려한 명성 뒤에서, 진심을 나누는 벗이 몇이나 남았는지는 무환 스스로도 가끔 자문하곤 했다."
+      ]},
+      의리:{ title:"엔딩 · 강호의 큰형님", text:[
+        "무환의 곁에는 언제나 사공위를 비롯한 수많은 동료들이 있었다. 사마경을 쓰러뜨린 것도 결국 혼자의 힘이 아닌, 함께한 이들의 힘이었다.",
+        "그는 문파의 수장이 되기보다, 강호 전체가 의지하는 '큰형님'으로 남는 길을 택했다."
+      ]},
+    };
+    return map[top];
+  }
+
+  // ---------- 렌더링 ----------
+  const cardEl = document.getElementById('card');
+  const sealEl = document.getElementById('sealMark');
+
+  function statsRowHTML(){
+    const order = ["내공","무공","명성","의리"];
+    return '<div class="stats-row">' + order.map(k=>{
+      return `<div class="stat"><div class="label">${k}</div><div class="value">${state.stats[k]}</div></div>`;
+    }).join('') + '</div>';
+  }
+
+  function render(){
+    cardEl.classList.remove('fade-in'); void cardEl.offsetWidth; cardEl.classList.add('fade-in');
+    sealEl.textContent = sealChars[Math.min(state.chapterIdx, sealChars.length-1)];
+
+    const chapter = chapters[state.chapterIdx];
+    const node = chapter.nodes[state.nodeIdx];
+
+    if(node.type === "text"){
+      cardEl.innerHTML = `
+        <div class="chapter-eyebrow">CHAPTER ${state.chapterIdx+1}</div>
+        <h2 class="chapter-title">${chapter.title}</h2>
+        <div class="narrative">${node.body.map(p=>`<p>${p}</p>`).join('')}</div>
+        ${statsRowHTML()}
+        <div class="actions">
+          <button class="btn primary" id="nextBtn">다음</button>
+        </div>
+      `;
+      document.getElementById('nextBtn').onclick = advance;
+    }
+    else if(node.type === "choice"){
+      cardEl.innerHTML = `
+        <div class="chapter-eyebrow">CHAPTER ${state.chapterIdx+1}</div>
+        <h2 class="chapter-title">${chapter.title}</h2>
+        <p style="font-weight:600;margin-bottom:14px;">${node.prompt}</p>
+        <div class="actions" id="choiceActions"></div>
+      `;
+      const wrap = document.getElementById('choiceActions');
+      node.options.forEach((opt, i)=>{
+        const b = document.createElement('button');
+        b.className = 'btn';
+        b.innerHTML = `<span class="tag">[${opt.tag}]</span>${opt.label}`;
+        b.onclick = ()=>{
+          applyEffects(opt.effects);
+          renderResult(chapter.title, opt.result);
+        };
+        wrap.appendChild(b);
+      });
+    }
+    else if(node.type === "combat"){
+      startCombat(node);
+    }
+  }
+
+  function renderResult(title, text){
+    cardEl.classList.remove('fade-in'); void cardEl.offsetWidth; cardEl.classList.add('fade-in');
+    cardEl.innerHTML = `
+      <div class="chapter-eyebrow">CHAPTER ${state.chapterIdx+1}</div>
+      <h2 class="chapter-title">${title}</h2>
+      <div class="narrative"><p>${text}</p></div>
+      ${statsRowHTML()}
+      <div class="actions">
+        <button class="btn primary" id="nextBtn">다음</button>
+      </div>
+    `;
+    document.getElementById('nextBtn').onclick = advance;
+  }
+
+  function advance(){
+    const chapter = chapters[state.chapterIdx];
+    state.nodeIdx++;
+    if(state.nodeIdx >= chapter.nodes.length){
+      state.chapterIdx++;
+      state.nodeIdx = 0;
+      if(state.chapterIdx >= chapters.length){
+        // shouldn't hit here normally (ending handled via combat), fallback
+        renderEnding(computeEnding(true));
+        return;
+      }
+    }
+    render();
+  }
+
+  // ---------- 전투 ----------
+  function startCombat(node){
+    state.combat = {
+      playerHp: 40 + state.stats.내공 * 1.4,
+      playerMaxHp: 40 + state.stats.내공 * 1.4,
+      enemyHp: node.enemy.hp,
+      enemyMaxHp: node.enemy.hp,
+      enemyAtk: node.enemy.atk,
+      enemyName: node.enemy.name,
+      skillCharges: 2,
+      log: [`${node.enemy.name}(이)가 나타났다!`],
+      node: node,
+      over:false,
+    };
+    state.combat.playerHp = Math.round(state.combat.playerHp);
+    state.combat.playerMaxHp = state.combat.playerHp;
+    renderCombat();
+  }
+
+  function pushLog(msg){
+    state.combat.log.push(msg);
+    if(state.combat.log.length > 40) state.combat.log.shift();
+  }
+
+  function renderCombat(){
+    cardEl.classList.remove('fade-in'); void cardEl.offsetWidth; cardEl.classList.add('fade-in');
+    const c = state.combat;
+    const chapter = chapters[state.chapterIdx];
+    const pPct = Math.max(0, Math.round(100*c.playerHp/c.playerMaxHp));
+    const ePct = Math.max(0, Math.round(100*c.enemyHp/c.enemyMaxHp));
+
+    cardEl.innerHTML = `
+      <div class="chapter-eyebrow">CHAPTER ${state.chapterIdx+1}</div>
+      <h2 class="chapter-title">${chapter.title}</h2>
+      <div class="combat-wrap">
+        <div class="vs-row">
+          <div class="fighter">
+            <div class="name">무환</div>
+            <div class="hpbar-outer"><div class="hpbar-inner" style="width:${pPct}%"></div></div>
+            <div class="hp-num">${Math.max(0,Math.round(c.playerHp))} / ${Math.round(c.playerMaxHp)}</div>
+          </div>
+          <div class="vs-mark">對</div>
+          <div class="fighter enemy">
+            <div class="name">${c.enemyName}</div>
+            <div class="hpbar-outer"><div class="hpbar-inner" style="width:${ePct}%"></div></div>
+            <div class="hp-num">${Math.max(0,Math.round(c.enemyHp))} / ${Math.round(c.enemyMaxHp)}</div>
+          </div>
+        </div>
+        <div class="log" id="combatLog">${c.log.map(l=>`<div>${l}</div>`).join('')}</div>
+        <div class="combat-actions">
+          <button class="btn" id="atkBtn">공격</button>
+          <button class="btn" id="defBtn">방어</button>
+          <button class="btn" id="skillBtn">필살기 (${c.skillCharges})</button>
+        </div>
+      </div>
+    `;
+    const log = document.getElementById('combatLog');
+    log.scrollTop = log.scrollHeight;
+
+    if(c.over) return;
+
+    document.getElementById('atkBtn').onclick = ()=>playerAction('attack');
+    document.getElementById('defBtn').onclick = ()=>playerAction('defend');
+    const skillBtn = document.getElementById('skillBtn');
+    if(c.skillCharges <= 0){ skillBtn.disabled = true; }
+    skillBtn.onclick = ()=>playerAction('skill');
+  }
+
+  function playerAction(action){
+    const c = state.combat;
+    if(c.over) return;
+    let playerDmg = 0;
+    let defending = false;
+
+    if(action === 'attack'){
+      playerDmg = 6 + Math.round(state.stats.무공 * 0.6) + Math.floor(Math.random()*5);
+      pushLog(`무환이 검을 휘두른다 — ${c.enemyName}에게 ${playerDmg}의 피해!`);
+    } else if(action === 'defend'){
+      defending = true;
+      pushLog(`무환이 자세를 낮추고 방어에 집중한다.`);
+    } else if(action === 'skill'){
+      if(c.skillCharges <= 0) return;
+      c.skillCharges--;
+      playerDmg = 14 + Math.round(state.stats.무공 * 0.8) + Math.round(state.stats.내공 * 0.4);
+      pushLog(`무환이 청운문의 절기를 펼친다! ${c.enemyName}에게 ${playerDmg}의 큰 피해!`);
+    }
+
+    c.enemyHp -= playerDmg;
+
+    if(c.enemyHp <= 0){
+      c.enemyHp = 0;
+      c.over = true;
+      pushLog(`${c.enemyName}(이)가 쓰러졌다!`);
+      renderCombat();
+      setTimeout(()=>endCombat(true), 850);
+      return;
+    }
+
+    // enemy turn
+    let enemyDmg = c.enemyAtk + Math.floor(Math.random()*5);
+    if(defending) enemyDmg = Math.round(enemyDmg * 0.4);
+    c.playerHp -= enemyDmg;
+    pushLog(`${c.enemyName}(이)가 반격한다 — 무환이 ${enemyDmg}의 피해를 입었다.`);
+
+    if(c.playerHp <= 0){
+      c.playerHp = 0;
+      c.over = true;
+      pushLog(`무환이 크게 다쳤다…`);
+      renderCombat();
+      setTimeout(()=>endCombat(false), 850);
+      return;
+    }
+
+    renderCombat();
+  }
+
+  function endCombat(won){
+    const node = state.combat.node;
+    if(node.onWin === "__ENDING__" || node.onLoseText === "__ENDING_LOSE__"){
+      renderEnding(computeEnding(won));
+      return;
+    }
+    const text = won ? node.onWin : node.onLoseText;
+    renderResult(chapters[state.chapterIdx].title, text);
+  }
+
+  function renderEnding(ending){
+    cardEl.classList.remove('fade-in'); void cardEl.offsetWidth; cardEl.classList.add('fade-in');
+    sealEl.textContent = "終";
+    cardEl.innerHTML = `
+      <div class="chapter-eyebrow">FINAL</div>
+      <h2 class="chapter-title">${ending.title}</h2>
+      <div class="narrative">${ending.text.map(p=>`<p>${p}</p>`).join('')}</div>
+      ${statsRowHTML()}
+      <div class="actions">
+        <button class="btn primary" id="restartBtn">처음부터 다시 시작</button>
+      </div>
+    `;
+    document.getElementById('restartBtn').onclick = ()=>{
+      state.stats = { 내공:10, 무공:10, 명성:5, 의리:5 };
+      state.chapterIdx = 0;
+      state.nodeIdx = 0;
+      state.combat = null;
+      render();
+    };
+  }
+
+  render();
+})();
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js").catch(() => {});
+  });
+}
+</script>
+</body>
+</html>
