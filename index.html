@@ -20,7 +20,7 @@
   :root{
     --ink:#16130f; --ink-2:#1e1a14; --paper:#e9dfc4; --paper-dark:#d9c9a0;
     --seal:#9c2b2b; --seal-dark:#7a1f1f; --gold:#c9a24b; --jade:#4f6b58;
-    --text-dark:#2b241a; --text-light:#efe6cf; --fs:1;
+    --text-dark:#2b241a; --text-light:#efe6cf; --fs:1; --fw:500;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;height:100%;}
@@ -42,7 +42,7 @@
   .chapter-eyebrow{ font-size:calc(12px*var(--fs)); letter-spacing:3px; color:var(--seal-dark); font-weight:600; margin-bottom:4px; }
   .chapter-title{ font-family:'Song Myung', serif; font-size:calc(20px*var(--fs)); margin:0 0 14px; color:var(--text-dark); border-bottom:1px solid rgba(43,36,26,0.25); padding-bottom:10px; }
   .narrative{ min-height:24px; }
-  .narrative p{ line-height:1.85; font-size:calc(15.5px*var(--fs)); margin:0 0 14px; color:var(--text-dark); }
+  .narrative p{ line-height:1.85; font-size:calc(15.5px*var(--fs)); font-weight:var(--fw); margin:0 0 14px; color:var(--text-dark); }
   .narrative.typing{ cursor:pointer; }
   .stats-row{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:16px 0 6px; }
   .stat{ background:rgba(43,36,26,0.06); border:1px solid rgba(43,36,26,0.15); border-radius:4px; padding:8px 6px; text-align:center; }
@@ -114,12 +114,16 @@
   .badge-row{ display:flex; flex-wrap:wrap; gap:6px; margin:10px 0 4px; }
   .badge{ font-size:calc(11px*var(--fs)); padding:4px 9px; border-radius:12px; background:rgba(43,36,26,0.08); border:1px solid rgba(43,36,26,0.18); color:var(--text-dark); }
   .badge.accent{ background:var(--seal-dark); color:var(--text-light); border-color:var(--seal-dark); }
-  .loc-desc{ font-size:calc(13.5px*var(--fs)); line-height:1.7; color:rgba(43,36,26,0.85); margin:8px 0 6px; }
+  .loc-desc{ font-size:calc(13.5px*var(--fs)); font-weight:var(--fw); line-height:1.7; color:rgba(43,36,26,0.85); margin:8px 0 6px; }
   .skill-item{ padding:10px 0; border-bottom:1px solid rgba(43,36,26,0.12); }
   .skill-item:last-child{ border-bottom:none; }
   .skill-item .sname{ font-family:'Song Myung',serif; font-size:calc(15px*var(--fs)); color:var(--text-dark); }
   .skill-item .sdesc{ font-size:calc(12.5px*var(--fs)); color:rgba(43,36,26,0.65); margin-top:2px; }
   .empty-note{ font-size:calc(13.5px*var(--fs)); color:rgba(43,36,26,0.55); padding:10px 0; }
+  .stat-edit-input{
+    width:64px; text-align:center; padding:8px 4px; border-radius:4px; border:1px solid rgba(43,36,26,0.3);
+    background:rgba(43,36,26,0.05); font-family:'Song Myung',serif; font-size:calc(15px*var(--fs)); color:var(--text-dark);
+  }
 </style>
 </head>
 <body>
@@ -141,6 +145,7 @@
   const SAVE_KEY = "muhwan_open_save_v1";
   const SETTINGS_KEY = "muhwan_settings_v1";
   const FONT_SCALES = { sm:0.88, md:1, lg:1.16, xl:1.32 };
+  const FONT_WEIGHTS = { light:400, normal:500, bold:700 };
   const THEMES = {
     ink:   { "--ink":"#16130f","--ink-2":"#1e1a14","--paper":"#e9dfc4","--paper-dark":"#d9c9a0","--seal":"#9c2b2b","--seal-dark":"#7a1f1f","--gold":"#c9a24b","--jade":"#4f6b58","--text-dark":"#2b241a","--text-light":"#efe6cf", label:"묵향", swatch:"#9c2b2b" },
     jade:  { "--ink":"#10150f","--ink-2":"#161f16","--paper":"#dfe8d4","--paper-dark":"#c8d6ba","--seal":"#3f6b46","--seal-dark":"#2e4f34","--gold":"#b7a35a","--jade":"#6b8f76","--text-dark":"#1f261e","--text-light":"#e6efe0", label:"벽옥", swatch:"#3f6b46" },
@@ -155,8 +160,8 @@
   // ---------- 설정 ----------
   let settings = loadSettings();
   function loadSettings(){
-    try{ const raw = localStorage.getItem(SETTINGS_KEY); if(raw) return Object.assign({ fontSize:"md", theme:"ink", sound:true, textSpeed:"normal", reduceMotion:false }, JSON.parse(raw)); }catch(e){}
-    return { fontSize:"md", theme:"ink", sound:true, textSpeed:"normal", reduceMotion:false };
+    try{ const raw = localStorage.getItem(SETTINGS_KEY); if(raw) return Object.assign({ fontSize:"md", fontWeight:"normal", theme:"ink", sound:true, textSpeed:"normal", reduceMotion:false }, JSON.parse(raw)); }catch(e){}
+    return { fontSize:"md", fontWeight:"normal", theme:"ink", sound:true, textSpeed:"normal", reduceMotion:false };
   }
   function saveSettings(){ try{ localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); }catch(e){} }
   function applySettings(){
@@ -164,6 +169,7 @@
     const root = document.documentElement;
     Object.keys(t).forEach(k=>{ if(k.startsWith("--")) root.style.setProperty(k, t[k]); });
     root.style.setProperty("--fs", FONT_SCALES[settings.fontSize] || 1);
+    root.style.setProperty("--fw", FONT_WEIGHTS[settings.fontWeight] || 500);
     document.body.classList.toggle("reduce-motion", !!settings.reduceMotion);
   }
 
@@ -393,16 +399,41 @@
     document.getElementById('backFromSetup').onclick=()=>{ sfx.click(); state.screen="title"; renderTitle(); };
   }
 
+  function renderStatEditRows(){
+    const wrap = document.getElementById('statEditRows');
+    if(!wrap) return;
+    const order = ["내공","무공","명성","의리"];
+    wrap.innerHTML = order.map(k=>`
+      <div class="stat-alloc-row">
+        <div class="sa-label">${k}</div>
+        <input type="number" class="stat-edit-input" id="edit-${k}" data-k="${k}" min="0" max="99" value="${state.stats[k]}">
+      </div>
+    `).join('');
+    order.forEach(k=>{
+      const input = document.getElementById('edit-'+k);
+      input.onchange = ()=>{
+        let v = parseInt(input.value, 10);
+        if(isNaN(v)) v = state.stats[k];
+        v = clamp(v, 0, 99);
+        state.stats[k] = v; input.value = v;
+        sfx.click(); persistSave();
+      };
+    });
+  }
+
   function openSettings(){ state.prevScreenSnapshot = state.screen; state.screen="settings"; renderSettings(); }
   function renderSettings(){
     fadeCard(); sealEl.textContent="設";
     const fsOrder=[["sm","작게"],["md","보통"],["lg","크게"],["xl","아주크게"]];
+    const fwOrder=[["light","얇게"],["normal","보통"],["bold","굵게"]];
     const spOrder=[["instant","즉시"],["normal","보통"],["slow","천천히"]];
     cardEl.innerHTML = `
       <div class="chapter-eyebrow">SETTINGS</div>
       <h2 class="chapter-title">설정</h2>
       <div class="section-label">글자 크기</div>
       <div class="seg-row" id="fsRow">${fsOrder.map(([k,l])=>`<div class="seg-btn ${settings.fontSize===k?'active':''}" data-k="${k}">${l}</div>`).join('')}</div>
+      <div class="section-label">글자 굵기</div>
+      <div class="seg-row" id="fwRow">${fwOrder.map(([k,l])=>`<div class="seg-btn ${settings.fontWeight===k?'active':''}" data-k="${k}">${l}</div>`).join('')}</div>
       <div class="section-label">테마 색상</div>
       <div class="swatch-row" id="themeRow">${Object.keys(THEMES).map(k=>`<div class="swatch ${settings.theme===k?'active':''}" data-k="${k}" style="background:${THEMES[k].swatch}" title="${THEMES[k].label}"></div>`).join('')}</div>
       <div class="section-label">텍스트 표시 속도</div>
@@ -411,16 +442,21 @@
       <div class="section-label">기타</div>
       <div class="toggle-row"><div class="toggle-label">사운드 효과음</div><div class="switch ${settings.sound?'on':''}" id="soundToggle"><div class="knob"></div></div></div>
       <div class="toggle-row"><div class="toggle-label">애니메이션 줄이기</div><div class="switch ${settings.reduceMotion?'on':''}" id="motionToggle"><div class="knob"></div></div></div>
+      <div class="section-label">능력치 수정</div>
+      <div class="hint">현재 진행 중인 능력치를 자유롭게 조정할 수 있습니다 (0~99).</div>
+      <div id="statEditRows"></div>
       <div class="section-label">진행 데이터</div>
       <div class="hint">진행 상황은 이 기기에 자동 저장됩니다.</div>
       <div class="actions"><button class="btn danger-btn" id="resetBtn">진행 상황 초기화</button></div>
       <div class="actions"><button class="btn primary" id="backFromSettings">뒤로가기</button></div>
     `;
     document.getElementById('fsRow').querySelectorAll('.seg-btn').forEach(b=>b.onclick=()=>{ settings.fontSize=b.dataset.k; saveSettings(); applySettings(); sfx.click(); renderSettings(); });
+    document.getElementById('fwRow').querySelectorAll('.seg-btn').forEach(b=>b.onclick=()=>{ settings.fontWeight=b.dataset.k; saveSettings(); applySettings(); sfx.click(); renderSettings(); });
     document.getElementById('themeRow').querySelectorAll('.swatch').forEach(b=>b.onclick=()=>{ settings.theme=b.dataset.k; saveSettings(); applySettings(); sfx.click(); renderSettings(); });
     document.getElementById('spRow').querySelectorAll('.seg-btn').forEach(b=>b.onclick=()=>{ settings.textSpeed=b.dataset.k; saveSettings(); sfx.click(); renderSettings(); });
     document.getElementById('soundToggle').onclick=()=>{ settings.sound=!settings.sound; saveSettings(); if(settings.sound) sfx.click(); renderSettings(); };
     document.getElementById('motionToggle').onclick=()=>{ settings.reduceMotion=!settings.reduceMotion; saveSettings(); applySettings(); sfx.click(); renderSettings(); };
+    renderStatEditRows();
     document.getElementById('resetBtn').onclick=()=>{
       if(confirm("정말로 진행 상황을 초기화할까요? 되돌릴 수 없습니다.")){ clearSave(); state=freshState(); renderTitle(); }
     };
