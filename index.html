@@ -15,7 +15,7 @@
 <link rel="icon" href="icon-192.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Song+Myung&family=Noto+Serif+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Song+Myung&family=Noto+Serif+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --ink:#16130f; --ink-2:#1e1a14; --paper:#e9dfc4; --paper-dark:#d9c9a0;
@@ -36,28 +36,46 @@
   .titlebar-right{ display:flex; align-items:center; gap:8px; }
   .icon-btn{ width:40px;height:40px;border-radius:8px;border:1px solid rgba(201,162,75,0.35); background:rgba(30,26,20,0.5); color:var(--gold); display:flex;align-items:center;justify-content:center; font-size:18px; cursor:pointer; flex-shrink:0; }
   .seal{ width:46px;height:46px;border:2px solid var(--seal);border-radius:6px;background:rgba(156,43,43,0.12); display:flex;align-items:center;justify-content:center; font-family:'Song Myung', serif; font-size:20px; color:var(--seal); transform:rotate(-3deg); flex-shrink:0; }
-  .card{ background:linear-gradient(180deg, var(--paper) 0%, var(--paper-dark) 100%); color:var(--text-dark); border-radius:3px;
+  .card{ background:
+      radial-gradient(circle at 12% 8%, rgba(43,36,26,0.05) 0, transparent 3%),
+      radial-gradient(circle at 78% 22%, rgba(43,36,26,0.04) 0, transparent 2.5%),
+      radial-gradient(circle at 35% 62%, rgba(43,36,26,0.04) 0, transparent 2%),
+      radial-gradient(circle at 88% 80%, rgba(43,36,26,0.05) 0, transparent 3%),
+      radial-gradient(circle at 55% 92%, rgba(43,36,26,0.03) 0, transparent 2.5%),
+      linear-gradient(180deg, var(--paper) 0%, var(--paper-dark) 100%);
+    color:var(--text-dark); border-radius:3px;
     box-shadow:0 18px 40px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(43,36,26,0.15); padding:26px 24px 22px; position:relative; overflow:hidden; }
   .card::before{ content:""; position:absolute; inset:8px; border:1px solid rgba(43,36,26,0.18); pointer-events:none; }
+  .card::after{
+    content:"印"; position:absolute; top:14px; right:16px; width:26px;height:26px;
+    border:1.5px solid rgba(156,43,43,0.5); border-radius:3px; color:rgba(156,43,43,0.55);
+    font-family:'Song Myung',serif; font-size:15px; display:flex; align-items:center; justify-content:center;
+    transform:rotate(4deg); pointer-events:none; opacity:0.75;
+  }
   .chapter-eyebrow{ font-size:calc(12px*var(--fs)); letter-spacing:3px; color:var(--seal-dark); font-weight:600; margin-bottom:4px; }
-  .chapter-title{ font-family:'Song Myung', serif; font-size:calc(20px*var(--fs)); margin:0 0 14px; color:var(--text-dark); border-bottom:1px solid rgba(43,36,26,0.25); padding-bottom:10px; }
+  .chapter-title{ font-family:'Song Myung', serif; font-size:calc(20px*var(--fs)); margin:0 0 14px; color:var(--text-dark); padding-bottom:12px; position:relative; }
+  .chapter-title::after{
+    content:""; position:absolute; left:0; bottom:0; height:3px; width:64px;
+    background:linear-gradient(90deg, var(--seal) 0%, rgba(156,43,43,0.15) 100%);
+    border-radius:2px;
+  }
   .narrative{ min-height:24px; }
   .narrative p{ line-height:1.85; font-size:calc(15.5px*var(--fs)); font-weight:var(--fw); margin:0 0 14px; color:var(--text-dark); }
   .narrative.typing{ cursor:pointer; }
   .stats-row{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:16px 0 6px; }
-  .stat{ background:rgba(43,36,26,0.06); border:1px solid rgba(43,36,26,0.15); border-radius:4px; padding:8px 6px; text-align:center; }
+  .stat{ background:rgba(43,36,26,0.06); border:1px solid rgba(43,36,26,0.15); border-radius:4px; padding:8px 6px; text-align:center; transition:background .15s ease; }
   .stat .label{ font-size:calc(11px*var(--fs)); color:var(--seal-dark); letter-spacing:1px; font-weight:600; }
   .stat .value{ font-family:'Song Myung',serif; font-size:calc(18px*var(--fs)); margin-top:2px; color:var(--text-dark); }
   .actions{ margin-top:20px; display:flex; flex-direction:column; gap:10px; }
   .btn{ font-family:'Noto Serif KR', serif; text-align:left; background:var(--ink-2); color:var(--text-light);
     border:1px solid rgba(201,162,75,0.35); padding:13px 16px; border-radius:3px; cursor:pointer; font-size:calc(14.5px*var(--fs)); line-height:1.5;
-    transition:background .15s ease, border-color .15s ease, transform .1s ease; }
-  .btn:hover{ background:#282019; border-color:var(--gold); }
-  .btn:active{ transform:scale(0.99); }
+    transition:background .15s ease, border-color .15s ease, transform .1s ease, box-shadow .15s ease; box-shadow:0 1px 0 rgba(0,0,0,0.2); }
+  .btn:hover{ background:#282019; border-color:var(--gold); box-shadow:0 3px 10px rgba(0,0,0,0.35); }
+  .btn:active{ transform:scale(0.98); box-shadow:0 1px 2px rgba(0,0,0,0.3); }
   .btn .tag{ display:inline-block; font-size:calc(11px*var(--fs)); color:var(--gold); margin-right:8px; letter-spacing:1px; }
-  .btn.primary{ background:var(--seal-dark); border-color:var(--seal); text-align:center; font-weight:600; }
-  .btn.primary:hover{ background:var(--seal); }
-  .btn.ghost{ background:transparent; border-color:rgba(43,36,26,0.3); color:var(--text-dark); }
+  .btn.primary{ background:var(--seal-dark); border-color:var(--seal); text-align:center; font-weight:600; box-shadow:0 2px 8px rgba(156,43,43,0.25); }
+  .btn.primary:hover{ background:var(--seal); box-shadow:0 4px 14px rgba(156,43,43,0.4); }
+  .btn.ghost{ background:transparent; border-color:rgba(43,36,26,0.3); color:var(--text-dark); box-shadow:none; }
   .btn:disabled{ opacity:.4; cursor:not-allowed; }
   .btn small{ display:block; font-size:calc(11.5px*var(--fs)); opacity:0.65; margin-top:2px; font-weight:400; }
 
@@ -82,14 +100,18 @@
   @keyframes fadeIn{ from{opacity:0;transform:translateY(6px);} to{opacity:1;transform:translateY(0);} }
   body.reduce-motion .fade-in{ animation:none; }
   @media (prefers-reduced-motion: reduce){ .fade-in{ animation:none; } }
+  body.high-contrast .card{ box-shadow:0 18px 40px rgba(0,0,0,0.6), inset 0 0 0 2px rgba(0,0,0,0.5); }
+  body.high-contrast .narrative p, body.high-contrast .loc-desc, body.high-contrast .chapter-title{ color:#000 !important; }
+  body.high-contrast .btn{ border-width:2px; }
+  body.high-contrast .stat, body.high-contrast .badge{ border-width:2px; border-color:rgba(0,0,0,0.4); }
 
   .section-label{ font-size:calc(12px*var(--fs)); letter-spacing:2px; color:var(--seal-dark); font-weight:700; margin:18px 0 8px; text-transform:uppercase; }
   .section-label:first-child{ margin-top:0; }
   .swatch-row{ display:flex; gap:10px; flex-wrap:wrap; }
   .swatch{ width:44px;height:44px;border-radius:50%;cursor:pointer;border:2px solid rgba(43,36,26,0.25); position:relative; }
   .swatch.active::after{ content:"✓"; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:#fff; font-size:16px; text-shadow:0 0 3px rgba(0,0,0,0.6); }
-  .seg-row{ display:flex; gap:6px; }
-  .seg-btn{ flex:1; text-align:center; padding:9px 4px; border-radius:4px; cursor:pointer; border:1px solid rgba(43,36,26,0.25); background:rgba(43,36,26,0.05); font-size:calc(13px*var(--fs)); color:var(--text-dark); }
+  .seg-row{ display:flex; gap:6px; flex-wrap:wrap; }
+  .seg-btn{ flex:1; min-width:64px; text-align:center; padding:9px 4px; border-radius:4px; cursor:pointer; border:1px solid rgba(43,36,26,0.25); background:rgba(43,36,26,0.05); font-size:calc(13px*var(--fs)); color:var(--text-dark); }
   .seg-btn.active{ background:var(--seal-dark); border-color:var(--seal-dark); color:var(--text-light); font-weight:600; }
   .toggle-row{ display:flex; align-items:center; justify-content:space-between; padding:10px 0; border-bottom:1px solid rgba(43,36,26,0.12); gap:10px; }
   .toggle-row:last-child{ border-bottom:none; }
@@ -112,7 +134,7 @@
   .danger-btn:hover{ background:rgba(156,43,43,0.08); }
 
   .badge-row{ display:flex; flex-wrap:wrap; gap:6px; margin:10px 0 4px; }
-  .badge{ font-size:calc(11px*var(--fs)); padding:4px 9px; border-radius:12px; background:rgba(43,36,26,0.08); border:1px solid rgba(43,36,26,0.18); color:var(--text-dark); }
+  .badge{ font-size:calc(11px*var(--fs)); padding:4px 10px; border-radius:12px; background:rgba(43,36,26,0.08); border:1px solid rgba(43,36,26,0.18); color:var(--text-dark); letter-spacing:0.3px; }
   .badge.accent{ background:var(--seal-dark); color:var(--text-light); border-color:var(--seal-dark); }
   .badge.gold{ background:rgba(201,162,75,0.18); border-color:rgba(201,162,75,0.4); color:var(--seal-dark); font-weight:700; }
   .loc-desc{ font-size:calc(13.5px*var(--fs)); font-weight:var(--fw); line-height:1.7; color:rgba(43,36,26,0.85); margin:8px 0 6px; }
@@ -121,6 +143,8 @@
   .skill-item .sname{ font-family:'Song Myung',serif; font-size:calc(15px*var(--fs)); color:var(--text-dark); }
   .skill-item .sdesc{ font-size:calc(12.5px*var(--fs)); color:rgba(43,36,26,0.65); margin-top:2px; }
   .empty-note{ font-size:calc(13.5px*var(--fs)); color:rgba(43,36,26,0.55); padding:10px 0; }
+  .scene-art{ width:100%; height:64px; margin:2px 0 14px; border-radius:3px; overflow:hidden; background:rgba(43,36,26,0.03); border:1px solid rgba(43,36,26,0.1); }
+  .scene-art svg{ width:100%; height:100%; display:block; }
   .stat-edit-input{ width:64px; text-align:center; padding:8px 4px; border-radius:4px; border:1px solid rgba(43,36,26,0.3);
     background:rgba(43,36,26,0.05); font-family:'Song Myung',serif; font-size:calc(15px*var(--fs)); color:var(--text-dark); }
   .slot-card{ padding:12px 14px; margin-bottom:2px; }
@@ -150,8 +174,8 @@
   const SAVE_KEYS = ["muhwan_open_save_slot1","muhwan_open_save_slot2","muhwan_open_save_slot3"];
   let currentSlot = 1;
 
-  const FONT_SCALES = { sm:0.88, md:1, lg:1.16, xl:1.32 };
-  const FONT_WEIGHTS = { light:400, normal:500, bold:700 };
+  const FONT_SCALES = { sm:0.88, md:1, lg:1.16, xl:1.32, xxl:1.5 };
+  const FONT_WEIGHTS = { light:400, normal:500, bold:700, xbold:800 };
   const THEMES = {
     ink:   { "--ink":"#16130f","--ink-2":"#1e1a14","--paper":"#e9dfc4","--paper-dark":"#d9c9a0","--seal":"#9c2b2b","--seal-dark":"#7a1f1f","--gold":"#c9a24b","--jade":"#4f6b58","--text-dark":"#2b241a","--text-light":"#efe6cf", label:"묵향", swatch:"#9c2b2b" },
     jade:  { "--ink":"#10150f","--ink-2":"#161f16","--paper":"#dfe8d4","--paper-dark":"#c8d6ba","--seal":"#3f6b46","--seal-dark":"#2e4f34","--gold":"#b7a35a","--jade":"#6b8f76","--text-dark":"#1f261e","--text-light":"#e6efe0", label:"벽옥", swatch:"#3f6b46" },
@@ -163,13 +187,14 @@
   const STAT_POOL_TOTAL = 30, STAT_MIN = 3, STAT_MAX = 15;
   const CLUE_TARGET = 5;
   const ACT2_CLUE_TARGET = 5;
+  const ACT3_CLUE_TARGET = 5;
   const GOLD_START = 20;
 
   // ---------- 설정 ----------
   let settings = loadSettings();
   function loadSettings(){
-    try{ const raw = localStorage.getItem(SETTINGS_KEY); if(raw) return Object.assign({ fontSize:"md", fontWeight:"normal", theme:"ink", sound:true, textSpeed:"normal", reduceMotion:false }, JSON.parse(raw)); }catch(e){}
-    return { fontSize:"md", fontWeight:"normal", theme:"ink", sound:true, textSpeed:"normal", reduceMotion:false };
+    try{ const raw = localStorage.getItem(SETTINGS_KEY); if(raw) return Object.assign({ fontSize:"md", fontWeight:"normal", theme:"ink", sound:true, textSpeed:"normal", reduceMotion:false, highContrast:false }, JSON.parse(raw)); }catch(e){}
+    return { fontSize:"md", fontWeight:"normal", theme:"ink", sound:true, textSpeed:"normal", reduceMotion:false, highContrast:false };
   }
   function saveSettings(){ try{ localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); }catch(e){} }
   function applySettings(){
@@ -179,6 +204,7 @@
     root.style.setProperty("--fs", FONT_SCALES[settings.fontSize] || 1);
     root.style.setProperty("--fw", FONT_WEIGHTS[settings.fontWeight] || 500);
     document.body.classList.toggle("reduce-motion", !!settings.reduceMotion);
+    document.body.classList.toggle("high-contrast", !!settings.highContrast);
   }
 
   // ---------- 사운드 ----------
@@ -215,6 +241,25 @@
     buwoon: { id:"buwoon", name:"부운신법(浮雲身法)", desc:"경공의 극치. 전투 중 1회, 적의 공격을 완전히 흘려낸다.",
       combat:true, evade:true, use:(st)=>({ dmg: 4+Math.round(st.stats.무공*0.2), log:`${st.playerName}이(가) 부운신법으로 몸을 흘린다.` }) },
     cheonli: { id:"cheonli", name:"천리전음(千里傳音)", desc:"강호의 소식을 먼저 듣는다. 탐색할 때마다 확률적으로 단서를 추가로 얻는다.", combat:false, passive:"clue" },
+    nakmae: { id:"nakmae", name:"낙매표두(落梅鏢)", desc:"암기 투척술. 전투 중 1회, 준수한 피해.", combat:true,
+      use:(st)=>({ dmg: 15+Math.round(st.stats.무공*0.65), log:`${st.playerName}이(가) 낙매표두를 날린다!` }) },
+    hoeseon: { id:"hoeseon", name:"회선각(回旋脚)", desc:"연속 발차기. 전투 중 1회, 강한 피해로 적을 크게 흔든다.", combat:true,
+      use:(st)=>({ dmg: 17+Math.round(st.stats.무공*0.6)+Math.round(st.stats.내공*0.2), log:`${st.playerName}이(가) 회선각을 펼친다!` }) },
+    jingi: { id:"jingi", name:"진기토납술(眞氣吐納術)", desc:"온전한 회복술. 전투 중 1회, 피해 없이 크게 회복한다.", combat:true,
+      use:(st)=>({ dmg: 0, heal: 14+Math.round(st.stats.내공*0.6), log:`${st.playerName}이(가) 진기토납술로 내상을 다스린다.` }) },
+    cheolpo: { id:"cheolpo", name:"철포삼(鐵布衫)", desc:"금강불괴의 외공. 전투 중 받는 피해가 상시 줄어든다.", combat:false, passive:"defense" },
+    mangeum: { id:"mangeum", name:"만금상술(萬金商術)", desc:"장사의 이치를 깨우친다. 전투 승리 시 얻는 은자가 늘어난다.", combat:false, passive:"gold" },
+    hansu: { id:"hansu", name:"한수결(寒水訣)", desc:"차가운 내공. 전투 중 1회, 큰 피해로 적의 기세를 얼어붙게 한다.", combat:true,
+      use:(st)=>({ dmg: 20+Math.round(st.stats.무공*0.75)+Math.round(st.stats.내공*0.15), log:`${st.playerName}이(가) 한수결을 펼친다!` }) },
+    pahok: { id:"pahok", name:"파옥권(破玉拳)", desc:"옥돌도 부순다는 권법. 전투 중 1회, 묵직한 피해.", combat:true,
+      use:(st)=>({ dmg: 16+Math.round(st.stats.무공*0.6), log:`${st.playerName}이(가) 파옥권을 내지른다!` }) },
+    eunhyeong: { id:"eunhyeong", name:"은형보(隱形步)", desc:"그림자처럼 사라지는 보법. 전투 중 1회, 적의 공격을 완전히 흘려낸다.", combat:true, evade:true,
+      use:(st)=>({ dmg: 5+Math.round(st.stats.무공*0.2), log:`${st.playerName}이(가) 은형보로 자취를 감춘다.` }) },
+    samjae: { id:"samjae", name:"삼재검(三才劍)", desc:"천지인의 이치를 담은 검. 피해와 함께 소량 회복.", combat:true,
+      use:(st)=>({ dmg: 11+Math.round(st.stats.무공*0.45), heal: Math.round(st.stats.내공*0.3), log:`${st.playerName}이(가) 삼재검을 펼친다.` }) },
+    byeokgok: { id:"byeokgok", name:"벽곡단(辟穀丹)", desc:"영약의 힘을 빌려 상처를 다스린다. 전투 중 1회, 피해 없이 매우 크게 회복.", combat:true,
+      use:(st)=>({ dmg: 0, heal: 18+Math.round(st.stats.내공*0.4), log:`${st.playerName}이(가) 벽곡단을 복용한다.` }) },
+    soyo: { id:"soyo", name:"소요유(逍遙遊)", desc:"구애받지 않는 마음가짐. 전투 중 매 턴 자연스레 소량 회복된다.", combat:false, passive:"regen" },
 
     sk_sorim:    { id:"sk_sorim",    name:"반야벽력장(般若霹靂掌)", desc:"[소림] 육중한 장력. 전투 중 1회, 매우 큰 피해.", combat:true,
       use:(st)=>({ dmg: 22+Math.round(st.stats.무공*1.0), log:`${st.playerName}이(가) 반야벽력장을 펼친다!` }) },
@@ -237,7 +282,7 @@
     sk_kongtong: { id:"sk_kongtong", name:"뇌운장(雷雲掌)", desc:"[공동] 변화무쌍한 장법. 전투 중 1회, 피해와 소량 회복.", combat:true,
       use:(st)=>({ dmg: 13+Math.round(st.stats.무공*0.55), heal: Math.round(st.stats.내공*0.25), log:`${st.playerName}이(가) 뇌운장을 펼친다.` }) },
   };
-  const GENERIC_SKILLS = ["gangjang","yuwoon","buwoon","cheonli"];
+  const GENERIC_SKILLS = ["gangjang","yuwoon","buwoon","cheonli","nakmae","hoeseon","jingi","cheolpo","mangeum","hansu","pahok","eunhyeong","samjae","byeokgok","soyo"];
   const SECT_SKILL_ORDER = ["sk_sorim","sk_mudang","sk_gaebang","sk_hwasan","sk_emei","sk_kunlun","sk_zhongnan","sk_qingcheng","sk_dianchang","sk_kongtong"];
   const ALL_SKILLS = GENERIC_SKILLS.concat(SECT_SKILL_ORDER);
 
@@ -270,10 +315,28 @@
     qingcheng:{ name:"청성파", desc:"안개 자욱한 청성산, 날카로운 검법으로 이름났다." },
     dianchang:{ name:"점창파", desc:"변방의 검문, 실전적인 도검술로 유명하다." },
     kongtong: { name:"공동파", desc:"기이한 지형의 산문, 독특한 장법으로 이름났다." },
+    jangan:   { name:"장안(長安)", desc:"천하의 중심이라 불리는 대도시, 온갖 사람들이 모여든다." },
+    hangju:   { name:"항주(杭州)", desc:"호수와 버드나무가 어우러진 강남의 물의 도시." },
+    seongdo:  { name:"성도(成都)", desc:"매운 향과 상단의 물결이 끊이지 않는 촉 땅의 중심지." },
+    suzhou:   { name:"소주(蘇州)", desc:"정원과 운하가 어우러진 강남의 문인들의 도시." },
+    kaifeng:  { name:"개봉(開封)", desc:"옛 도읍의 위엄이 남은 곳, 상인과 협객이 뒤섞여 산다." },
+    nanjing:  { name:"남경(南京)", desc:"학문과 문물이 모이는 남쪽의 큰 도읍." },
+    dunhwang: { name:"돈황(敦煌)", desc:"사막 한가운데의 오아시스, 이국의 상단들이 오가는 교차로." },
+    cheongha: { name:"청하촌(靑河村)", desc:"강가에 자리한 소박한 농촌 마을, 물소리가 하루 종일 들려온다." },
+    jungnim:  { name:"죽림촌(竹林村)", desc:"대나무숲에 둘러싸인 산골 마을, 바람이 불 때마다 댓잎 소리가 인다." },
+    eochon:   { name:"어촌(漁村)", desc:"바닷바람이 짠 내를 실어오는 작은 어촌, 그물 손질하는 소리가 끊이지 않는다." },
+    byeonbang:{ name:"변방촌(邊方村)", desc:"국경 가까운 거친 변방 마을, 낭인과 유랑민들이 오가며 머문다." },
+    maehwa:   { name:"매화촌(梅花村)", desc:"온 마을이 매화나무로 둘러싸인 곳, 봄이면 꽃잎이 눈처럼 흩날린다." },
+    tangwang: { name:"탄광촌(炭鑛村)", desc:"검은 탄가루가 내려앉은 광부들의 마을, 갱도 깊은 곳에서 곡괭이 소리가 끊이지 않는다." },
+    oncheon:  { name:"온천촌(溫泉村)", desc:"김이 피어오르는 온천으로 이름난 요양 마을, 상처 입은 낭인들도 종종 머문다." },
+    mokjang:  { name:"목장촌(牧場村)", desc:"드넓은 초원에서 말을 기르는 마을, 말발굽 소리가 끊이지 않는다." },
     heukpungchae: { name:"흑풍채", desc:"원수 사마경의 근거지. 산 그림자 속에 숨겨진 검은 채책.", locked:true },
     shadowsect: { name:"천기루(天機樓)", desc:"어둠 속에서 강호를 조종해온 정체불명의 세력.", locked:true },
+    taeguk: { name:"태극봉인지(太極封印地)", desc:"청운문이 오래전 목숨을 걸고 무언가를 봉인했다는 전설의 땅.", locked:true },
+    bukhae: { name:"북해(北海)", desc:"얼음 바람이 몰아치는 변방, 전설의 검신이 은거한다는 땅.", locked:true },
+    nammal: { name:"남만(南蠻)", desc:"독초와 정글이 우거진 이국의 땅, 독의 여왕이 다스린다는 소문이 있다.", locked:true },
   };
-  const LOCATION_ORDER = ["market","inn","wild","shaolin","wudang","gaebang","hwasan","emei","kunlun","zhongnan","qingcheng","dianchang","kongtong"];
+  const LOCATION_ORDER = ["market","inn","wild","shaolin","wudang","gaebang","hwasan","emei","kunlun","zhongnan","qingcheng","dianchang","kongtong","jangan","hangju","seongdo","suzhou","kaifeng","nanjing","dunhwang","cheongha","jungnim","eochon","byeonbang","maehwa","tangwang","oncheon","mokjang"];
 
   // ---------- 적 풀 ----------
   const WILD_ENEMIES = [
@@ -281,6 +344,9 @@
     { name:"수적 무리의 척후", hp:32, atk:5, gold:8 },
     { name:"이름 모를 낭인 검객", hp:36, atk:6, gold:10 },
     { name:"실력을 뽐내는 후기지수", hp:30, atk:6, gold:7 },
+    { name:"산길의 화적", hp:34, atk:6, gold:9 },
+    { name:"떠돌이 도사 행세를 하는 사기꾼", hp:26, atk:5, gold:11 },
+    { name:"복면을 쓴 자객", hp:38, atk:7, gold:13 },
   ];
 
   // ---------- 상태 ----------
@@ -288,11 +354,13 @@
   function freshState(){
     return {
       stats: { ...DEFAULT_STATS }, playerName:"무환",
-      skills:[], sect:null, clues:0, turn:0, gold:GOLD_START, companion:null,
-      act2clues:0,
+      skills:[], skillLevels:{}, sect:null, sectRank:0, sectTrainCount:0, clues:0, turn:0, gold:GOLD_START, companion:null, invincible:false, infamy:0, winStreak:0, bestWinStreak:0, ngPlusCount:0,
+      act2clues:0, act3clues:0, metNPCs:[], journal:[], visited:["market"], injuryTurns:0, earnedAchievements:[], items:{},
+      partner:null, partnerSinceTurn:0, married:false, marriedSinceTurn:0, hasChild:false,
       location:"market", usedEvents:[], lastEventId:{},
       flags:{ introDone:false, canConfront:false, revengeDone:false, revengeWon:false,
-        act2Unlocked:false, act2Done:false, act2Won:false },
+        act2Unlocked:false, act2Done:false, act2Won:false,
+        act3Unlocked:false, act3Done:false, act3Won:false },
       screen:"title", prevScreenSnapshot:null,
       scene:null, combat:null,
     };
@@ -300,14 +368,17 @@
   state = freshState();
   let allocDraft = { ...DEFAULT_STATS };
   let nameDraft = "무환";
+  let ngPlusCarry = null;
 
   function slotKey(n){ return SAVE_KEYS[(n||currentSlot)-1]; }
   function loadSaveSlot(n){ try{ const raw = localStorage.getItem(slotKey(n)); if(raw) return JSON.parse(raw); }catch(e){} return null; }
   function persistSave(){
     try{
       localStorage.setItem(slotKey(currentSlot), JSON.stringify({
-        stats:state.stats, playerName:state.playerName, skills:state.skills, sect:state.sect,
-        clues:state.clues, turn:state.turn, gold:state.gold, companion:state.companion, act2clues:state.act2clues,
+        stats:state.stats, playerName:state.playerName, skills:state.skills, skillLevels:state.skillLevels, sect:state.sect, sectRank:state.sectRank, sectTrainCount:state.sectTrainCount, infamy:state.infamy, winStreak:state.winStreak, bestWinStreak:state.bestWinStreak, ngPlusCount:state.ngPlusCount,
+        clues:state.clues, turn:state.turn, gold:state.gold, companion:state.companion, act2clues:state.act2clues, act3clues:state.act3clues, invincible:state.invincible,
+        metNPCs:state.metNPCs, journal:state.journal, visited:state.visited, injuryTurns:state.injuryTurns, earnedAchievements:state.earnedAchievements, items:state.items,
+        partner:state.partner, partnerSinceTurn:state.partnerSinceTurn, married:state.married, marriedSinceTurn:state.marriedSinceTurn, hasChild:state.hasChild,
         location:state.location, usedEvents:state.usedEvents, lastEventId:state.lastEventId, flags:state.flags,
       }));
     }catch(e){}
@@ -337,17 +408,37 @@
   function fadeCard(){ cardEl.classList.remove('fade-in'); void cardEl.offsetWidth; cardEl.classList.add('fade-in'); }
   function statsRowHTML(){
     const order=["내공","무공","명성","의리"];
-    return '<div class="stats-row">'+order.map(k=>`<div class="stat"><div class="label">${k}</div><div class="value">${state.stats[k]}</div></div>`).join('')+'</div>';
+    const icons={내공:"氣",무공:"劍",명성:"名",의리:"義"};
+    return '<div class="stats-row">'+order.map(k=>`<div class="stat"><div class="label">${icons[k]} ${k}</div><div class="value">${state.stats[k]}</div></div>`).join('')+'</div>';
+  }
+  function reputationTitle(myeongseong){
+    if(myeongseong>=40) return "강호제일 풍운아";
+    if(myeongseong>=30) return "명숙(名宿)";
+    if(myeongseong>=20) return "이름 알려진 협객";
+    if(myeongseong>=10) return "떠오르는 후기지수";
+    return "무명소졸(無名小卒)";
   }
   function badgeRowHTML(){
     let b = [];
-    b.push(`<span class="badge accent">${state.sect ? SECTS[state.sect].name : "독행협"}</span>`);
+    b.push(`<span class="badge accent">${state.sect ? SECTS[state.sect].name + (state.sectRank>0 ? " · "+RANK_TITLES[state.sectRank] : "") : "독행협"}</span>`);
+    b.push(`<span class="badge">${reputationTitle(state.stats.명성)}</span>`);
     b.push(`<span class="badge gold">${state.gold}냥</span>`);
     b.push(`<span class="badge">단서 ${state.clues}/${CLUE_TARGET}</span>`);
     if(state.skills.length) b.push(`<span class="badge">무공 ${state.skills.length}/${ALL_SKILLS.length}식</span>`);
     if(state.companion) b.push(`<span class="badge accent">동료: ${state.companion}</span>`);
+    if(state.married) b.push(`<span class="badge accent">혼인: ${state.partner}</span>`);
+    else if(state.partner) b.push(`<span class="badge">정인: ${state.partner}</span>`);
     if(state.flags.revengeDone) b.push(`<span class="badge accent">복수 완료</span>`);
     if(state.flags.act2Done) b.push(`<span class="badge accent">천기루 결착</span>`);
+    if(state.flags.act3Done) b.push(`<span class="badge accent">봉인지 결착</span>`);
+    { const earned = ACHIEVEMENTS.filter(a=>a.cond(state)).length; if(earned>0) b.push(`<span class="badge">칭호 ${earned}/${ACHIEVEMENTS.length}</span>`); }
+    if(state.invincible) b.push(`<span class="badge accent">무적</span>`);
+    if(state.injuryTurns>0) b.push(`<span class="badge">부상 (${state.injuryTurns}턴)</span>`);
+    if(state.infamy>0) b.push(`<span class="badge">악명 ${state.infamy}</span>`);
+    if(state.winStreak>=2) b.push(`<span class="badge gold">연승 ${state.winStreak}</span>`);
+    { const si = seasonIndex();
+      if(si===3) b.push(`<span class="badge">혹한기 · 전투력 소폭 감소</span>`);
+      else if(si===1) b.push(`<span class="badge">한여름 · 전투력 소폭 상승</span>`); }
     return `<div class="badge-row">${b.join('')}</div>`;
   }
 
@@ -368,7 +459,10 @@
       <div class="narrative"><p>정해진 끝은 없다. 강호를 떠돌며 사람을 만나고, 무공을 익히고, 문파에 몸을 담거나 홀로 원수를 쫓아라.</p></div>
       <div class="section-label">저장 슬롯</div>
       <div id="slotList"></div>
-      <div class="actions"><button class="btn ghost" id="settingsBtn">설정</button></div>
+      <div class="actions">
+        <button class="btn ghost" id="hallBtn">명예의 전당 (슬롯 비교)</button>
+        <button class="btn ghost" id="settingsBtn">설정</button>
+      </div>
     `;
     const wrap = document.getElementById('slotList');
     for(let n=1;n<=3;n++){
@@ -396,11 +490,60 @@
         row.appendChild(clearBtn);
       }
       wrap.appendChild(row);
+      if(has){
+        const s = loadSaveSlot(n);
+        if(s && s.flags && s.flags.act2Done){
+          const ngBtn = document.createElement('button'); ngBtn.className='btn ghost'; ngBtn.style.marginBottom='8px';
+          ngBtn.textContent = `슬롯 ${n} — 뉴게임+ (무공·재산 절반 계승하여 새로 시작)`;
+          ngBtn.onclick = ()=>{ sfx.click(); startNewGamePlus(n); };
+          wrap.appendChild(ngBtn);
+        }
+      }
     }
     document.getElementById('settingsBtn').onclick = ()=>{ sfx.click(); openSettings(); };
+    document.getElementById('hallBtn').onclick = ()=>{ sfx.click(); renderHallOfFame(); };
   }
 
-  function openSetup(){ state = freshState(); nameDraft="무환"; allocDraft={...DEFAULT_STATS}; state.screen="setup"; renderSetup(); }
+  function renderHallOfFame(){
+    fadeCard(); sealEl.textContent="殿";
+    cardEl.innerHTML = `
+      <div class="chapter-eyebrow">명예의 전당</div>
+      <h2 class="chapter-title">세 협객의 발자취</h2>
+      <div id="hallList"></div>
+      <div class="actions"><button class="btn ghost" id="backToTitle">뒤로</button></div>
+    `;
+    const wrap = document.getElementById('hallList');
+    let any = false;
+    for(let n=1;n<=3;n++){
+      const s = loadSaveSlot(n);
+      const div = document.createElement('div'); div.className='skill-item';
+      if(!s){
+        div.style.opacity='0.45';
+        div.innerHTML = `<div class="sname">슬롯 ${n}</div><div class="sdesc">아직 비어있다.</div>`;
+      } else {
+        any = true;
+        const sectName = s.sect ? SECTS[s.sect].name : "독행협";
+        const earned = ACHIEVEMENTS.filter(a=>a.cond(s)).length;
+        const status = s.flags.act3Done ? (s.flags.act3Won ? "3부 완결" : "3부 도전 중")
+          : s.flags.act2Done ? "2부 완료" : s.flags.revengeDone ? "1부 완료" : "여정 진행 중";
+        div.innerHTML = `<div class="sname">슬롯 ${n} — ${s.playerName}</div>
+          <div class="sdesc">${sectName} · 무공 ${s.skills.length}/${ALL_SKILLS.length}식 · 칭호 ${earned}/${ACHIEVEMENTS.length} · 골드 ${s.gold}냥 · 제${s.turn}보 · ${status}</div>`;
+      }
+      wrap.appendChild(div);
+    }
+    if(!any){ wrap.innerHTML = `<div class="empty-note">아직 어느 슬롯도 시작되지 않았다.</div>`; }
+    document.getElementById('backToTitle').onclick=()=>{ sfx.click(); renderTitle(); };
+  }
+
+  function openSetup(){ state = freshState(); nameDraft="무환"; allocDraft={...DEFAULT_STATS}; ngPlusCarry=null; state.screen="setup"; renderSetup(); }
+  function startNewGamePlus(slotN){
+    const old = loadSaveSlot(slotN);
+    if(!old) return;
+    const carry = { skills:(old.skills||[]).slice(), skillLevels: Object.assign({}, old.skillLevels||{}), gold: Math.round((old.gold||0)/2), ngPlusCount: (old.ngPlusCount||0)+1 };
+    currentSlot = slotN;
+    openSetup();
+    ngPlusCarry = carry;
+  }
   function allocRemain(){ return STAT_POOL_TOTAL - Object.values(allocDraft).reduce((a,b)=>a+b,0); }
   function renderSetup(){
     fadeCard(); sealEl.textContent="少";
@@ -451,7 +594,19 @@
       if(allocRemain()!==0) return; sfx.click();
       state.stats={...allocDraft}; state.playerName=nameDraft||"무환";
       persistSave();
-      startScene(INTRO_NODES, ()=>{ state.flags.introDone=true; state.location="market"; persistSave(); renderHub(); });
+      startScene(pick(INTRO_VARIANTS), ()=>{
+        state.flags.introDone=true; state.location="market";
+        if(ngPlusCarry){
+          state.skills = ngPlusCarry.skills.slice();
+          state.skillLevels = Object.assign({}, ngPlusCarry.skillLevels);
+          state.gold += ngPlusCarry.gold;
+          state.ngPlusCount = ngPlusCarry.ngPlusCount;
+          addJournal(`이전 생에서 익힌 무공과 재산 일부를 계승했다. (환생 ${state.ngPlusCount}회차)`);
+          ngPlusCarry = null;
+        }
+        addJournal("강호로의 첫 걸음을 내디뎠다.");
+        persistSave(); renderHub();
+      });
     };
     document.getElementById('backFromSetup').onclick=()=>{ sfx.click(); state.screen="title"; renderTitle(); };
   }
@@ -459,8 +614,8 @@
   function openSettings(){ state.prevScreenSnapshot = state.screen; state.screen="settings"; renderSettings(); }
   function renderSettings(){
     fadeCard(); sealEl.textContent="設";
-    const fsOrder=[["sm","작게"],["md","보통"],["lg","크게"],["xl","아주크게"]];
-    const fwOrder=[["light","얇게"],["normal","보통"],["bold","굵게"]];
+    const fsOrder=[["sm","작게"],["md","보통"],["lg","크게"],["xl","아주크게"],["xxl","최대"]];
+    const fwOrder=[["light","얇게"],["normal","보통"],["bold","굵게"],["xbold","매우굵게"]];
     const spOrder=[["instant","즉시"],["normal","보통"],["slow","천천히"]];
     cardEl.innerHTML = `
       <div class="chapter-eyebrow">SETTINGS</div>
@@ -477,6 +632,8 @@
       <div class="section-label">기타</div>
       <div class="toggle-row"><div class="toggle-label">사운드 효과음</div><div class="switch ${settings.sound?'on':''}" id="soundToggle"><div class="knob"></div></div></div>
       <div class="toggle-row"><div class="toggle-label">애니메이션 줄이기</div><div class="switch ${settings.reduceMotion?'on':''}" id="motionToggle"><div class="knob"></div></div></div>
+      <div class="toggle-row"><div class="toggle-label">고대비 모드</div><div class="switch ${settings.highContrast?'on':''}" id="contrastToggle"><div class="knob"></div></div></div>
+      <div class="actions"><button class="btn ghost" id="helpBtn">게임 도움말</button></div>
 
       <div class="section-label">능력치 수정</div>
       <div class="hint">현재 진행 중인 능력치를 자유롭게 조정할 수 있습니다 (0~99).</div>
@@ -485,6 +642,10 @@
       <div class="section-label">골드 수정</div>
       <div class="hint">소지금을 자유롭게 조정할 수 있습니다 (0~9999).</div>
       <div class="stat-alloc-row"><div class="sa-label">골드</div><input type="number" class="stat-edit-input" id="goldEdit" min="0" max="9999" value="${state.gold}"></div>
+      <div class="stat-alloc-row"><div class="sa-label">악명</div><input type="number" class="stat-edit-input" id="infamyEdit" min="0" max="99" value="${state.infamy}"></div>
+
+      <div class="section-label">전투 치트</div>
+      <div class="toggle-row"><div class="toggle-label">무적 모드<br><span style="font-size:calc(11.5px*var(--fs));opacity:0.6;">전투 중 받는 피해가 0이 됩니다.</span></div><div class="switch ${state.invincible?'on':''}" id="invincibleToggle"><div class="knob"></div></div></div>
 
       <div class="section-label">무공 수정</div>
       <div class="hint">습득 여부를 직접 켜고 끌 수 있습니다.</div>
@@ -493,6 +654,18 @@
       <div class="section-label">진행 데이터</div>
       <div class="hint">현재 슬롯(${currentSlot})의 진행 상황이 자동 저장됩니다.</div>
       <div class="actions"><button class="btn danger-btn" id="resetBtn">이 슬롯 초기화</button></div>
+
+      <div class="section-label">백업 (내보내기 / 가져오기)</div>
+      <div class="hint">기기를 바꾸거나 브라우저 데이터가 지워질 경우를 대비해, 진행 상황을 코드로 백업하거나 복원할 수 있습니다.</div>
+      <div class="actions">
+        <button class="btn ghost" id="exportBtn">이 슬롯 내보내기</button>
+      </div>
+      <textarea id="exportArea" readonly style="width:100%;height:70px;margin-top:6px;display:none;font-size:11px;padding:8px;border-radius:4px;border:1px solid rgba(43,36,26,0.3);background:rgba(43,36,26,0.05);color:var(--text-dark);"></textarea>
+      <textarea id="importArea" placeholder="여기에 백업 코드를 붙여넣으세요" style="width:100%;height:70px;margin-top:10px;font-size:11px;padding:8px;border-radius:4px;border:1px solid rgba(43,36,26,0.3);background:rgba(43,36,26,0.05);color:var(--text-dark);"></textarea>
+      <div class="actions">
+        <button class="btn ghost" id="importBtn">이 슬롯으로 가져오기</button>
+      </div>
+
       <div class="actions"><button class="btn primary" id="backFromSettings">뒤로가기</button></div>
     `;
     document.getElementById('fsRow').querySelectorAll('.seg-btn').forEach(b=>b.onclick=()=>{ settings.fontSize=b.dataset.k; saveSettings(); applySettings(); sfx.click(); renderSettings(); });
@@ -501,12 +674,47 @@
     document.getElementById('spRow').querySelectorAll('.seg-btn').forEach(b=>b.onclick=()=>{ settings.textSpeed=b.dataset.k; saveSettings(); sfx.click(); renderSettings(); });
     document.getElementById('soundToggle').onclick=()=>{ settings.sound=!settings.sound; saveSettings(); if(settings.sound) sfx.click(); renderSettings(); };
     document.getElementById('motionToggle').onclick=()=>{ settings.reduceMotion=!settings.reduceMotion; saveSettings(); applySettings(); sfx.click(); renderSettings(); };
+    document.getElementById('contrastToggle').onclick=()=>{ settings.highContrast=!settings.highContrast; saveSettings(); applySettings(); sfx.click(); renderSettings(); };
+    document.getElementById('helpBtn').onclick=()=>{ sfx.click(); openHelp(); };
     document.getElementById('goldEdit').onchange = (e)=>{
       let v = parseInt(e.target.value,10); if(isNaN(v)) v = state.gold; v = clamp(v,0,9999);
       state.gold = v; e.target.value = v; sfx.click(); persistSave();
     };
+    document.getElementById('infamyEdit').onchange = (e)=>{
+      let v = parseInt(e.target.value,10); if(isNaN(v)) v = state.infamy; v = clamp(v,0,99);
+      state.infamy = v; e.target.value = v; sfx.click(); persistSave();
+    };
+    document.getElementById('invincibleToggle').onclick = ()=>{
+      state.invincible = !state.invincible; sfx.click(); persistSave(); renderSettings();
+    };
     document.getElementById('resetBtn').onclick=()=>{
       if(confirm(`정말로 슬롯 ${currentSlot}의 진행 상황을 초기화할까요? 되돌릴 수 없습니다.`)){ clearSaveSlot(currentSlot); state=freshState(); renderTitle(); }
+    };
+    document.getElementById('exportBtn').onclick=()=>{
+      const raw = localStorage.getItem(slotKey(currentSlot));
+      const area = document.getElementById('exportArea');
+      if(!raw){ area.style.display='block'; area.value = "내보낼 데이터가 없습니다. 먼저 게임을 진행해주세요."; return; }
+      try{
+        const encoded = btoa(unescape(encodeURIComponent(raw)));
+        area.style.display='block'; area.value = encoded; area.focus(); area.select();
+        sfx.click();
+      }catch(e){ area.style.display='block'; area.value = "내보내기에 실패했습니다."; }
+    };
+    document.getElementById('importBtn').onclick=()=>{
+      const val = document.getElementById('importArea').value.trim();
+      if(!val) return;
+      try{
+        const json = decodeURIComponent(escape(atob(val)));
+        const parsed = JSON.parse(json);
+        if(!confirm(`슬롯 ${currentSlot}에 덮어쓸까요? 현재 슬롯의 기존 진행 상황은 사라집니다.`)) return;
+        localStorage.setItem(slotKey(currentSlot), JSON.stringify(parsed));
+        sfx.click();
+        alert("가져오기가 완료되었습니다. 타이틀로 돌아갑니다.");
+        state = freshState();
+        renderTitle();
+      }catch(e){
+        alert("올바르지 않은 백업 코드입니다.");
+      }
     };
     document.getElementById('backFromSettings').onclick=()=>{
       sfx.click(); const back=state.prevScreenSnapshot||"title"; state.screen=back;
@@ -543,10 +751,14 @@
     wrap.innerHTML = ALL_SKILLS.map(id=>{
       const s = SKILLS[id];
       const on = state.skills.includes(id);
+      const lvl = state.skillLevels[id] || 1;
       return `
         <div class="toggle-row">
-          <div class="toggle-label">${s.name}<br><span style="font-size:calc(11.5px*var(--fs));opacity:0.6;">${s.desc}</span></div>
-          <div class="switch ${on?'on':''}" data-id="${id}"><div class="knob"></div></div>
+          <div class="toggle-label">${s.name}${on?` (Lv.${lvl})`:''}<br><span style="font-size:calc(11.5px*var(--fs));opacity:0.6;">${s.desc}</span></div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            ${on ? `<button class="step-btn" data-lvl-id="${id}" data-d="-1" style="width:26px;height:26px;font-size:13px;">−</button><button class="step-btn" data-lvl-id="${id}" data-d="1" style="width:26px;height:26px;font-size:13px;">+</button>` : ''}
+            <div class="switch ${on?'on':''}" data-id="${id}"><div class="knob"></div></div>
+          </div>
         </div>
       `;
     }).join('');
@@ -554,10 +766,46 @@
       sw.onclick = ()=>{
         const id = sw.dataset.id;
         if(state.skills.includes(id)){ state.skills = state.skills.filter(s=>s!==id); }
-        else { state.skills.push(id); }
+        else { state.skills.push(id); if(!state.skillLevels[id]) state.skillLevels[id]=1; }
         sfx.click(); persistSave(); renderSkillEditRows();
       };
     });
+    wrap.querySelectorAll('[data-lvl-id]').forEach(btn=>{
+      btn.onclick = ()=>{
+        const id = btn.dataset.lvlId, d = parseInt(btn.dataset.d,10);
+        const cur = state.skillLevels[id] || 1;
+        const next = clamp(cur+d, 1, SKILL_MAX_LEVEL);
+        state.skillLevels[id] = next;
+        sfx.click(); persistSave(); renderSkillEditRows();
+      };
+    });
+  }
+
+  function openHelp(){ state.prevScreenSnapshot = state.screen === "help" ? "settings" : state.screen; renderHelp(); }
+  function renderHelp(){
+    fadeCard(); sealEl.textContent="?";
+    cardEl.innerHTML = `
+      <div class="chapter-eyebrow">HELP</div>
+      <h2 class="chapter-title">게임 도움말</h2>
+      <div class="section-label">기본 흐름</div>
+      <div class="narrative"><p>정해진 챕터 없이 이어지는 오픈월드입니다. 허브 화면에서 "이 지역 둘러보기"를 눌러 랜덤 사건을 겪고, "다른 지역으로 이동"으로 낙양·구파일방 등 13개 지역을 오갈 수 있습니다.</p></div>
+      <div class="section-label">무공과 문파</div>
+      <div class="narrative"><p>시장·객잔·산길에서 우연히 무공 비급을 얻거나, 각 문파에 입문하면 그 문파의 전용 절기를 배웁니다. 전투 중 "필살기"와 익힌 무공은 각각 별도 버튼으로 사용할 수 있습니다.</p></div>
+      <div class="section-label">복수와 그 이후</div>
+      <div class="narrative"><p>탐험 중 "단서"를 5개 모으면 원수 사마경이 있는 흑풍채로 향할 수 있습니다. 이후엔 천기루라는 새로운 사건이 이어집니다.</p></div>
+      <div class="section-label">부상과 골드</div>
+      <div class="narrative"><p>전투에서 패배하면 일시적으로 부상 상태가 되어 전투력이 낮아집니다. 시간이 지나면 낫거나, 객잔에서 돈을 내고 치료받을 수 있습니다. 골드는 전투 승리나 저잣거리 이벤트로 얻습니다.</p></div>
+      <div class="section-label">저장</div>
+      <div class="narrative"><p>진행 상황은 매 사건이 끝날 때마다 자동 저장됩니다. 슬롯은 3개까지 독립적으로 사용할 수 있습니다.</p></div>
+      <div class="actions"><button class="btn primary" id="backFromHelp">뒤로가기</button></div>
+    `;
+    document.getElementById('backFromHelp').onclick=()=>{
+      sfx.click();
+      const back = state.prevScreenSnapshot || "settings";
+      if(back==="title") renderTitle();
+      else if(back==="hub") renderHub();
+      else renderSettings();
+    };
   }
 
   // =========================================================
@@ -633,28 +881,95 @@
     if(!effects) return;
     for(const k in effects){
       if(k==="clues"){ state.clues = clamp(state.clues+effects[k], 0, 99);
-        if(state.clues >= CLUE_TARGET && !state.flags.canConfront){ state.flags.canConfront = true; }
+        if(state.clues >= CLUE_TARGET && !state.flags.canConfront){ state.flags.canConfront = true; addJournal("흑풍채의 위치를 알아냈다."); }
         continue; }
       if(k==="act2clues"){ state.act2clues = clamp(state.act2clues+effects[k], 0, 99);
-        if(state.act2clues >= ACT2_CLUE_TARGET && !state.flags.act2Unlocked){ state.flags.act2Unlocked = true; }
+        if(state.act2clues >= ACT2_CLUE_TARGET && !state.flags.act2Unlocked){ state.flags.act2Unlocked = true; addJournal("천기루의 존재를 알아냈다."); }
+        continue; }
+      if(k==="act3clues"){ state.act3clues = clamp(state.act3clues+effects[k], 0, 99);
+        if(state.act3clues >= ACT3_CLUE_TARGET && !state.flags.act3Unlocked){ state.flags.act3Unlocked = true; addJournal("태극봉인지의 존재를 알아냈다."); }
         continue; }
       if(k==="gold"){ state.gold = clamp(state.gold+effects[k], 0, 99999); if(effects[k]>0) sfx.gold(); continue; }
+      if(k==="infamy"){ state.infamy = clamp(state.infamy+effects[k], 0, 99); continue; }
       if(state.stats[k]!==undefined) state.stats[k] = clamp(state.stats[k]+effects[k], 0, 99);
     }
   }
-  function learnSkill(id){ if(!state.skills.includes(id)) state.skills.push(id); }
+  const SKILL_MAX_LEVEL = 3;
+  function learnSkill(id){ if(!state.skills.includes(id)){ state.skills.push(id); state.skillLevels[id] = 1; } }
+  function levelUpSkill(id){
+    const cur = state.skillLevels[id] || 1;
+    if(cur >= SKILL_MAX_LEVEL) return false;
+    state.skillLevels[id] = cur + 1;
+    return true;
+  }
+  function masteryConsolation(fallbackStatPool){
+    const knownLevelable = state.skills.filter(id=>GENERIC_SKILLS.includes(id) && (state.skillLevels[id]||1) < SKILL_MAX_LEVEL);
+    if(knownLevelable.length){
+      const id = pick(knownLevelable);
+      levelUpSkill(id);
+      sfx.get();
+      return `이미 아는 무공이었지만, 거듭 익히니 「${SKILLS[id].name}」이(가) Lv.${state.skillLevels[id]}(으)로 강화되었다!`;
+    }
+    const sk = pick(fallbackStatPool);
+    applyEffects({[sk]:1});
+    return `이미 극한까지 익힌 무공들뿐이었다. 대신 ${sk}이(가) 소폭 상승했다.`;
+  }
+  const RANK_TITLES = ["외문제자","내문제자","숙련제자","장로","태상장로"];
+  const RANK_THRESHOLD = 8;
+  function checkSectRankUp(){
+    if(!state.sect) return;
+    const newRank = Math.min(RANK_TITLES.length-1, Math.floor(state.sectTrainCount / RANK_THRESHOLD));
+    if(newRank > state.sectRank){
+      state.sectRank = newRank;
+      const stat = SECTS[state.sect].trainStat;
+      const boostKeys = Object.keys(stat);
+      const eff = {}; boostKeys.forEach(k=>{ eff[k] = 1; });
+      applyEffects(eff);
+      addJournal(`${SECTS[state.sect].name}에서 「${RANK_TITLES[newRank]}」(으)로 승급했다.`);
+    }
+  }
+  function meetNPC(id){ if(!state.metNPCs.includes(id)) state.metNPCs.push(id); }
+  function addJournal(text){ state.journal.push(`제${state.turn}보 — ${text}`); if(state.journal.length>60) state.journal.shift(); }
+  function markVisited(id){ if(!state.visited.includes(id)) state.visited.push(id); }
+
+  const NPC_GALLERY = [
+    { id:"sagongwi", name:"사공위(司空衛)", desc:"패도적인 검을 쓰는 낙양의 후기지수. 낙양 객잔에서 만날 수 있다." },
+    { id:"samagyeong", name:"사마경(司馬鯨)", desc:"흑풍채의 채주이자 청운문을 무너뜨린 원수." },
+    { id:"naengwol", name:"냉월(冷月)", desc:"천기루의 수장, 강호를 그림자에서 조종해온 인물." },
+    { id:"eunger", name:"은거 기인", desc:"관도와 산길에서 우연히 만난 이름 모를 고수." },
+    { id:"nogae", name:"노개(老丐)", desc:"개방 총타의 늙은 거지, 청운문의 옛일을 기억한다." },
+    { id:"baekbal", name:"백발 노인", desc:"낙양 객잔에서 만난 취객, 검결 한 구절을 전수해주었다." },
+    { id:"yeon", name:"목연(穆煙)", desc:"낙양 저잣거리에서 다친 이들을 돌보는 의녀. 무환과 인연을 맺을 수 있다." },
+    { id:"hyeoncheon", name:"현천진인(玄天眞人)", desc:"사마경과 냉월, 그 모두의 배후에 있던 진짜 원흉. 청운문과 얽힌 오랜 악연의 근원." },
+  ];
+
+  const ACHIEVEMENTS = [
+    { id:"ach_master", title:"천하제일무공가", desc:"무공 전체를 모두 습득한다.", cond:(s)=>s.skills.length>=ALL_SKILLS.length, reward:{gold:50} },
+    { id:"ach_rich", title:"거부(巨富)", desc:"소지금 200냥 이상을 모은다.", cond:(s)=>s.gold>=200, reward:{명성:2} },
+    { id:"ach_revenge", title:"복수협(復讐俠)", desc:"흑풍채의 원수를 처단한다.", cond:(s)=>s.flags.revengeDone && s.flags.revengeWon, reward:{gold:20} },
+    { id:"ach_legend", title:"전설협(傳說俠)", desc:"천기루의 배후를 밝혀낸다.", cond:(s)=>s.flags.act2Done && s.flags.act2Won, reward:{gold:30} },
+    { id:"ach_act3", title:"천하제일협(天下第一俠)", desc:"태극봉인지의 진실을 마주하고 현천진인을 넘어선다.", cond:(s)=>s.flags.act3Done && s.flags.act3Won, reward:{gold:50, 명성:5} },
+    { id:"ach_streak", title:"연전연승(連戰連勝)", desc:"전투에서 10연승을 달성한다.", cond:(s)=>(s.bestWinStreak||0)>=10, reward:{gold:30, 무공:2} },
+    { id:"ach_ngplus", title:"윤회협(輪迴俠)", desc:"뉴게임+로 새로운 생을 시작한다.", cond:(s)=>(s.ngPlusCount||0)>=1, reward:{gold:20} },
+    { id:"ach_brother", title:"의형제(義兄弟)", desc:"사공위와 의형제를 맺는다.", cond:(s)=>s.companion==="사공위", reward:{의리:2} },
+    { id:"ach_traveler", title:"천하일주(天下一周)", desc:"강호의 모든 지역을 밟아본다.", cond:(s)=>LOCATION_ORDER.every(id=>s.visited.includes(id)), reward:{명성:3} },
+    { id:"ach_veteran", title:"구도자(求道者)", desc:"백 보 이상 강호를 떠돈다.", cond:(s)=>s.turn>=100, reward:{내공:2,무공:2} },
+    { id:"ach_married", title:"백년가약(百年佳約)", desc:"목연과 혼인을 맺는다.", cond:(s)=>s.married===true, reward:{gold:40, 의리:3} },
+  ];
 
   // =========================================================
   // 전투 엔진
   // =========================================================
   function startCombat(node){
     const companionBonus = state.companion ? 10 : 0;
+    const injuryMul = state.injuryTurns>0 ? 0.85 : 1;
     state.combat = {
-      playerHp: Math.round(40 + state.stats.내공*1.4 + companionBonus), enemyHp:node.enemy.hp, enemyMaxHp:node.enemy.hp,
+      playerHp: Math.round((40 + state.stats.내공*1.4 + companionBonus) * injuryMul), enemyHp:node.enemy.hp, enemyMaxHp:node.enemy.hp,
       enemyAtk:node.enemy.atk, enemyName:node.enemy.name, skillCharges:2,
       usedSkills:{}, log: state.companion ? [`${node.enemy.name}(이)가 나타났다!`, `${state.companion}이(가) 곁에서 함께 싸운다.`] : [`${node.enemy.name}(이)가 나타났다!`],
       node:node, over:false,
     };
+    if(state.injuryTurns>0) state.combat.log.push("몸에 남은 부상 탓에 평소보다 힘이 덜 실린다.");
     state.combat.playerMaxHp = state.combat.playerHp;
     renderCombat();
   }
@@ -669,6 +984,7 @@
     cardEl.innerHTML = `
       <div class="chapter-eyebrow">전투</div>
       <h2 class="chapter-title">${c.enemyName}과(와)의 대결</h2>
+      ${sceneArtHTML("duel")}
       <div class="combat-wrap">
         <div class="vs-row">
           <div class="fighter"><div class="name">${state.playerName}</div>
@@ -694,14 +1010,16 @@
     actWrap.appendChild(makeBtn(`필살기 (${c.skillCharges})`, ()=>playerAction('skill'), c.skillCharges<=0));
     combatSkills.forEach(id=>{
       const used = !!c.usedSkills[id];
-      actWrap.appendChild(makeBtn(SKILLS[id].name.split('(')[0], ()=>playerAction('learned', id), used));
+      const lvl = state.skillLevels[id] || 1;
+      actWrap.appendChild(makeBtn(SKILLS[id].name.split('(')[0] + (lvl>1?` Lv${lvl}`:''), ()=>playerAction('learned', id), used));
     });
   }
   function playerAction(action, skillId){
     const c = state.combat; if(c.over) return;
     let playerDmg=0, defending=false, heal=0;
     if(action==='attack'){ sfx.attack(); playerDmg = 6+Math.round(state.stats.무공*0.6)+Math.floor(Math.random()*5);
-      pushLog(`${state.playerName}이(가) 검을 휘두른다 — ${c.enemyName}에게 ${playerDmg}의 피해!`); }
+      const atkPhrase = pick(["검을 휘두른다","빠르게 파고들며 검을 찌른다","매섭게 검을 내려친다","측면으로 돌며 검을 긋는다","자세를 낮췄다가 튀어오르며 벤다"]);
+      pushLog(`${state.playerName}이(가) ${atkPhrase} — ${c.enemyName}에게 ${playerDmg}의 피해!`); }
     else if(action==='defend'){ sfx.click(); defending=true; pushLog(`${state.playerName}이(가) 자세를 낮추고 방어에 집중한다.`); }
     else if(action==='skill'){ if(c.skillCharges<=0) return; sfx.skill(); c.skillCharges--;
       playerDmg = 14+Math.round(state.stats.무공*0.8)+Math.round(state.stats.내공*0.4);
@@ -710,10 +1028,18 @@
       const sk = SKILLS[skillId]; if(!sk || c.usedSkills[skillId]) return;
       sfx.skill(); c.usedSkills[skillId]=true;
       const r = sk.use(state);
-      playerDmg = r.dmg||0; heal = r.heal||0;
-      pushLog(withName(r.log, state.playerName));
+      const lvl = state.skillLevels[skillId] || 1;
+      const lvlMul = 1 + (lvl-1)*0.15;
+      playerDmg = Math.round((r.dmg||0) * lvlMul); heal = Math.round((r.heal||0) * lvlMul);
+      pushLog(withName(r.log, state.playerName) + (lvl>1 ? ` (Lv.${lvl})` : ""));
       if(sk.evade) defending = true;
       if(heal>0){ c.playerHp = Math.min(c.playerMaxHp, c.playerHp+heal); pushLog(`${state.playerName}의 상처가 소량 회복된다. (+${heal})`); }
+    }
+    if(state.injuryTurns>0 && playerDmg>0) playerDmg = Math.round(playerDmg*0.85);
+    if(playerDmg>0){
+      const si = seasonIndex();
+      if(si===3) playerDmg = Math.round(playerDmg*0.9);
+      else if(si===1) playerDmg = Math.round(playerDmg*1.05);
     }
     c.enemyHp -= playerDmg;
     if(c.enemyHp<=0){
@@ -723,6 +1049,8 @@
     }
     let enemyDmg = c.enemyAtk + Math.floor(Math.random()*5);
     if(defending) enemyDmg = Math.round(enemyDmg * (action==='learned' ? 0.05 : 0.4));
+    if(state.skills.includes('cheolpo')) enemyDmg = Math.round(enemyDmg * 0.85);
+    if(state.invincible) enemyDmg = 0;
     c.playerHp -= enemyDmg;
     pushLog(`${c.enemyName}(이)가 반격한다 — ${state.playerName}이(가) ${enemyDmg}의 피해를 입었다.`);
     if(playerDmg>0) sfx.hit();
@@ -731,11 +1059,29 @@
       renderCombat(); sfx.lose();
       setTimeout(()=>endCombat(false), 850); return;
     }
+    if(state.skills.includes('soyo') && c.playerHp < c.playerMaxHp){
+      const regen = 3;
+      c.playerHp = Math.min(c.playerMaxHp, c.playerHp + regen);
+      pushLog(`${state.playerName}의 마음이 편안해지며 소량 회복된다. (+${regen})`);
+    }
     renderCombat();
   }
   function endCombat(won){
     const node = state.combat.node;
-    if(won && node.effectsOnWin) applyEffects(node.effectsOnWin);
+    if(!won){ state.injuryTurns = Math.max(state.injuryTurns, 3); state.winStreak = 0; }
+    else {
+      state.winStreak++;
+      if(state.winStreak > state.bestWinStreak) state.bestWinStreak = state.winStreak;
+      if(state.winStreak % 5 === 0){
+        applyEffects({gold:15, 명성:2});
+        addJournal(`연승 ${state.winStreak}회 달성! 강호에 소문이 퍼졌다. (보상 획득)`);
+      }
+    }
+    if(won && node.effectsOnWin){
+      let eff = node.effectsOnWin;
+      if(eff.gold && state.skills.includes('mangeum')){ eff = Object.assign({}, eff, { gold: Math.round(eff.gold*1.3) }); }
+      applyEffects(eff);
+    }
     const text = won ? node.onWin : node.onLoseText;
     if(node.onComplete){ node.onComplete(won); return; }
     showInlineResult({eyebrow:"전투 결과", title:node.enemy.name+" — 결착"}, withName(text, state.playerName));
@@ -744,20 +1090,52 @@
   // =========================================================
   // 도입부(INTRO)
   // =========================================================
-  const INTRO_NODES = [
-    { type:"text", eyebrow:"서장", title:"몰락한 문파의 마지막 후예", body:[
-      "십오 년 전, 청운문(靑雲門)은 하룻밤 사이에 잿더미가 되었다. 살아남은 것은 갓난아기 한 명, 훗날 무환(武幻)이라는 이름을 얻은 아이뿐이었다.",
-      "은거도인(隱居道人)의 산장에서 자란 무환은 이제 열여덟, 하산을 앞두고 있다."
-    ]},
-    { type:"choice", eyebrow:"서장", title:"몰락한 문파의 마지막 후예", prompt:"스승이 마지막으로 묻는다 — \"무엇을 갈고닦아야겠느냐?\"", options:[
-      { label:"단전에 내공을 쌓는다", tag:"내공", effects:{내공:5}, result:"무환은 단전의 내식을 다스리는 데 집중했다." },
-      { label:"실전 초식을 갈고닦는다", tag:"무공", effects:{무공:5}, result:"무환은 검을 뽑고 초식을 반복하며 실전 감각을 길렀다." },
-      { label:"세상 물정을 익힌다", tag:"의리·명성", effects:{의리:3, 명성:2}, result:"무환은 산 아래를 오가며 강호의 인심을 몸으로 익혔다." },
-    ]},
-    { type:"text", eyebrow:"서장", title:"하산", body:[
-      "스승은 낡은 목검 한 자루와 여비 삼아 노잣돈을 내밀었다. \"이 검은 청운문의 마지막 유품이다. 강호로 나가거든, 네가 어디서 왔는지를 스스로 찾아라.\"",
-      "무환은 목검을 허리에 차고 새벽안개 속으로 산을 내려갔다. 이제부터는 정해진 길이 없다 — 그가 걷는 모든 걸음이 곧 그의 이야기가 된다."
-    ]},
+  const INTRO_VARIANTS = [
+    [
+      { type:"text", eyebrow:"서장", title:"몰락한 문파의 마지막 후예", body:[
+        "십오 년 전, 청운문(靑雲門)은 하룻밤 사이에 잿더미가 되었다. 살아남은 것은 갓난아기 한 명, 훗날 무환(武幻)이라는 이름을 얻은 아이뿐이었다.",
+        "은거도인(隱居道人)의 산장에서 자란 무환은 이제 열여덟, 하산을 앞두고 있다."
+      ]},
+      { type:"choice", eyebrow:"서장", title:"몰락한 문파의 마지막 후예", prompt:"스승이 마지막으로 묻는다 — \"무엇을 갈고닦아야겠느냐?\"", options:[
+        { label:"단전에 내공을 쌓는다", tag:"내공", effects:{내공:5}, result:"무환은 단전의 내식을 다스리는 데 집중했다." },
+        { label:"실전 초식을 갈고닦는다", tag:"무공", effects:{무공:5}, result:"무환은 검을 뽑고 초식을 반복하며 실전 감각을 길렀다." },
+        { label:"세상 물정을 익힌다", tag:"의리·명성", effects:{의리:3, 명성:2}, result:"무환은 산 아래를 오가며 강호의 인심을 몸으로 익혔다." },
+      ]},
+      { type:"text", eyebrow:"서장", title:"하산", body:[
+        "스승은 낡은 목검 한 자루와 여비 삼아 노잣돈을 내밀었다. \"이 검은 청운문의 마지막 유품이다. 강호로 나가거든, 네가 어디서 왔는지를 스스로 찾아라.\"",
+        "무환은 목검을 허리에 차고 새벽안개 속으로 산을 내려갔다. 이제부터는 정해진 길이 없다 — 그가 걷는 모든 걸음이 곧 그의 이야기가 된다."
+      ]},
+    ],
+    [
+      { type:"text", eyebrow:"서장", title:"몰락한 문파의 마지막 후예", body:[
+        "십오 년 전, 청운문(靑雲門)은 하룻밤 사이에 잿더미가 되었다. 그 불길 속에서 늙은 표사 하나가 강보에 싸인 아기를 품에 안고 빠져나왔다.",
+        "표사는 깊은 산중에 은거하며 아이에게 무환(武幻)이라는 이름을 지어주었다. 이제 무환은 열여덟, 하산을 앞두고 있다."
+      ]},
+      { type:"choice", eyebrow:"서장", title:"몰락한 문파의 마지막 후예", prompt:"노표사가 담담히 묻는다 — \"무엇을 갈고닦아야겠느냐?\"", options:[
+        { label:"단전에 내공을 쌓는다", tag:"내공", effects:{내공:5}, result:"무환은 단전의 내식을 다스리는 데 집중했다." },
+        { label:"실전 초식을 갈고닦는다", tag:"무공", effects:{무공:5}, result:"무환은 검을 뽑고 초식을 반복하며 실전 감각을 길렀다." },
+        { label:"세상 물정을 익힌다", tag:"의리·명성", effects:{의리:3, 명성:2}, result:"무환은 산 아래를 오가며 강호의 인심을 몸으로 익혔다." },
+      ]},
+      { type:"text", eyebrow:"서장", title:"하산", body:[
+        "노표사는 손때 묻은 목검 한 자루와 노잣돈 몇 냥을 내밀었다. \"이 검은 청운문의 마지막 유품이다. 진실은 강호 어딘가에 있을 것이다.\"",
+        "무환은 목검을 허리에 차고 산길을 내려갔다. 이제부터는 정해진 길이 없다 — 그가 걷는 모든 걸음이 곧 그의 이야기가 된다."
+      ]},
+    ],
+    [
+      { type:"text", eyebrow:"서장", title:"몰락한 문파의 마지막 후예", body:[
+        "십오 년 전, 청운문(靑雲門)은 하룻밤 사이에 잿더미가 되었다. 폐허에서 들려온 울음소리를 따라간 한 여도인(女道人)이 갓난아기를 거두어 산으로 올랐다.",
+        "여도인은 아이에게 무환(武幻)이라는 이름을 주고 말없이 열여덟 해를 함께했다. 이제 하산의 날이 머지않았다."
+      ]},
+      { type:"choice", eyebrow:"서장", title:"몰락한 문파의 마지막 후예", prompt:"여도인이 마지막으로 묻는다 — \"무엇을 갈고닦아야겠느냐?\"", options:[
+        { label:"단전에 내공을 쌓는다", tag:"내공", effects:{내공:5}, result:"무환은 단전의 내식을 다스리는 데 집중했다." },
+        { label:"실전 초식을 갈고닦는다", tag:"무공", effects:{무공:5}, result:"무환은 검을 뽑고 초식을 반복하며 실전 감각을 길렀다." },
+        { label:"세상 물정을 익힌다", tag:"의리·명성", effects:{의리:3, 명성:2}, result:"무환은 산 아래를 오가며 강호의 인심을 몸으로 익혔다." },
+      ]},
+      { type:"text", eyebrow:"서장", title:"하산", body:[
+        "여도인은 오래된 목검 한 자루와 약간의 노잣돈을 내밀었다. \"이 검은 청운문의 마지막 유품이다. 강호로 나가거든, 네가 어디서 왔는지를 스스로 찾아라.\"",
+        "무환은 목검을 허리에 차고 새벽 산길을 내려갔다. 이제부터는 정해진 길이 없다 — 그가 걷는 모든 걸음이 곧 그의 이야기가 된다."
+      ]},
+    ],
   ];
 
   // =========================================================
@@ -768,11 +1146,28 @@
     { text:"조용히 앉아 내식을 다스리며 하루를 보냈다.", stat:"내공" },
     { text:"지나가는 사람들과 짧은 담소를 나누며 인심을 얻었다.", stat:"의리" },
     { text:"우연히 도움을 준 일이 입소문을 타고 조금씩 퍼졌다.", stat:"명성" },
+    { text:"땀에 젖은 옷을 갈아입으며, 오늘 익힌 초식을 되짚어보았다.", stat:"무공" },
+    { text:"낯선 이와 잠시 동행하며 세상 돌아가는 이야기를 들었다.", stat:"명성" },
+    { text:"작은 시비를 중재해주고 나니 마음이 한결 가벼워졌다.", stat:"의리" },
+    { text:"홀로 걸으며 호흡을 가다듬으니 단전이 한층 안정되었다.", stat:"내공" },
+    { text:"길에서 만난 아이에게 방향을 알려주고 짧은 인사를 나누었다.", stat:"의리" },
+    { text:"저물녘 노을을 바라보며 검을 몇 차례 휘둘러보았다.", stat:"무공" },
+    { text:"우연히 들은 소문 속에 무환의 이름이 살짝 섞여 있었다.", stat:"명성" },
+    { text:"바위에 걸터앉아 눈을 감고 오랫동안 심법을 되새겼다.", stat:"내공" },
   ];
   function fallbackEvent(){
     const f = pick(FALLBACK_LINES);
     return { nodes:[ { type:"text", eyebrow:LOCATIONS[state.location].name, body:[f.text] } ], effects:{ [f.stat]:1 } };
   }
+  const FLAVOR_TEXT_VARIANTS = {
+    w4: ["탁 트인 풍경 앞에서 무환은 잠시 걸음을 멈추고 내식을 가다듬었다.", "산길을 걸으며 흐르는 물소리에 오래도록 귀를 기울였다.", "높은 바위에 올라 저 멀리 펼쳐진 강호를 바라보았다."],
+    s4: ["경내를 거닐며 불경 한 구절을 마음에 새겼다.", "법당 앞에서 예를 올리고 조용히 생각에 잠겼다.", "노승들의 걸음걸이를 눈여겨보며 배울 점을 찾았다."],
+    u4: ["산 정상에서 흐르는 구름을 바라보며 마음을 다스렸다.", "도관의 마당을 쓸며 잡념을 비웠다.", "새벽 종소리에 맞춰 토납술을 수련했다."],
+    g4: ["개방도들 사이에서 떠도는 소문을 들었다.", "거지들의 잡담 속에서 뜻밖의 이야기를 주웠다.", "저잣거리 걸인들이 나누는 대화에 슬쩍 귀를 기울였다."],
+    m4: ["저잣거리를 오가며 이런저런 소문을 주워들었다. 요즘 흑풍채(黑風寨)의 움직임이 심상치 않다는 이야기였다.", "노점상들 사이에서 흑풍채(黑風寨) 이야기가 심심찮게 오갔다.", "지나가던 낭인이 흑풍채(黑風寨)를 조심하라며 낮게 경고했다."],
+    i3: ["낯선 무인과 합석해 정보를 나누었다. 대가로 강호의 크고 작은 소식을 들을 수 있었다.", "옆자리 무인이 술기운에 강호의 이런저런 소식을 늘어놓았다.", "먼 길을 떠돌던 표사와 합석해 여러 지역의 소문을 주고받았다."],
+  };
+  const SECT_FLAVOR_TEMPLATES = ["{loc}의 경내를 거닐며 하루를 보냈다.", "{loc} 곳곳을 둘러보며 조용한 시간을 보냈다.", "{loc}에서 마주친 문인들과 가벼운 인사를 나눴다."];
   function maybeCheonliBonus(nodesArr){
     if(state.skills.includes('cheonli') && state.clues < CLUE_TARGET && Math.random() < 0.25){
       applyEffects({clues:1});
@@ -802,11 +1197,11 @@
       { id: locId+"_join", once:true, condition:()=>state.sect===null, nodes:[
         { type:"text", eyebrow:sectName, title:"입문 제안", body:[joinLine] },
         { type:"choice", eyebrow:sectName, prompt:"", options:[
-          { label:sectName+"에 입문한다", tag:"문파", effects:stat, onSelect:()=>{ state.sect=sectKey; learnSkill(skillId); }, result:`무환은 ${sectName}의 제자가 되었다. 문파의 비전 무공, 「${SKILLS[skillId].name}」도 함께 전수받았다.` },
+          { label:sectName+"에 입문한다", tag:"문파", effects:stat, onSelect:()=>{ state.sect=sectKey; learnSkill(skillId); addJournal(`${sectName}에 입문했다.`); }, result:`무환은 ${sectName}의 제자가 되었다. 문파의 비전 무공, 「${SKILLS[skillId].name}」도 함께 전수받았다.` },
           { label:"정중히 거절한다 — 홀로 걷는 길을 택한다", tag:"독행", effects:{의리:1}, result:"무환은 스스로의 길을 걷기로 했다." },
         ]},
       ]},
-      { id: locId+"_train", repeatable:true, weight:2, condition:()=>state.sect===sectKey, nodes:[
+      { id: locId+"_train", repeatable:true, weight:2, condition:()=>state.sect===sectKey, isTrain:true, nodes:[
         { type:"text", eyebrow:sectName, body:[trainLine] },
       ], effects: stat },
       { id: locId+"_flavor", repeatable:true, weight:1, nodes:[
@@ -816,9 +1211,10 @@
   }
 
   let pendingResultOverride = null;
-  function tryBuy(cost, effects, successText){
+  function tryBuy(cost, effects, successText, itemName){
     if(state.gold < cost){ pendingResultOverride = `소지금이 부족하다. (필요: ${cost}냥, 소지: ${state.gold}냥)`; return; }
     state.gold -= cost; applyEffects(effects); pendingResultOverride = successText + ` (−${cost}냥)`;
+    if(itemName){ state.items[itemName] = (state.items[itemName]||0) + 1; }
   }
 
   const EVENT_POOLS = {
@@ -833,7 +1229,7 @@
       { id:"m2", once:true, nodes:[
         { type:"text", eyebrow:"낙양 저잣거리", body:["허름한 노점에 낡은 죽간 하나가 놓여 있었다. 주인은 \"무공 비급이오, 진짜인지는 나도 모르오\"라며 웃었다."] },
         { type:"choice", eyebrow:"낙양 저잣거리", prompt:"비급을 살 것인가", options:[
-          { label:"사서 읽어본다", tag:"기연", effects:{}, onSelect:()=>{ const un = GENERIC_SKILLS.filter(id=>!state.skills.includes(id)); if(un.length){ const id=pick(un); learnSkill(id); pendingResultOverride = `놀랍게도 진짜였다. 무환은 「${SKILLS[id].name}」을(를) 터득했다!`; sfx.get(); } else { pendingResultOverride = "아쉽게도 이미 아는 무공이었다."; } },
+          { label:"사서 읽어본다", tag:"기연", effects:{}, onSelect:()=>{ const un = GENERIC_SKILLS.filter(id=>!state.skills.includes(id)); if(un.length){ const id=pick(un); learnSkill(id); pendingResultOverride = `놀랍게도 진짜였다. 무환은 「${SKILLS[id].name}」을(를) 터득했다!`; sfx.get(); } else { pendingResultOverride = masteryConsolation(["내공","무공"]); } },
             result:"__DYNAMIC__" },
           { label:"거들떠보지 않는다", tag:"신중", effects:{}, result:"무환은 미심쩍은 물건에 손대지 않았다." },
         ]},
@@ -848,14 +1244,82 @@
       { id:"m_shop", repeatable:true, weight:2, nodes:[
         { type:"text", eyebrow:"낙양 저잣거리", body:["저잣거리 한켠에 영약과 병기를 파는 상단이 자리를 잡았다."] },
         { type:"choice", eyebrow:"낙양 저잣거리", prompt:"무엇을 살 것인가", options:[
-          { label:"소환단 (25냥) — 내공 상승", tag:"구매", effects:{}, onSelect:()=>tryBuy(25,{내공:3},"소환단을 복용하니 단전이 뜨거워진다."), result:"__DYNAMIC__" },
-          { label:"연검 (30냥) — 무공 상승", tag:"구매", effects:{}, onSelect:()=>tryBuy(30,{무공:3},"가벼운 연검을 손에 쥐니 손끝이 예민해진다."), result:"__DYNAMIC__" },
+          { label:"소환단 (25냥) — 내공 상승", tag:"구매", effects:{}, onSelect:()=>tryBuy(25,{내공:3},"소환단을 복용하니 단전이 뜨거워진다.","소환단"), result:"__DYNAMIC__" },
+          { label:"연검 (30냥) — 무공 상승", tag:"구매", effects:{}, onSelect:()=>tryBuy(30,{무공:3},"가벼운 연검을 손에 쥐니 손끝이 예민해진다.","연검"), result:"__DYNAMIC__" },
           { label:"그냥 둘러본다", tag:"", effects:{}, result:"딱히 살 만한 것은 없었다." },
         ]},
       ]},
       { id:"m_sagongwi_flavor", repeatable:true, weight:1, condition:()=>state.companion==="사공위", nodes:[
         { type:"text", eyebrow:"낙양 저잣거리", body:["저잣거리에서 사공위와 우연히 마주쳤다. 그는 반갑게 어깨를 두드리며 술 한잔을 청했다."] },
       ], effects:{의리:1} },
+      { id:"m_teach", repeatable:true, weight:1, condition:()=>state.skills.length>=10, nodes:[
+        { type:"text", eyebrow:"낙양 저잣거리", body:["소문을 듣고 찾아온 젊은 무인이 무환 앞에 무릎을 꿇었다. \"부디 한 수만 가르쳐주십시오.\""] },
+        { type:"choice", eyebrow:"낙양 저잣거리", prompt:"", options:[
+          { label:"간단한 요결을 가르쳐준다", tag:"의리", effects:{의리:2, 명성:2}, result:"젊은 무인은 몇 번이고 고개를 숙이며 감사를 표했다. 그런 그의 모습에서 지난날의 자신이 겹쳐 보였다." },
+          { label:"아직 때가 아니라며 돌려보낸다", tag:"신중", effects:{}, result:"무환은 정중히 거절했다. 젊은 무인은 아쉬운 기색으로 물러났다." },
+        ]},
+      ]},
+      { id:"m_imperial1", once:true, nodes:[
+        { type:"text", eyebrow:"낙양 저잣거리", title:"관부의 과세", body:["관복을 입은 무리가 저잣거리 상인들에게 터무니없는 액수의 세금을 요구하고 있었다. 상인들의 얼굴에 두려움이 가득했다."] },
+        { type:"choice", eyebrow:"낙양 저잣거리", prompt:"", options:[
+          { label:"나서서 상인들을 감싼다", tag:"의협", effects:{의리:3, 명성:-1}, result:"관원들은 무환의 기세에 눌려 물러갔지만, 그의 이름이 관부의 문서에도 오르내리기 시작했다." },
+          { label:"관의 일에 끼어들지 않는다", tag:"신중", effects:{}, result:"무환은 씁쓸한 마음으로 자리를 떴다. 무림인이 관의 일에 함부로 끼어들 수는 없는 노릇이었다." },
+        ]},
+      ]},
+      { id:"m_villain1", once:true, nodes:[
+        { type:"text", eyebrow:"낙양 저잣거리", body:["기죽어 보이는 포목상 앞을 지나던 무환의 눈에, 그가 큰돈을 지니고 있다는 것이 보였다."] },
+        { type:"choice", eyebrow:"낙양 저잣거리", prompt:"", options:[
+          { label:"위협하여 돈을 빼앗는다", tag:"악행", effects:{gold:20, infamy:8, 의리:-2}, result:"포목상은 벌벌 떨며 돈을 내놓았다. 손에 쥔 은자는 무거웠지만, 무환의 마음 한구석은 서늘했다." },
+          { label:"그냥 지나친다", tag:"신중", effects:{}, result:"무환은 잠시 스친 못된 생각을 떨쳐내고 갈 길을 갔다." },
+        ]},
+      ]},
+      { id:"m_sectwar", once:true, condition:()=>state.turn>=25, nodes:[
+        { type:"text", eyebrow:"강호 대사", title:"화산·청성의 반목", body:[
+          "저잣거리 전체가 술렁였다. 오래전부터 검법의 우위를 두고 다투던 화산파와 청성파 사이의 해묵은 갈등이, 마침내 대규모 충돌 직전까지 치달았다는 소식이었다.",
+          "\"이러다 정말 피바람이 불겠어…\" 상인들도 근심 어린 얼굴로 수군거렸다."
+        ]},
+        { type:"choice", eyebrow:"강호 대사", prompt:"무환은 어떻게 움직일 것인가", options:[
+          { label:"직접 나서서 양측을 중재한다", tag:"의협", effects:{의리:3, 명성:3}, result:"무환은 두 문파의 장로들을 설득해 극적으로 충돌을 막아냈다. \"청운문의 후예가 강호의 평화를 지켰다\"는 이야기가 널리 퍼졌다." },
+          { label:"자신이 아는 문파 쪽에 힘을 보탠다", tag:"의리", effects:{}, onSelect:()=>{}, result:"__DYNAMIC__" },
+          { label:"강호의 큰 흐름에서 한 발 물러나 관망한다", tag:"신중", effects:{}, result:"무환은 이 다툼이 자신의 몫이 아니라 여기고 조용히 지켜보기로 했다." },
+        ]},
+      ]},
+      { id:"m_yeon_meet", once:true, meetsNPC:"yeon", nodes:[
+        { type:"text", eyebrow:"낙양 저잣거리", title:"저잣거리의 의녀", body:["저잣거리 한켠, 다친 낭인들을 손수 돌보는 여인이 있었다. 목연(穆煙)이라 불리는 그녀는 무환의 상처 난 손을 보더니 말없이 약초를 건넸다.", "\"그러다 크게 다치십니다.\" 그녀가 담담히 말했다."] },
+        { type:"choice", eyebrow:"낙양 저잣거리", prompt:"", options:[
+          { label:"고마움을 표하며 자주 들르기로 한다", tag:"인연", effects:{의리:2}, onSelect:()=>{ state.partner="목연"; state.partnerSinceTurn=state.turn; addJournal("목연과 인연을 맺었다."); }, result:"두 사람 사이에 작은 인연의 실이 이어졌다. 이후로도 종종 그녀를 찾게 될 것 같았다." },
+          { label:"정중히 인사만 하고 지나간다", tag:"신중", effects:{}, result:"무환은 가볍게 목례하고 자리를 떴다." },
+        ]},
+      ]},
+      { id:"m_yeon_flavor", repeatable:true, weight:2, condition:()=>state.partner==="목연" && !state.married, nodes:[
+        { type:"text", eyebrow:"낙양 저잣거리", body:["목연이 무환의 안색을 살피며 상처를 돌봐주었다. 그녀 곁에 있으면 마음이 한결 편안해졌다."] },
+      ], effects:{의리:1} },
+      { id:"m_yeon_past", once:true, condition:()=>state.partner==="목연", nodes:[
+        { type:"text", eyebrow:"낙양 저잣거리", title:"목연의 비밀", body:[
+          "목연은 오랫동안 감춰온 사연을 조심스레 털어놓았다. \"저는 본디 어느 탐관오리 가문의 의녀였습니다. 부당한 명을 거부하고 도망쳐 나왔지요.\"",
+          "\"요 며칠, 그 집안에서 보낸 듯한 자들이 저잣거리를 서성이는 걸 보았습니다.\" 그녀의 목소리가 가늘게 떨렸다."
+        ]},
+        { type:"choice", eyebrow:"낙양 저잣거리", prompt:"", options:[
+          { label:"추적자들과 맞서 그녀를 지킨다", tag:"의협", effects:{}, onSelect:()=>{}, result:"__DYNAMIC__" },
+          { label:"조용히 다른 곳으로 피신시킨다", tag:"신중", effects:{의리:2}, result:"무환은 목연을 데리고 잠시 낙양을 벗어나 있도록 손을 썼다. 추적자들은 며칠 뒤 소리 없이 자취를 감췄다." },
+        ]},
+      ]},
+      { id:"m_yeon_marry", once:true, condition:()=>state.partner==="목연" && !state.married && (state.turn-state.partnerSinceTurn)>=15, nodes:[
+        { type:"text", eyebrow:"낙양 저잣거리", title:"백년가약", body:["오랜 시간 서로를 지켜봐 온 두 사람이었다. 목연이 조심스레 입을 열었다. \"저와… 평생을 함께해 주시겠습니까?\""] },
+        { type:"choice", eyebrow:"낙양 저잣거리", prompt:"", options:[
+          { label:"청혼을 받아들인다", tag:"백년가약", effects:{의리:3, 명성:2}, onSelect:()=>{ state.married=true; state.marriedSinceTurn=state.turn; addJournal("목연과 혼인을 맺었다."); }, result:"두 사람은 조촐하지만 진심 어린 혼례를 올렸다. 강호를 떠도는 협객에게도, 이제 돌아갈 곳이 생겼다." },
+          { label:"아직은 때가 아니라며 미룬다", tag:"신중", effects:{}, result:"목연은 서운한 기색을 감추지 못했지만, 무환의 뜻을 존중했다." },
+        ]},
+      ]},
+      { id:"m_yeon_child", once:true, condition:()=>state.married && (state.turn-(state.marriedSinceTurn||0))>=10, nodes:[
+        { type:"text", eyebrow:"낙양 저잣거리", title:"새로운 인연", body:[
+          "목연이 수줍은 얼굴로 무환의 손을 이끌었다. \"드릴 말씀이 있습니다.\" 그녀의 배는 어느새 눈에 띄게 불러 있었다.",
+          "무환은 한참 동안 말을 잇지 못했다. 강호를 떠돌던 협객의 삶에, 처음으로 지켜야 할 것이 하나 더 늘어난 순간이었다."
+        ]},
+        { type:"choice", eyebrow:"낙양 저잣거리", prompt:"", options:[
+          { label:"목연의 손을 꼭 잡는다", tag:"", effects:{의리:3, 명성:2}, onSelect:()=>{ state.hasChild=true; addJournal("목연과의 사이에 아이가 생겼다."); }, result:"무환은 아무 말 없이 목연의 손을 꼭 잡았다. 그것으로 충분했다." },
+        ]},
+      ]},
     ],
     inn: [
       { id:"i1", once:true, nodes:[
@@ -865,10 +1329,10 @@
           { label:"정중히 받아친다", tag:"기개", effects:{명성:2}, result:"무환의 담담한 태도에 오히려 취객이 머쓱해졌다." },
         ]},
       ]},
-      { id:"i2", once:true, nodes:[
+      { id:"i2", once:true, meetsNPC:"baekbal", nodes:[
         { type:"text", eyebrow:"낙양 객잔", body:["백발이 성성한 노인이 술잔을 건네며 말했다. \"그 눈빛, 무언가를 쫓는 자로군. 내 젊었을 때를 보는 듯하네.\"", "노인은 취기에 검결(劍訣) 한 구절을 읊조려주었다."] },
         { type:"choice", eyebrow:"낙양 객잔", prompt:"", options:[
-          { label:"귀담아 익힌다", tag:"기연", effects:{}, onSelect:()=>{ const un=GENERIC_SKILLS.filter(id=>!state.skills.includes(id)); if(un.length){ const id=pick(un); learnSkill(id); pendingResultOverride=`무환은 그 자리에서 「${SKILLS[id].name}」의 요결을 깨우쳤다!`; sfx.get(); } else { pendingResultOverride="이미 아는 요결이었으나, 다시 새기니 마음이 편안해졌다."; } }, result:"__DYNAMIC__" },
+          { label:"귀담아 익힌다", tag:"기연", effects:{}, onSelect:()=>{ const un=GENERIC_SKILLS.filter(id=>!state.skills.includes(id)); if(un.length){ const id=pick(un); learnSkill(id); pendingResultOverride=`무환은 그 자리에서 「${SKILLS[id].name}」의 요결을 깨우쳤다!`; sfx.get(); } else { pendingResultOverride = masteryConsolation(["내공","의리"]); } }, result:"__DYNAMIC__" },
         ]},
       ]},
       { id:"i3", repeatable:true, weight:2, nodes:[
@@ -878,17 +1342,50 @@
           { label:"세상 돌아가는 이야기만 나눈다", tag:"명성", effects:{명성:1}, result:"가벼운 이야기를 나누며 인맥을 넓혔다." },
         ]},
       ]},
-      { id:"i_sagongwi", once:true, nodes:[
+      { id:"i_sagongwi", once:true, meetsNPC:"sagongwi", nodes:[
         { type:"text", eyebrow:"낙양 객잔", title:"낯익은 검객", body:["객잔 문을 박차고 들어온 사내가 무환을 알아보고 씩 웃었다. \"오랜만이군. 그때의 빚, 오늘 갚아주지.\" 사공위(司空衛)였다."] },
         { type:"combat", enemy:{name:"사공위(비무)", hp:40, atk:7}, onWin:"사공위는 크게 웃으며 검을 거두었다. \"여전하군.\"", onLoseText:"무환은 패했지만 사공위는 진심으로 즐거워했다." },
         { type:"choice", eyebrow:"낙양 객잔", prompt:"사공위가 손을 내민다 — \"의형제를 맺지 않겠나?\"", options:[
-          { label:"의형제를 맺는다", tag:"의리", effects:{의리:3}, onSelect:()=>{ state.companion="사공위"; }, result:"두 사람은 술잔을 나누며 의형제를 맺었다. 이제 사공위는 든든한 동료다. (전투 시작 시 체력 보너스)" },
+          { label:"의형제를 맺는다", tag:"의리", effects:{의리:3}, onSelect:()=>{ state.companion="사공위"; addJournal("사공위와 의형제를 맺었다."); }, result:"두 사람은 술잔을 나누며 의형제를 맺었다. 이제 사공위는 든든한 동료다. (전투 시작 시 체력 보너스)" },
           { label:"정중히 거절한다", tag:"독행", effects:{}, result:"무환은 홀로 걷는 길을 택했다. 사공위는 아쉬워하면서도 웃으며 물러났다." },
         ]},
       ]},
       { id:"i_sagongwi_flavor", repeatable:true, weight:1, condition:()=>state.companion==="사공위", nodes:[
         { type:"text", eyebrow:"낙양 객잔", body:["객잔에서 사공위와 술잔을 나누며 밀린 이야기를 주고받았다."] },
       ], effects:{의리:1} },
+      { id:"i_sagongwi_past", once:true, condition:()=>state.companion==="사공위", nodes:[
+        { type:"text", eyebrow:"낙양 객잔", title:"사공위의 그늘", body:[
+          "여느 때와 달리 사공위는 술잔을 앞에 두고도 좀처럼 입을 열지 않았다. 한참 만에야 그는 무겁게 말을 꺼냈다.",
+          "\"내겐 사형이 있었네. 나보다 실력이 앞섰지만, 문파를 배신하고 마적단의 두목이 되었지. 최근 그자가 이 근방에 나타났다는 소문을 들었네.\""
+        ]},
+        { type:"choice", eyebrow:"낙양 객잔", prompt:"", options:[
+          { label:"함께 그를 찾아 마주한다", tag:"의협", effects:{}, onSelect:()=>{ pendingResultOverride="__SAGONGWI_COMBAT__"; }, result:"__DYNAMIC__" },
+          { label:"굳이 옛 원한을 들쑤시지 말라고 만류한다", tag:"신중", effects:{내공:1}, result:"사공위는 씁쓸히 웃으며 고개를 끄덕였다. \"…그럴지도 모르지.\" 그는 더 말을 잇지 않았다." },
+        ]},
+      ]},
+      { id:"i5", once:true, condition:()=>state.clues>=1, nodes:[
+        { type:"text", eyebrow:"낙양 객잔", title:"낯익은 이름", body:[
+          "구석 자리의 노인이 무환의 얼굴을 오래도록 바라보더니 나지막이 중얼거렸다. \"…선우강(鮮于岡) 문주님의 눈매를 꼭 닮았군.\"",
+          "무환이 놀라 되묻자 노인은 손을 내저었다. \"그분의 부인, 임소해(林素海) 님은 검뿐 아니라 의술에도 능하셨지. 두 분 모두… 좋은 분들이셨네.\""
+        ]},
+      ], effects:{명성:1, clues:1} },
+      { id:"i_imperial2", once:true, nodes:[
+        { type:"text", eyebrow:"낙양 객잔", title:"무림첩", body:[
+          "객잔에 나붙은 방문(榜文)이 술렁임을 일으켰다. 조정이 모든 무림인에게 \"무림첩(武林牒)\"이라는 호적을 등록하도록 명한다는 내용이었다.",
+          "\"이참에 무림을 아예 관의 손아귀에 두려는 속셈이지.\" 누군가 낮게 투덜거렸다."
+        ]},
+        { type:"choice", eyebrow:"낙양 객잔", prompt:"", options:[
+          { label:"순순히 등록에 응한다", tag:"신중", effects:{명성:2}, result:"무환은 관부와 척을 지지 않기로 했다. 몇몇은 그런 그를 곱지 않게 보았다." },
+          { label:"등록을 거부하고 조용히 자리를 뜬다", tag:"독행", effects:{의리:2}, result:"무환은 관의 손에 이름이 오르내리는 것이 내키지 않았다. 강호의 낭인들 사이에서 그런 그의 태도는 오히려 신망을 얻었다." },
+        ]},
+      ]},
+      { id:"i_heal", repeatable:true, weight:3, condition:()=>state.injuryTurns>0, nodes:[
+        { type:"text", eyebrow:"낙양 객잔", body:["몸에 남은 부상이 욱신거린다. 마침 객잔에 떠돌이 의원이 머물고 있었다."] },
+        { type:"choice", eyebrow:"낙양 객잔", prompt:"", options:[
+          { label:"치료를 받는다 (10냥)", tag:"치료", effects:{}, onSelect:()=>{ if(state.gold>=10){ state.gold-=10; state.injuryTurns=0; pendingResultOverride="의원의 침술 덕에 부상이 말끔히 나았다. (−10냥)"; } else { pendingResultOverride="치료비가 부족하다."; } }, result:"__DYNAMIC__" },
+          { label:"그냥 쉰다", tag:"신중", effects:{}, result:"무환은 조용히 몸을 추스렸다. 시간이 지나면 나을 것이다." },
+        ]},
+      ]},
       { id:"i_sectrivalry", repeatable:true, weight:1, condition:()=>state.sect!==null, nodes:[
         { type:"text", eyebrow:"낙양 객잔", body:["타 문파의 무인이 무환의 소속을 알아보고 시비를 걸었다. \"그 문파 놈들, 요즘 기고만장하더군.\""] },
         { type:"choice", eyebrow:"낙양 객잔", prompt:"", options:[
@@ -903,10 +1400,10 @@
       { id:"w2", once:true, nodes:[
         { type:"text", eyebrow:"관도와 산길", body:["폭포 뒤에 숨겨진 작은 동굴을 발견했다. 안쪽 벽에는 오래된 그림과 글귀가 새겨져 있었다."] },
         { type:"choice", eyebrow:"관도와 산길", prompt:"", options:[
-          { label:"벽의 구결을 따라 익혀본다", tag:"기연", effects:{}, onSelect:()=>{ const un=GENERIC_SKILLS.filter(id=>!state.skills.includes(id)); if(un.length){ const id=pick(un); learnSkill(id); pendingResultOverride=`무환은 「${SKILLS[id].name}」을(를) 온전히 터득했다!`; sfx.get(); } else { pendingResultOverride="이미 아는 무공의 다른 갈래였다."; } }, result:"__DYNAMIC__" },
+          { label:"벽의 구결을 따라 익혀본다", tag:"기연", effects:{}, onSelect:()=>{ const un=GENERIC_SKILLS.filter(id=>!state.skills.includes(id)); if(un.length){ const id=pick(un); learnSkill(id); pendingResultOverride=`무환은 「${SKILLS[id].name}」을(를) 온전히 터득했다!`; sfx.get(); } else { pendingResultOverride = masteryConsolation(["무공","명성"]); } }, result:"__DYNAMIC__" },
         ]},
       ]},
-      { id:"w3", once:true, nodes:[
+      { id:"w3", once:true, meetsNPC:"eunger", nodes:[
         { type:"text", eyebrow:"관도와 산길", body:["남루한 차림의 은거 기인이 무환의 걸음걸이를 보더니 혀를 찼다. \"헛점이 많구나. 한 수 가르쳐주마.\""] },
       ], effects:{무공:3, 내공:2} },
       { id:"w4", repeatable:true, weight:1, nodes:[
@@ -926,6 +1423,72 @@
           { label:"당장은 흘려듣는다", tag:"신중", effects:{}, result:"무환은 아직 확신이 서지 않아 발길을 돌렸다." },
         ]},
       ]},
+      { id:"w7", repeatable:true, weight:1, nodes:[
+        { type:"text", eyebrow:"관도와 산길", body:["안개 속에서 심상치 않은 기운이 느껴졌다. 평범한 짐승의 것이 아니었다."] },
+        { type:"combat", enemy:{name:"기이한 백호(白狐)", hp:30, atk:6}, effectsOnWin:{gold:12}, onWin:"백호는 신묘한 울음을 남기고 안개 속으로 사라졌다. 발치에 무언가 반짝이는 것이 떨어져 있었다.", onLoseText:"무환은 신묘한 존재의 기세에 눌려 물러났다." },
+      ]},
+      { id:"w8", repeatable:true, weight:1, nodes:[
+        { type:"text", eyebrow:"관도와 산길", body:["오래된 산굴 앞, 붉은 눈의 늙은 요수(妖獸)가 웅크리고 있다가 천천히 일어섰다."] },
+        { type:"combat", enemy:{name:"산굴의 늙은 요수", hp:40, atk:7}, effectsOnWin:{gold:14}, onWin:"요수는 낮은 울음과 함께 산굴 깊은 곳으로 물러났다.", onLoseText:"무환은 요수의 기세에 밀려 물러날 수밖에 없었다." },
+      ]},
+      { id:"w9", once:true, nodes:[
+        { type:"text", eyebrow:"관도와 산길", body:["맑은 샘터에서 하룻밤 노숙을 하게 되었다. 모닥불 너머로 또 다른 나그네가 말을 걸어왔다."] },
+        { type:"choice", eyebrow:"관도와 산길", prompt:"", options:[
+          { label:"경계를 풀지 않고 짧게 응대한다", tag:"신중", effects:{내공:2}, result:"무환은 필요한 말만 나누고 곧 잠자리에 들었다. 다음 날 아침, 낯선 나그네는 이미 떠나고 없었다." },
+          { label:"마음을 열고 오래 이야기를 나눈다", tag:"의리", effects:{의리:2, clues:1}, result:"나그네는 여러 문파를 떠돌아본 표사였다. 그의 입에서 흑풍채에 관한 뜻밖의 이야기가 흘러나왔다." },
+        ]},
+      ]},
+      { id:"w10", repeatable:true, weight:1, condition:()=>state.flags.act2Done && !state.flags.act3Done, nodes:[
+        { type:"text", eyebrow:"관도와 산길", body:["천기루의 배후를 밝힌 뒤에도, 무환의 마음 한구석은 여전히 개운치 않았다. 냉월조차 두려워하던 \"더 위의 존재\"가 있다는 말이 자꾸 떠올랐다."] },
+        { type:"choice", eyebrow:"관도와 산길", prompt:"", options:[
+          { label:"그 존재의 흔적을 쫓는다", tag:"단서", effects:{act3clues:1}, result:"낡은 지도 조각 하나를 얻었다 — 서쪽 협곡 깊은 곳, \"태극봉인지\"라 표시된 곳이었다." },
+          { label:"당장은 마음을 접는다", tag:"신중", effects:{}, result:"무환은 아직 때가 아니라 여기고 발길을 돌렸다." },
+        ]},
+      ]},
+      { id:"w11", once:true, condition:()=>state.flags.act2Done, nodes:[
+        { type:"text", eyebrow:"관도와 산길", title:"이끼 낀 석비", body:[
+          "산길 한켠, 오래되어 글자를 알아보기 힘든 석비 하나가 서 있었다. 무환은 이끼를 걷어내고 새겨진 글귀를 읽어 내려갔다.",
+          "\"…현천(玄天), 그 사악한 심공을 봉하기 위해 청운문의 모든 것을 걸었다…\" 낯선 이름이었지만, 왠지 모르게 가슴이 서늘해졌다."
+        ]},
+      ], effects:{act3clues:1} },
+      { id:"w12", once:true, nodes:[
+        { type:"text", eyebrow:"몽중편린", title:"어렴풋한 기억", body:[
+          "노숙 중 얕은 잠에 든 무환의 눈앞에 낯선 장면이 스쳐 지나갔다. 검을 쥔 여인의 뒷모습, 나지막이 흥얼거리는 자장가.",
+          "얼굴은 보이지 않았지만, 그 목소리만은 이상하리만치 또렷했다. 눈을 뜨자 모든 것이 흐릿하게 흩어졌다."
+        ]},
+      ], effects:{내공:1} },
+      { id:"w13", repeatable:true, weight:2, condition:()=>state.flags.act3Done && state.flags.act3Won, nodes:[
+        { type:"text", eyebrow:"관도와 산길", body:["현천이 무너진 뒤에도, 그를 따르던 잔당들이 곳곳에서 발견된다는 소문이 있었다. 산길 모퉁이에서 검은 무복의 무리가 앞을 막아섰다."] },
+        { type:"combat", enemy:{name:"현천의 잔당", hp:36, atk:7}, effectsOnWin:{gold:15, 명성:1}, onWin:"잔당들은 뿔뿔이 흩어져 도망쳤다. 현천의 그림자는 아직 완전히 걷히지 않은 듯했다.", onLoseText:"무환은 잔당들의 매서운 합공에 크게 고전했다." },
+      ]},
+      { id:"w14", once:true, condition:()=>state.flags.act3Done && state.flags.act3Won, nodes:[
+        { type:"text", eyebrow:"관도와 산길", title:"멀어지는 그림자", body:[
+          "해 질 무렵, 절벽 위에서 무환을 내려다보는 인영 하나가 있었다. 검은 장포를 걸친 자였다.",
+          "\"…스승님의 뜻은, 아직 끝나지 않았다.\" 낮은 목소리가 바람에 실려 왔다. 무환이 다시 눈을 돌렸을 땐, 이미 그 자리엔 아무도 없었다."
+        ]},
+      ]},
+      { id:"w_master", once:true, condition:()=>state.turn>=15, nodes:[
+        { type:"text", eyebrow:"관도와 산길", title:"스승과의 재회", body:[
+          "산길을 걷던 무환은 문득 낯익은 뒷모습을 발견하고 걸음을 멈췄다. 세월이 흘렀어도 한눈에 알아볼 수 있었다. 스승이었다.",
+          "\"…많이 컸구나.\" 스승은 무환을 위아래로 훑어보더니, 옅은 미소를 지었다."
+        ]},
+        { type:"choice", eyebrow:"관도와 산길", prompt:"그동안의 이야기를 들려드릴 것인가", options:[
+          { label:"그간 있었던 일을 자세히 전한다", tag:"의리", effects:{의리:2}, result:"스승은 말없이 고개를 끄덕이며 무환의 이야기를 끝까지 들어주었다. \"…네가 걸어온 길이, 곧 청운문이 다시 서는 길이다.\"" },
+          { label:"간단히 안부만 여쭙는다", tag:"신중", effects:{내공:1}, result:"스승은 굳이 캐묻지 않았다. \"말하지 않아도, 눈빛만 봐도 알겠구나.\"" },
+        ]},
+      ]},
+      { id:"w15", repeatable:true, weight:1, condition:()=>state.skills.length>=8, nodes:[
+        { type:"text", eyebrow:"관도와 산길", body:["관복 위에 검은 갑주를 덧입은 무사들이 길을 막았다. 금의위(錦衣衛)의 문양이 선명했다. \"강호의 무공이 도를 넘는 자, 조사하라는 명이 있었다.\""] },
+        { type:"combat", enemy:{name:"금의위 무사", hp:40, atk:8}, effectsOnWin:{명성:2},
+          onWin:"금의위 무사들은 혀를 차며 물러갔다. \"…이 일, 위에 그대로 고하겠다.\"",
+          onLoseText:"무환은 크게 다쳤지만, 금의위 역시 순순히 물러날 수밖에 없었다." },
+      ]},
+      { id:"w16", repeatable:true, weight:2, condition:()=>state.infamy>=15, nodes:[
+        { type:"text", eyebrow:"관도와 산길", body:["의로운 협객 무리가 무환의 앞을 가로막았다. \"그대의 악명, 강호에 파다하더군. 오늘 이 자리에서 정리하고 가지.\""] },
+        { type:"combat", enemy:{name:"응징하러 온 협객들", hp:40, atk:8}, effectsOnWin:{infamy:-5},
+          onWin:"협객들은 패배를 인정하며 물러갔다. 그래도 무환의 악명은 조금이나마 옅어졌다.",
+          onLoseText:"무환은 크게 다쳤다. 악명이 부른 화는 결국 스스로에게 돌아오는 법이었다." },
+      ]},
     ],
     shaolin: [
       { id:"s1", once:true, nodes:[
@@ -935,16 +1498,22 @@
       { id:"s2", once:true, condition:()=>state.sect===null, nodes:[
         { type:"text", eyebrow:"소림사", title:"입문 제안", body:["방장이 무환을 조용히 불렀다. \"본사에 입문할 뜻이 있는가? 불문의 무공은 그대를 강하게 할 것이오.\""] },
         { type:"choice", eyebrow:"소림사", prompt:"", options:[
-          { label:"소림에 입문한다", tag:"문파", effects:{무공:2,내공:2}, onSelect:()=>{ state.sect="소림"; learnSkill("sk_sorim"); }, result:"무환은 소림의 제자가 되었다. 불문의 절기 「반야벽력장」도 함께 전수받았다." },
+          { label:"소림에 입문한다", tag:"문파", effects:{무공:2,내공:2}, onSelect:()=>{ state.sect="소림"; learnSkill("sk_sorim"); addJournal("소림사에 입문했다."); }, result:"무환은 소림의 제자가 되었다. 불문의 절기 「반야벽력장」도 함께 전수받았다." },
           { label:"정중히 거절한다 — 홀로 걷는 길을 택한다", tag:"독행", effects:{의리:1}, result:"무환은 스스로의 길을 걷기로 했다. 방장은 아쉬워하면서도 그 뜻을 존중했다." },
         ]},
       ]},
-      { id:"s3", repeatable:true, weight:2, condition:()=>state.sect==="소림", nodes:[
+      { id:"s3", repeatable:true, weight:2, condition:()=>state.sect==="소림", isTrain:true, nodes:[
         { type:"text", eyebrow:"소림사", body:["소림의 승려들과 함께 특훈을 치렀다. 육중한 권각술이 몸에 새겨진다."] },
       ], effects:{무공:2, 내공:1} },
       { id:"s4", repeatable:true, weight:1, nodes:[
         { type:"text", eyebrow:"소림사", body:["경내를 거닐며 불경 한 구절을 마음에 새겼다."] },
       ], effects:{의리:1} },
+      { id:"s5", once:true, nodes:[
+        { type:"text", eyebrow:"소림사", title:"장경각의 노승", body:["장경각을 지키는 노승이 무환을 눈여겨보다가 낡은 두루마리 하나를 건넸다. \"인연이 닿는 자에게만 보이는 것이다.\""] },
+        { type:"choice", eyebrow:"소림사", prompt:"", options:[
+          { label:"두루마리를 펼쳐본다", tag:"기연", effects:{}, onSelect:()=>{ const un=GENERIC_SKILLS.filter(id=>!state.skills.includes(id)); if(un.length){ const id=pick(un); learnSkill(id); pendingResultOverride=`두루마리 속 구결을 따라가니 「${SKILLS[id].name}」을(를) 깨우쳤다!`; sfx.get(); } else { pendingResultOverride = masteryConsolation(["내공"]); } }, result:"__DYNAMIC__" },
+        ]},
+      ]},
     ],
     wudang: [
       { id:"u1", once:true, nodes:[
@@ -954,19 +1523,26 @@
       { id:"u2", once:true, condition:()=>state.sect===null, nodes:[
         { type:"text", eyebrow:"무당파", title:"입문 제안", body:["도장(道長)이 구름 사이에서 나타나 말했다. \"본파의 무공은 부드럽되 끊이지 않소. 그대에게 어울릴 듯한데.\""] },
         { type:"choice", eyebrow:"무당파", prompt:"", options:[
-          { label:"무당에 입문한다", tag:"문파", effects:{내공:2,무공:2}, onSelect:()=>{ state.sect="무당"; learnSkill("sk_mudang"); }, result:"무환은 무당의 제자가 되었다. 도가의 절기 「태극환류공」도 함께 전수받았다." },
+          { label:"무당에 입문한다", tag:"문파", effects:{내공:2,무공:2}, onSelect:()=>{ state.sect="무당"; learnSkill("sk_mudang"); addJournal("무당파에 입문했다."); }, result:"무환은 무당의 제자가 되었다. 도가의 절기 「태극환류공」도 함께 전수받았다." },
           { label:"정중히 거절한다", tag:"독행", effects:{의리:1}, result:"도장은 미소 지으며 무환의 선택을 받아들였다." },
         ]},
       ]},
-      { id:"u3", repeatable:true, weight:2, condition:()=>state.sect==="무당", nodes:[
+      { id:"u3", repeatable:true, weight:2, condition:()=>state.sect==="무당", isTrain:true, nodes:[
         { type:"text", eyebrow:"무당파", body:["구름 위 도관에서 토납술과 검리를 함께 익혔다."] },
       ], effects:{내공:2, 무공:1} },
       { id:"u4", repeatable:true, weight:1, nodes:[
         { type:"text", eyebrow:"무당파", body:["산 정상에서 흐르는 구름을 바라보며 마음을 다스렸다."] },
       ], effects:{내공:1} },
+      { id:"u5", once:true, nodes:[
+        { type:"text", eyebrow:"무당파", title:"두 도인의 논검", body:["도관 마당에서 두 도인이 검리를 두고 논쟁을 벌이고 있었다. 하나는 부드러움을, 하나는 빠름을 앞세웠다."] },
+        { type:"choice", eyebrow:"무당파", prompt:"누구의 말에 동조할 것인가", options:[
+          { label:"부드러움이 결국 이긴다", tag:"내공", effects:{내공:2}, result:"두 도인은 흥미롭다는 듯 무환을 바라보았다. \"어린 나이에 제법 깊이 있는 생각이군.\"" },
+          { label:"빠름이 먼저 닿는다", tag:"무공", effects:{무공:2}, result:"도인들은 크게 웃으며 무환의 패기를 칭찬했다." },
+        ]},
+      ]},
     ],
     gaebang: [
-      { id:"g1", once:true, nodes:[
+      { id:"g1", once:true, meetsNPC:"nogae", nodes:[
         { type:"text", eyebrow:"개방 총타", body:["누더기를 걸친 노개(老丐)가 무환을 훑어보며 말했다. \"청운문의 아이로군. 아직 살아있었다니.\""] },
         { type:"choice", eyebrow:"개방 총타", prompt:"", options:[
           { label:"청운문에 대해 묻는다", tag:"단서", effects:{clues:1}, result:"노개는 옛일을 조금 들려주었다. \"그날 밤, 검은 무복의 무리가 산을 올랐다고 하더군.\"" },
@@ -976,16 +1552,29 @@
       { id:"g2", once:true, condition:()=>state.sect===null, nodes:[
         { type:"text", eyebrow:"개방 총타", title:"입문 제안", body:["방주가 술 한 사발을 건네며 말했다. \"개방은 문파라기보다 그물이오. 함께하면 어디든 못 갈 곳이 없지.\""] },
         { type:"choice", eyebrow:"개방 총타", prompt:"", options:[
-          { label:"개방에 입문한다", tag:"문파", effects:{의리:2,명성:2}, onSelect:()=>{ state.sect="개방"; learnSkill("sk_gaebang"); }, result:"무환은 개방의 제자가 되었다. 절기 「취팔선보」도 함께 전수받았다." },
+          { label:"개방에 입문한다", tag:"문파", effects:{의리:2,명성:2}, onSelect:()=>{ state.sect="개방"; learnSkill("sk_gaebang"); addJournal("개방에 입문했다."); }, result:"무환은 개방의 제자가 되었다. 절기 「취팔선보」도 함께 전수받았다." },
           { label:"정중히 거절한다", tag:"독행", effects:{의리:1}, result:"방주는 아쉬워하면서도 호탕하게 웃었다. \"언제든 환영이오.\"" },
         ]},
       ]},
-      { id:"g3", repeatable:true, weight:2, condition:()=>state.sect==="개방", nodes:[
+      { id:"g3", repeatable:true, weight:2, condition:()=>state.sect==="개방", isTrain:true, nodes:[
         { type:"text", eyebrow:"개방 총타", body:["거지들과 어울리며 강호 곳곳의 소식을 주고받았다."] },
       ], effects:{의리:2, 명성:1} },
       { id:"g4", repeatable:true, weight:2, nodes:[
         { type:"text", eyebrow:"개방 총타", body:["개방도들 사이에서 떠도는 소문을 들었다."] },
       ], effects:{clues:1} },
+      { id:"g5", repeatable:true, weight:1, condition:()=>state.clues<CLUE_TARGET, nodes:[
+        { type:"text", eyebrow:"개방 총타", body:["한쪽 눈이 먼 정보상이 은밀히 다가와 속삭였다. \"확실한 정보가 있소만, 공짜는 아니지.\""] },
+        { type:"choice", eyebrow:"개방 총타", prompt:"", options:[
+          { label:"값을 치르고 정보를 산다 (15냥)", tag:"단서", effects:{}, onSelect:()=>tryBuy(15,{clues:1},"정보상은 흑풍채 주변 지형에 대한 확실한 정보를 건넸다."), result:"__DYNAMIC__" },
+          { label:"거절한다", tag:"신중", effects:{}, result:"무환은 미심쩍은 거래를 거절했다." },
+        ]},
+      ]},
+      { id:"g6", once:true, condition:()=>state.flags.act2Done, nodes:[
+        { type:"text", eyebrow:"개방 총타", title:"방주의 밀담", body:[
+          "방주가 은밀히 무환을 뒷방으로 불렀다. \"자네가 천기루를 무너뜨렸다는 소식은 이미 들었네. 하지만 냉월조차 누군가의 그림자 아래 있었다는 걸 아는가?\"",
+          "\"현천(玄天)이라는 이름을, 아주 오래된 개방의 비밀 기록에서 본 적이 있네. 태극봉인지라는 곳과 함께 말일세.\""
+        ]},
+      ], effects:{act3clues:1} },
     ],
     hwasan: buildSectEvents("hwasan","화산","화산 매화검수",36,7,
       "장문인이 말했다. \"화산의 검은 매화처럼 매섭고 아름답다. 배워보겠는가?\"",
@@ -1008,12 +1597,420 @@
     kongtong: buildSectEvents("kongtong","공동","공동 장법사",35,6,
       "장문인이 말했다. \"공동의 장법은 예측할 수 없는 변화를 품는다.\"",
       "변화무쌍한 장법을 익히며 손끝의 감각을 키웠다."),
+    bukhae: [
+      { id:"b1", once:true, nodes:[
+        { type:"text", eyebrow:"북해", title:"얼음의 땅", body:[
+          "며칠을 걸어 다다른 북해는 숨을 쉴 때마다 폐가 얼얼할 만큼 매서운 곳이었다. 눈보라 속에서도 곧게 선 검 한 자루가 얼음 위에 꽂혀 있었다.",
+          "\"멀리서도 잘 찾아왔군.\" 등 뒤에서 담담한 목소리가 들렸다. 북해검신(北海劍神) 한파(寒波)였다."
+        ]},
+        { type:"choice", eyebrow:"북해", prompt:"", options:[
+          { label:"정중히 가르침을 청한다", tag:"겸손", effects:{내공:2}, result:"한파는 옅게 웃으며 몇 마디 조언을 건넸다. \"급하게 강해지려 하지 마라. 얼음도 천천히 얼어야 단단하다.\"" },
+          { label:"비무를 청한다", tag:"기개", effects:{}, onSelect:()=>{}, result:"__DYNAMIC__" },
+        ]},
+      ]},
+      { id:"b2", repeatable:true, weight:1, nodes:[
+        { type:"text", eyebrow:"북해", body:["매서운 눈보라 속에서 홀로 내식을 다스렸다. 온몸이 얼어붙을 듯했지만, 그만큼 정신은 또렷해졌다."] },
+      ], effects:{내공:2} },
+      { id:"b3", once:true, nodes:[
+        { type:"text", eyebrow:"북해", body:["얼음 벌판 한가운데, 오래전 표류한 배의 잔해에서 낡은 죽간을 발견했다."] },
+        { type:"choice", eyebrow:"북해", prompt:"", options:[
+          { label:"죽간을 살펴본다", tag:"기연", effects:{}, onSelect:()=>{ const un=GENERIC_SKILLS.filter(id=>!state.skills.includes(id)); if(un.length){ const id=pick(un); learnSkill(id); pendingResultOverride=`얼어붙은 죽간 속에서 「${SKILLS[id].name}」의 구결을 찾아냈다!`; sfx.get(); } else { pendingResultOverride = masteryConsolation(["내공"]); } }, result:"__DYNAMIC__" },
+        ]},
+      ]},
+    ],
+    nammal: [
+      { id:"n1", once:true, nodes:[
+        { type:"text", eyebrow:"남만", title:"독무의 정글", body:[
+          "짙은 독무가 깔린 정글, 발을 디딜 때마다 낯선 벌레 울음소리가 들려왔다. 나무 위에서 화려한 옷을 입은 여인이 소리 없이 내려섰다.",
+          "\"이 독무 속에서 숨 쉬는 걸 보니, 보통내기는 아니군.\" 남만독후(南蠻毒后) 언랑(彦浪)이었다."
+        ]},
+        { type:"choice", eyebrow:"남만", prompt:"", options:[
+          { label:"정중히 가르침을 청한다", tag:"겸손", effects:{의리:2}, result:"언랑은 흥미롭다는 듯 웃으며 해독초 몇 가지를 알려주었다. \"강호를 떠돌려면 이 정도는 알아둬야지.\"" },
+          { label:"비무를 청한다", tag:"기개", effects:{}, onSelect:()=>{}, result:"__DYNAMIC__" },
+        ]},
+      ]},
+      { id:"n2", repeatable:true, weight:1, nodes:[
+        { type:"text", eyebrow:"남만", body:["독무 속에서 호흡을 다스리며 몸을 단련했다. 낯선 환경일수록 감각이 예민해졌다."] },
+      ], effects:{무공:2} },
+      { id:"n3", once:true, nodes:[
+        { type:"text", eyebrow:"남만", body:["정글 깊은 곳, 원주민들이 남긴 벽화 앞에서 낯선 초식의 흔적을 발견했다."] },
+        { type:"choice", eyebrow:"남만", prompt:"", options:[
+          { label:"벽화의 초식을 따라해본다", tag:"기연", effects:{}, onSelect:()=>{ const un=GENERIC_SKILLS.filter(id=>!state.skills.includes(id)); if(un.length){ const id=pick(un); learnSkill(id); pendingResultOverride=`벽화 속 움직임을 따라가니 「${SKILLS[id].name}」을(를) 터득했다!`; sfx.get(); } else { pendingResultOverride = masteryConsolation(["무공"]); } }, result:"__DYNAMIC__" },
+        ]},
+      ]},
+    ],
+    jangan: [
+      { id:"j1", once:true, nodes:[
+        { type:"text", eyebrow:"장안", title:"천하의 중심", body:["장안의 대로는 사람과 수레로 발 디딜 틈이 없었다. 각지의 사투리와 옷차림이 뒤섞여 정신이 다 아득할 지경이었다.", "저잣거리 한켠에서는 조정의 인사와 무림맹의 동향에 대한 이야기가 은밀히 오갔다."] },
+        { type:"choice", eyebrow:"장안", prompt:"", options:[
+          { label:"귀 기울여 정세를 살핀다", tag:"단서", effects:{명성:2}, result:"무환은 강호와 조정 양쪽의 흐름을 어렴풋이 읽어낼 수 있었다." },
+          { label:"번화한 거리를 그저 구경한다", tag:"신중", effects:{의리:1}, result:"오랜만에 느긋한 마음으로 거리를 거닐었다." },
+        ]},
+      ]},
+      { id:"j2", once:true, nodes:[
+        { type:"text", eyebrow:"장안", title:"명문가의 후예", body:["화려한 비단옷을 입은 청년이 무환의 앞을 가로막았다. \"장안에서 이름값을 하려면, 나부터 넘어야 할 것이오.\""] },
+        { type:"combat", enemy:{name:"명문세가의 후예", hp:40, atk:8}, effectsOnWin:{gold:18, 명성:2}, onWin:"청년은 씁쓸히 웃으며 검을 거두었다. \"…다음엔 내가 이기지.\"", onLoseText:"무환은 패했지만, 화려한 검로 속에서 배울 점이 적지 않았다." },
+      ]},
+      { id:"j3", repeatable:true, weight:2, nodes:[
+        { type:"text", eyebrow:"장안", body:["대도시의 번잡함 속에서 하루를 보냈다. 이곳에서는 사소한 소문도 순식간에 퍼져나갔다."] },
+      ], effects:{명성:1} },
+      { id:"j4", once:true, nodes:[
+        { type:"text", eyebrow:"장안", body:["골동품을 파는 노점에서 먼지 쌓인 죽간 하나가 눈에 띄었다. 주인은 값도 모르고 헐값에 팔겠다고 했다."] },
+        { type:"choice", eyebrow:"장안", prompt:"", options:[
+          { label:"사서 살펴본다 (10냥)", tag:"기연", effects:{}, onSelect:()=>{ if(state.gold<10){ pendingResultOverride="소지금이 부족하다."; return; } state.gold-=10; const un=GENERIC_SKILLS.filter(id=>!state.skills.includes(id)); if(un.length){ const id=pick(un); learnSkill(id); pendingResultOverride=`뜻밖에도 진서였다. 무환은 「${SKILLS[id].name}」을(를) 터득했다! (−10냥)`; sfx.get(); } else { pendingResultOverride = masteryConsolation(["명성"]); } }, result:"__DYNAMIC__" },
+          { label:"그냥 지나친다", tag:"신중", effects:{}, result:"무환은 흥미가 동하지 않아 자리를 떴다." },
+        ]},
+      ]},
+    ],
+    hangju: [
+      { id:"h1", once:true, meetsNPC:null, nodes:[
+        { type:"text", eyebrow:"항주", title:"호수 위의 인연", body:["잔잔한 호수 위, 조각배 한 척이 미끄러지듯 지나갔다. 뱃사공이 흥얼거리는 노랫가락이 버드나무 사이로 흩어졌다.", "무환은 오랜만에 강호의 살벌함을 잊고 풍경에 마음을 놓았다."] },
+        { type:"choice", eyebrow:"항주", prompt:"", options:[
+          { label:"배를 빌려 호수를 건넌다", tag:"여유", effects:{내공:2}, result:"물결을 가르며 무환은 오랜만에 마음의 평온을 되찾았다." },
+          { label:"호숫가를 거닐며 생각에 잠긴다", tag:"신중", effects:{의리:1}, result:"버드나무 그늘 아래, 무환은 지나온 길을 천천히 되짚어보았다." },
+        ]},
+      ]},
+      { id:"h2", once:true, nodes:[
+        { type:"text", eyebrow:"항주", title:"호수의 수적", body:["평화롭던 호수에 갑자기 비명이 울렸다. 수적 무리가 상선을 덮치고 있었다."] },
+        { type:"combat", enemy:{name:"호수의 수적", hp:36, atk:7}, effectsOnWin:{gold:16, 의리:2}, onWin:"수적들은 물속으로 도망쳤다. 상인들은 몇 번이고 고개 숙여 감사했다.", onLoseText:"무환은 크게 다쳤지만, 상선은 간신히 위기를 넘겼다." },
+      ]},
+      { id:"h3", repeatable:true, weight:2, nodes:[
+        { type:"text", eyebrow:"항주", body:["호숫가에 앉아 물결을 바라보며 조용히 내식을 다스렸다."] },
+      ], effects:{내공:1} },
+      { id:"h4", once:true, nodes:[
+        { type:"text", eyebrow:"항주", body:["오래된 사당 처마 밑에서 비를 피하던 중, 벽에 새겨진 낯선 검결을 발견했다."] },
+        { type:"choice", eyebrow:"항주", prompt:"", options:[
+          { label:"검결을 눈에 담아둔다", tag:"기연", effects:{}, onSelect:()=>{ const un=GENERIC_SKILLS.filter(id=>!state.skills.includes(id)); if(un.length){ const id=pick(un); learnSkill(id); pendingResultOverride=`빗소리 속에서 무환은 「${SKILLS[id].name}」을(를) 깨우쳤다!`; sfx.get(); } else { pendingResultOverride = masteryConsolation(["내공","무공"]); } }, result:"__DYNAMIC__" },
+        ]},
+      ]},
+    ],
+    seongdo: [
+      { id:"se1", once:true, nodes:[
+        { type:"text", eyebrow:"성도", title:"매운 향의 도시", body:["성도의 저잣거리는 매운 향신료 냄새로 가득했다. 상단의 행렬이 끊이지 않고 오갔다.", "\"촉 땅 상단의 물자가 이 정도라니…\" 무환은 새삼 강호의 넓음을 실감했다."] },
+        { type:"choice", eyebrow:"성도", prompt:"", options:[
+          { label:"상단 사람들과 어울려본다", tag:"의리", effects:{의리:2}, result:"거친 뱃사람과 표사들 틈에서, 무환은 소탈한 정을 느꼈다." },
+          { label:"홀로 조용히 거리를 살핀다", tag:"신중", effects:{명성:1}, result:"무환은 낯선 도시의 분위기를 찬찬히 눈에 담았다." },
+        ]},
+      ]},
+      { id:"se2", once:true, nodes:[
+        { type:"text", eyebrow:"성도", title:"상단의 호위 의뢰", body:["다급한 표두(鏢頭) 하나가 무환을 붙잡았다. \"근방에 표물을 노리는 도적떼가 있다는데, 호위할 사람이 부족하오!\""] },
+        { type:"combat", enemy:{name:"표물을 노리는 도적떼", hp:38, atk:7}, effectsOnWin:{gold:22}, onWin:"도적떼는 흩어졌고, 표두는 크게 안도하며 사례금을 건넸다.", onLoseText:"무환은 크게 다쳤지만, 표물만은 간신히 지켜냈다." },
+      ]},
+      { id:"se3", repeatable:true, weight:2, nodes:[
+        { type:"text", eyebrow:"성도", body:["매운 음식을 파는 노점에서 끼니를 해결하며 하루를 보냈다."] },
+      ], effects:{무공:1} },
+      { id:"se4", once:true, nodes:[
+        { type:"text", eyebrow:"성도", body:["독과 약재를 함께 다루는 노의원의 가게에서, 낯선 무공의 흔적이 담긴 낡은 처방전을 발견했다."] },
+        { type:"choice", eyebrow:"성도", prompt:"", options:[
+          { label:"처방전을 살펴본다", tag:"기연", effects:{}, onSelect:()=>{ const un=GENERIC_SKILLS.filter(id=>!state.skills.includes(id)); if(un.length){ const id=pick(un); learnSkill(id); pendingResultOverride=`처방전 뒷면에 숨겨진 구결을 따라 무환은 「${SKILLS[id].name}」을(를) 터득했다!`; sfx.get(); } else { pendingResultOverride = masteryConsolation(["무공","내공"]); } }, result:"__DYNAMIC__" },
+        ]},
+      ]},
+    ],
+    suzhou: [
+      { id:"su1", once:true, nodes:[
+        { type:"text", eyebrow:"소주", title:"정원의 은거 문인", body:["소주의 이름난 정원, 연못가 정자에서 한 노문인이 조용히 시를 읊고 있었다. 무환의 걸음걸이를 눈여겨보더니 말을 걸어왔다.", "\"검을 쓰는 이가 이런 곳까지 발걸음을 하다니, 흔치 않은 일이군.\""] },
+        { type:"choice", eyebrow:"소주", prompt:"", options:[
+          { label:"가르침을 청한다", tag:"수양", effects:{내공:2, 의리:1}, result:"노문인은 검과 문(文)이 다르지 않다는 이치를 짧게 일러주었다. 무환의 마음이 한결 차분해졌다." },
+          { label:"정중히 인사만 나눈다", tag:"신중", effects:{명성:1}, result:"짧은 인사였지만, 노문인은 무환의 예의에 흡족해했다." },
+        ]},
+      ]},
+      { id:"su2", once:true, nodes:[
+        { type:"text", eyebrow:"소주", title:"운하의 밤손님", body:["야밤, 운하를 오가는 상선에 검은 그림자들이 올라타는 것이 보였다. 도둑 무리였다."] },
+        { type:"combat", enemy:{name:"운하의 밤손님", hp:34, atk:6}, effectsOnWin:{gold:14, 의리:1}, onWin:"도둑들은 물속으로 뛰어들어 달아났다. 뱃사공은 몇 번이고 고개를 숙였다.", onLoseText:"무환은 크게 다쳤지만, 배에 실린 물건만은 지켜냈다." },
+      ]},
+      { id:"su3", repeatable:true, weight:2, nodes:[
+        { type:"text", eyebrow:"소주", body:["정원의 좁은 오솔길을 거닐며 조용히 하루를 보냈다."] },
+      ], effects:{의리:1} },
+      { id:"su4", once:true, nodes:[
+        { type:"text", eyebrow:"소주", body:["서화(書畵)를 파는 골동품점에서, 그림 뒷면에 은밀히 적힌 구결을 발견했다."] },
+        { type:"choice", eyebrow:"소주", prompt:"", options:[
+          { label:"구결을 눈에 익힌다", tag:"기연", effects:{}, onSelect:()=>{ const un=GENERIC_SKILLS.filter(id=>!state.skills.includes(id)); if(un.length){ const id=pick(un); learnSkill(id); pendingResultOverride=`그림 뒤에 숨겨진 구결을 따라 무환은 「${SKILLS[id].name}」을(를) 터득했다!`; sfx.get(); } else { pendingResultOverride = masteryConsolation(["의리","내공"]); } }, result:"__DYNAMIC__" },
+        ]},
+      ]},
+    ],
+    kaifeng: [
+      { id:"kf1", once:true, nodes:[
+        { type:"text", eyebrow:"개봉", title:"옛 도읍의 그늘", body:["한때 천하의 중심이었던 개봉은 이제 옛 영화의 흔적만 남아 있었다. 저잣거리에서는 어느 상인과 무뢰배 사이에 시비가 붙어 있었다."] },
+        { type:"choice", eyebrow:"개봉", prompt:"", options:[
+          { label:"나서서 상인의 편을 든다", tag:"의협", effects:{의리:2}, result:"무뢰배는 투덜대며 물러갔다. 상인은 무환에게 몇 번이고 고마움을 표했다." },
+          { label:"조용히 지나친다", tag:"신중", effects:{내공:1}, result:"무환은 굳이 남의 다툼에 끼어들지 않았다." },
+        ]},
+      ]},
+      { id:"kf2", once:true, nodes:[
+        { type:"text", eyebrow:"개봉", title:"현상금 사냥꾼", body:["낯선 사내가 무환의 얼굴을 이리저리 뜯어보더니 씩 웃었다. \"수배 전단 속 얼굴과 제법 닮았군. 확인 좀 해야겠어.\""] },
+        { type:"combat", enemy:{name:"현상금 사냥꾼", hp:38, atk:7}, effectsOnWin:{gold:16}, onWin:"사냥꾼은 사람을 잘못 봤다며 투덜대면서도 순순히 물러났다.", onLoseText:"무환은 크게 다쳤지만, 오해였다는 말과 함께 상황은 정리되었다." },
+      ]},
+      { id:"kf3", repeatable:true, weight:2, nodes:[
+        { type:"text", eyebrow:"개봉", body:["옛 도읍의 무너진 성벽을 따라 걸으며 지난 역사를 떠올렸다."] },
+      ], effects:{명성:1} },
+      { id:"kf4", once:true, nodes:[
+        { type:"text", eyebrow:"개봉", body:["폐가가 된 옛 무관(武館) 터에서, 먼지 쌓인 목판에 새겨진 초식을 발견했다."] },
+        { type:"choice", eyebrow:"개봉", prompt:"", options:[
+          { label:"목판의 초식을 눈에 담는다", tag:"기연", effects:{}, onSelect:()=>{ const un=GENERIC_SKILLS.filter(id=>!state.skills.includes(id)); if(un.length){ const id=pick(un); learnSkill(id); pendingResultOverride=`옛 무관의 목판에서 무환은 「${SKILLS[id].name}」을(를) 터득했다!`; sfx.get(); } else { pendingResultOverride = masteryConsolation(["무공","명성"]); } }, result:"__DYNAMIC__" },
+        ]},
+      ]},
+    ],
+    nanjing: [
+      { id:"na1", once:true, nodes:[
+        { type:"text", eyebrow:"남경", title:"서원의 논쟁", body:["남경의 이름난 서원 앞, 젊은 학사들이 무(武)와 문(文) 중 무엇이 세상을 이롭게 하는지를 두고 열띤 논쟁을 벌이고 있었다.", "한 학사가 지나가던 무환을 발견하고 의견을 물었다."] },
+        { type:"choice", eyebrow:"남경", prompt:"", options:[
+          { label:"무(武)의 가치를 옹호한다", tag:"무공", effects:{무공:2}, result:"무환의 말에 몇몇 학사들이 고개를 끄덕였다. \"협객의 말에도 일리가 있군.\"" },
+          { label:"문(文)과 무(武)가 다르지 않다고 답한다", tag:"의리", effects:{의리:2}, result:"학사들은 뜻밖의 답변에 흥미를 보이며 무환에게 차 한 잔을 권했다." },
+        ]},
+      ]},
+      { id:"na2", once:true, nodes:[
+        { type:"text", eyebrow:"남경", title:"밤의 도둑", body:["객잔에 묵은 첫날 밤, 인기척에 눈을 뜬 무환은 방 안을 뒤지던 도둑과 마주쳤다."] },
+        { type:"combat", enemy:{name:"밤의 도둑", hp:30, atk:6}, effectsOnWin:{gold:12}, onWin:"도둑은 창문으로 뛰어내려 달아났다. 다행히 잃어버린 것은 없었다.", onLoseText:"도둑은 소란 속에 달아났지만, 무환도 자잘한 상처를 입었다." },
+      ]},
+      { id:"na3", repeatable:true, weight:2, nodes:[
+        { type:"text", eyebrow:"남경", body:["서원 근처를 거닐며 책 읽는 소리에 귀를 기울였다."] },
+      ], effects:{명성:1} },
+      { id:"na4", once:true, nodes:[
+        { type:"text", eyebrow:"남경", body:["오래된 서고에서 먼지 쌓인 병서(兵書) 한 권을 발견했다. 여백에 낯선 필체로 무언가가 적혀 있었다."] },
+        { type:"choice", eyebrow:"남경", prompt:"", options:[
+          { label:"여백의 구결을 살펴본다", tag:"기연", effects:{}, onSelect:()=>{ const un=GENERIC_SKILLS.filter(id=>!state.skills.includes(id)); if(un.length){ const id=pick(un); learnSkill(id); pendingResultOverride=`병서 여백의 구결을 따라 무환은 「${SKILLS[id].name}」을(를) 터득했다!`; sfx.get(); } else { pendingResultOverride = masteryConsolation(["명성","의리"]); } }, result:"__DYNAMIC__" },
+        ]},
+      ]},
+    ],
+    dunhwang: [
+      { id:"dh1", once:true, nodes:[
+        { type:"text", eyebrow:"돈황", title:"사막의 교차로", body:["사막 한가운데 자리한 돈황은 이국의 상인들로 북적였다. 낯선 언어와 낙타 울음소리가 뒤섞여 색다른 활기를 띠었다.", "한 대상(隊商)의 우두머리가 무환에게 동행을 제안했다."] },
+        { type:"choice", eyebrow:"돈황", prompt:"", options:[
+          { label:"잠시 대상과 동행한다", tag:"의리", effects:{의리:2}, result:"대상과 함께한 짧은 여정에서, 무환은 낯선 땅의 이야기를 여럿 들을 수 있었다." },
+          { label:"홀로 시가지를 둘러본다", tag:"신중", effects:{명성:1}, result:"무환은 낯선 도시의 풍경을 천천히 눈에 담았다." },
+        ]},
+      ]},
+      { id:"dh2", once:true, nodes:[
+        { type:"text", eyebrow:"돈황", title:"사막의 도적", body:["모래바람이 몰아치는 와중, 낙타 상단을 노리는 사막 도적떼가 나타났다."] },
+        { type:"combat", enemy:{name:"사막의 도적", hp:38, atk:7}, effectsOnWin:{gold:20}, onWin:"도적들은 모래바람 속으로 흩어져 사라졌다. 상단은 감사의 뜻으로 노잣돈을 보탰다.", onLoseText:"무환은 크게 다쳤지만, 상단의 피해는 최소화할 수 있었다." },
+      ]},
+      { id:"dh3", repeatable:true, weight:2, nodes:[
+        { type:"text", eyebrow:"돈황", body:["뜨거운 모래바람 속에서 묵묵히 내식을 다스리며 하루를 견뎠다."] },
+      ], effects:{내공:1} },
+      { id:"dh4", once:true, nodes:[
+        { type:"text", eyebrow:"돈황", body:["사막 절벽에 뚫린 석굴, 오래된 벽화 한 켠에 낯선 무인의 초식이 그려져 있었다."] },
+        { type:"choice", eyebrow:"돈황", prompt:"", options:[
+          { label:"벽화의 초식을 눈에 담는다", tag:"기연", effects:{}, onSelect:()=>{ const un=GENERIC_SKILLS.filter(id=>!state.skills.includes(id)); if(un.length){ const id=pick(un); learnSkill(id); pendingResultOverride=`석굴 벽화 속 초식을 따라 무환은 「${SKILLS[id].name}」을(를) 터득했다!`; sfx.get(); } else { pendingResultOverride = masteryConsolation(["무공","내공"]); } }, result:"__DYNAMIC__" },
+        ]},
+      ]},
+    ],
+    cheongha: [
+      { id:"ch1", once:true, nodes:[
+        { type:"text", eyebrow:"청하촌", title:"강가의 마을", body:["작은 초가집들이 강을 따라 옹기종기 모여 있었다. 아이들이 무환의 목검을 신기한 듯 쳐다보며 뒤를 졸졸 따라왔다.", "마을 어귀에서는 촌장이 걱정스러운 얼굴로 강 상류를 바라보고 있었다."] },
+        { type:"choice", eyebrow:"청하촌", prompt:"", options:[
+          { label:"무슨 일인지 물어본다", tag:"의리", effects:{의리:2}, result:"촌장은 근래 상류 쪽에서 도적떼가 자주 출몰한다며 한숨을 쉬었다." },
+          { label:"조용히 마을을 지나간다", tag:"신중", effects:{내공:1}, result:"무환은 굳이 나서지 않고 조용히 마을을 둘러보았다." },
+        ]},
+      ]},
+      { id:"ch2", once:true, nodes:[
+        { type:"text", eyebrow:"청하촌", title:"곳간을 노리는 도적", body:["해 질 무렵, 마을 곳간을 노리는 도적 몇이 담을 넘고 있었다. 촌민들은 겁에 질려 숨죽이고 있었다."] },
+        { type:"combat", enemy:{name:"곳간을 노리는 도적", hp:30, atk:6}, effectsOnWin:{gold:10, 의리:3}, onWin:"도적들은 혼비백산해 달아났다. 촌민들은 눈물까지 글썽이며 감사를 표했다.", onLoseText:"무환은 다쳤지만, 도적들도 결국 빈손으로 물러났다." },
+      ]},
+      { id:"ch3", repeatable:true, weight:2, nodes:[
+        { type:"text", eyebrow:"청하촌", body:["강가에 앉아 물소리를 들으며 조용히 하루를 보냈다."] },
+      ], effects:{내공:1} },
+      { id:"ch4", once:true, nodes:[
+        { type:"text", eyebrow:"청하촌", body:["마을에서 가장 나이 많은 노인이 화롯가에서 젊은 시절 배웠다는 낡은 권법을 흉내 내 보여주었다."] },
+        { type:"choice", eyebrow:"청하촌", prompt:"", options:[
+          { label:"노인의 권법을 유심히 눈에 담는다", tag:"기연", effects:{}, onSelect:()=>{ const un=GENERIC_SKILLS.filter(id=>!state.skills.includes(id)); if(un.length){ const id=pick(un); learnSkill(id); pendingResultOverride=`촌로의 투박한 권법 속에서 무환은 「${SKILLS[id].name}」의 이치를 깨우쳤다!`; sfx.get(); } else { pendingResultOverride = masteryConsolation(["의리"]); } }, result:"__DYNAMIC__" },
+        ]},
+      ]},
+    ],
+    jungnim: [
+      { id:"jn1", once:true, nodes:[
+        { type:"text", eyebrow:"죽림촌", title:"댓잎 소리", body:["대나무숲을 헤치고 들어서자 조용한 산골 마을이 나타났다. 바람이 불 때마다 사각이는 댓잎 소리가 마을 전체를 감쌌다.", "마을 사람들은 낯선 이를 경계하면서도, 예를 갖춘 무환에게 차츰 마음을 열었다."] },
+        { type:"choice", eyebrow:"죽림촌", prompt:"", options:[
+          { label:"마을 일을 거들어준다", tag:"의리", effects:{의리:2}, result:"무환은 반나절 동안 대나무를 베는 일을 도왔다. 마을 사람들은 소탈하게 웃으며 밥 한 끼를 내어주었다." },
+          { label:"숲을 조용히 거닌다", tag:"수양", effects:{내공:1}, result:"무환은 댓잎 소리에 마음을 씻어내며 오랜만에 여유를 느꼈다." },
+        ]},
+      ]},
+      { id:"jn2", once:true, nodes:[
+        { type:"text", eyebrow:"죽림촌", title:"산짐승의 습격", body:["밤사이 마을 가축우리를 노리는 커다란 멧돼지 무리가 나타났다. 장정 몇이 나섰지만 역부족이었다."] },
+        { type:"combat", enemy:{name:"성난 멧돼지 무리", hp:32, atk:6}, effectsOnWin:{gold:8, 의리:2}, onWin:"멧돼지들은 숲속으로 달아났다. 마을은 오랜만에 편히 잠들 수 있었다.", onLoseText:"무환은 다쳤지만, 멧돼지들도 결국 물러갔다." },
+      ]},
+      { id:"jn3", repeatable:true, weight:2, nodes:[
+        { type:"text", eyebrow:"죽림촌", body:["대나무숲 사이를 거닐며 흔들리는 댓잎 소리에 귀를 기울였다."] },
+      ], effects:{의리:1} },
+      { id:"jn4", once:true, nodes:[
+        { type:"text", eyebrow:"죽림촌", body:["대나무숲 깊은 곳, 오래된 죽간 더미 속에서 벌레 먹은 무공서 한 권을 발견했다."] },
+        { type:"choice", eyebrow:"죽림촌", prompt:"", options:[
+          { label:"무공서를 살펴본다", tag:"기연", effects:{}, onSelect:()=>{ const un=GENERIC_SKILLS.filter(id=>!state.skills.includes(id)); if(un.length){ const id=pick(un); learnSkill(id); pendingResultOverride=`벌레 먹은 죽간 속에서도 무환은 「${SKILLS[id].name}」의 요체를 알아보았다!`; sfx.get(); } else { pendingResultOverride = masteryConsolation(["내공"]); } }, result:"__DYNAMIC__" },
+        ]},
+      ]},
+    ],
+    eochon: [
+      { id:"ec1", once:true, nodes:[
+        { type:"text", eyebrow:"어촌", title:"짠내 나는 바람", body:["파도 소리와 함께 그물 손질하는 소리가 끊이지 않는 작은 어촌이었다. 어부들은 낯선 무인을 신기하게 바라보았다.", "한 노어부가 무환에게 오늘 그물질이 영 신통치 않다며 푸념을 늘어놓았다."] },
+        { type:"choice", eyebrow:"어촌", prompt:"", options:[
+          { label:"그물 끌어올리는 것을 돕는다", tag:"의리", effects:{의리:2}, result:"무환의 힘을 보태자 그물이 한결 수월하게 올라왔다. 노어부는 싱싱한 생선 몇 마리를 손에 쥐여주었다." },
+          { label:"바닷가를 거닐며 바람을 쐰다", tag:"신중", effects:{내공:1}, result:"짠 내 나는 바람을 맞으며, 무환은 오랜만에 홀가분함을 느꼈다." },
+        ]},
+      ]},
+      { id:"ec2", once:true, nodes:[
+        { type:"text", eyebrow:"어촌", title:"해적의 그림자", body:["먼바다에서 낯선 배 한 척이 마을 쪽으로 다가오고 있었다. 어부들의 얼굴에 두려움이 스쳤다. 해적선이었다."] },
+        { type:"combat", enemy:{name:"작은 해적 무리", hp:34, atk:7}, effectsOnWin:{gold:14, 의리:2}, onWin:"해적들은 뭍에 오르기도 전에 무환의 기세에 눌려 뱃머리를 돌렸다.", onLoseText:"무환은 다쳤지만, 해적들도 더 다가오지 못하고 물러갔다." },
+      ]},
+      { id:"ec3", repeatable:true, weight:2, nodes:[
+        { type:"text", eyebrow:"어촌", body:["방파제에 앉아 파도 소리를 들으며 하루를 보냈다."] },
+      ], effects:{무공:1} },
+      { id:"ec4", once:true, nodes:[
+        { type:"text", eyebrow:"어촌", body:["오래된 등대지기 노인의 오두막에서, 젊은 시절 표류하다 얻었다는 이국의 무공 그림을 보게 되었다."] },
+        { type:"choice", eyebrow:"어촌", prompt:"", options:[
+          { label:"그림 속 초식을 눈에 담는다", tag:"기연", effects:{}, onSelect:()=>{ const un=GENERIC_SKILLS.filter(id=>!state.skills.includes(id)); if(un.length){ const id=pick(un); learnSkill(id); pendingResultOverride=`이국의 그림 속에서 무환은 「${SKILLS[id].name}」의 이치를 알아보았다!`; sfx.get(); } else { pendingResultOverride = masteryConsolation(["무공"]); } }, result:"__DYNAMIC__" },
+        ]},
+      ]},
+    ],
+    byeonbang: [
+      { id:"bp1", once:true, nodes:[
+        { type:"text", eyebrow:"변방촌", title:"거친 변방의 마을", body:["국경에 가까운 이 마을은 낭인과 유랑민들이 뒤섞여 살고 있었다. 분위기는 거칠었지만, 그만큼 서로를 의지하는 정도 두터웠다.", "객잔 앞에서 낯선 무리가 마을 사람에게 행패를 부리고 있었다."] },
+        { type:"choice", eyebrow:"변방촌", prompt:"", options:[
+          { label:"나서서 말린다", tag:"의협", effects:{의리:2, 명성:1}, result:"무환의 기세에 무리는 슬그머니 꼬리를 내렸다. 마을 사람들은 그를 다르게 보기 시작했다." },
+          { label:"괜한 일에 얽히지 않는다", tag:"신중", effects:{내공:1}, result:"변방의 다툼은 하루 이틀 일이 아니었다. 무환은 조용히 지나쳤다." },
+        ]},
+      ]},
+      { id:"bp2", once:true, nodes:[
+        { type:"text", eyebrow:"변방촌", title:"국경의 낭인 무리", body:["밤사이 국경을 넘나드는 낭인 무리가 마을 창고를 습격했다. 마을 자경단만으로는 역부족이었다."] },
+        { type:"combat", enemy:{name:"국경의 낭인 무리", hp:40, atk:8}, effectsOnWin:{gold:18, 의리:2}, onWin:"낭인들은 국경 너머로 도망쳤다. 자경단은 무환에게 거친 손으로 몇 번이고 악수를 청했다.", onLoseText:"무환은 크게 다쳤지만, 마을의 피해는 최소한으로 막아냈다." },
+      ]},
+      { id:"bp3", repeatable:true, weight:2, nodes:[
+        { type:"text", eyebrow:"변방촌", body:["거친 변방 사람들과 어울리며 술 한잔 나누었다."] },
+      ], effects:{의리:1} },
+      { id:"bp4", once:true, nodes:[
+        { type:"text", eyebrow:"변방촌", body:["국경을 넘나들던 늙은 낭인 하나가, 젊은 시절 이역에서 배웠다는 낯선 무공을 슬쩍 흘려주었다."] },
+        { type:"choice", eyebrow:"변방촌", prompt:"", options:[
+          { label:"귀담아 익힌다", tag:"기연", effects:{}, onSelect:()=>{ const un=GENERIC_SKILLS.filter(id=>!state.skills.includes(id)); if(un.length){ const id=pick(un); learnSkill(id); pendingResultOverride=`늙은 낭인의 가르침 속에서 무환은 「${SKILLS[id].name}」을(를) 터득했다!`; sfx.get(); } else { pendingResultOverride = masteryConsolation(["무공","의리"]); } }, result:"__DYNAMIC__" },
+        ]},
+      ]},
+    ],
+    maehwa: [
+      { id:"mh1", once:true, nodes:[
+        { type:"text", eyebrow:"매화촌", title:"꽃잎 흩날리는 마을", body:["마을 전체가 매화나무로 둘러싸여 있었다. 바람이 불 때마다 꽃잎이 눈처럼 흩날려 길 위에 쌓였다.", "마침 마을에서는 해마다 열리는 매화 축제가 한창이었다."] },
+        { type:"choice", eyebrow:"매화촌", prompt:"", options:[
+          { label:"축제에 어울려본다", tag:"의리", effects:{의리:2}, result:"무환은 오랜만에 마음을 내려놓고 마을 사람들과 어울렸다. 낯선 협객을 향한 경계도 어느새 풀어졌다." },
+          { label:"조용히 매화나무 사이를 거닌다", tag:"수양", effects:{내공:1}, result:"흩날리는 꽃잎 속에서, 무환은 오랜만에 고요한 마음을 되찾았다." },
+        ]},
+      ]},
+      { id:"mh2", once:true, nodes:[
+        { type:"text", eyebrow:"매화촌", title:"매화나무를 해치는 짐승", body:["근래 마을의 오래된 매화나무들을 해치는 정체 모를 짐승이 나타난다는 소문이 있었다. 마을 사람들은 애가 탔다."] },
+        { type:"combat", enemy:{name:"매화나무를 해치는 야수", hp:32, atk:6}, effectsOnWin:{gold:10, 의리:2}, onWin:"야수는 산속 깊이 달아났다. 마을 사람들은 오래된 나무들을 지켜준 것에 크게 고마워했다.", onLoseText:"무환은 다쳤지만, 야수도 결국 물러갔다." },
+      ]},
+      { id:"mh3", repeatable:true, weight:2, nodes:[
+        { type:"text", eyebrow:"매화촌", body:["매화나무 아래 앉아 흩날리는 꽃잎을 바라보며 하루를 보냈다."] },
+      ], effects:{의리:1} },
+      { id:"mh4", once:true, nodes:[
+        { type:"text", eyebrow:"매화촌", body:["마을 서당 훈장이 매화나무의 가지치는 법에 빗대어 검리를 설명해주었다. 뜻밖에도 깊은 이치가 담겨 있었다."] },
+        { type:"choice", eyebrow:"매화촌", prompt:"", options:[
+          { label:"가르침을 마음에 새긴다", tag:"기연", effects:{}, onSelect:()=>{ const un=GENERIC_SKILLS.filter(id=>!state.skills.includes(id)); if(un.length){ const id=pick(un); learnSkill(id); pendingResultOverride=`매화 가지치기에 빗댄 검리 속에서 무환은 「${SKILLS[id].name}」을(를) 터득했다!`; sfx.get(); } else { pendingResultOverride = masteryConsolation(["의리","내공"]); } }, result:"__DYNAMIC__" },
+        ]},
+      ]},
+    ],
+    tangwang: [
+      { id:"tg1", once:true, nodes:[
+        { type:"text", eyebrow:"탄광촌", title:"검은 먼지의 마을", body:["온 마을이 검은 탄가루로 뒤덮여 있었다. 갱도 입구마다 지친 얼굴의 광부들이 오갔다.", "한 광부가 무환에게 다가와 조심스레 말을 걸었다. \"…혹시 무인이시오? 갱도에 도움이 필요한데.\""] },
+        { type:"choice", eyebrow:"탄광촌", prompt:"", options:[
+          { label:"무슨 일인지 물어본다", tag:"의리", effects:{의리:2}, result:"광부는 근래 갱도 깊은 곳에서 정체 모를 소리가 들린다며 두려워했다." },
+          { label:"바쁘다며 지나친다", tag:"신중", effects:{무공:1}, result:"무환은 갈 길이 바빠 정중히 사양했다." },
+        ]},
+      ]},
+      { id:"tg2", once:true, nodes:[
+        { type:"text", eyebrow:"탄광촌", title:"갱도의 도적", body:["갱도 깊은 곳, 캐낸 광물을 몰래 빼돌리려는 도적 무리가 광부들을 위협하고 있었다."] },
+        { type:"combat", enemy:{name:"갱도의 도적", hp:36, atk:7}, effectsOnWin:{gold:16}, onWin:"도적들은 곡괭이를 맞고 갱도 밖으로 도망쳤다. 광부들은 몇 번이고 고개를 숙였다.", onLoseText:"무환은 다쳤지만, 광부들은 무사히 피신할 수 있었다." },
+      ]},
+      { id:"tg3", repeatable:true, weight:2, nodes:[
+        { type:"text", eyebrow:"탄광촌", body:["광부들 틈에 섞여 곡괭이질을 거들며 하루를 보냈다."] },
+      ], effects:{무공:1} },
+      { id:"tg4", once:true, nodes:[
+        { type:"text", eyebrow:"탄광촌", body:["갱도 깊은 곳 벽면에서, 누군가 정으로 새겨놓은 낯선 초식의 흔적을 발견했다."] },
+        { type:"choice", eyebrow:"탄광촌", prompt:"", options:[
+          { label:"벽의 초식을 눈에 담는다", tag:"기연", effects:{}, onSelect:()=>{ const un=GENERIC_SKILLS.filter(id=>!state.skills.includes(id)); if(un.length){ const id=pick(un); learnSkill(id); pendingResultOverride=`갱도 벽에 새겨진 초식을 따라 무환은 「${SKILLS[id].name}」을(를) 터득했다!`; sfx.get(); } else { pendingResultOverride = masteryConsolation(["무공"]); } }, result:"__DYNAMIC__" },
+        ]},
+      ]},
+    ],
+    oncheon: [
+      { id:"on1", once:true, nodes:[
+        { type:"text", eyebrow:"온천촌", title:"김이 피어오르는 마을", body:["온 마을에 하얀 김이 피어올랐다. 다친 낭인들과 지친 나그네들이 온천에 몸을 담그며 쉬어가는 곳이었다.", "마을 사람들은 무환의 몸 여기저기 남은 상처를 보고는 온천을 권했다."] },
+        { type:"choice", eyebrow:"온천촌", prompt:"", options:[
+          { label:"온천에 몸을 담근다", tag:"휴식", effects:{내공:2}, onSelect:()=>{ if(state.injuryTurns>0){ state.injuryTurns = Math.max(0, state.injuryTurns-2); } }, result:"따뜻한 온천물이 몸속 깊이 스며들었다. 오랜 여독과 자잘한 상처가 한결 가벼워졌다." },
+          { label:"정중히 사양하고 갈 길을 재촉한다", tag:"신중", effects:{무공:1}, result:"무환은 아직 여유를 부릴 때가 아니라 여기고 발길을 재촉했다." },
+        ]},
+      ]},
+      { id:"on2", once:true, nodes:[
+        { type:"text", eyebrow:"온천촌", title:"온천을 독차지하려는 무리", body:["행패를 부리는 무뢰배 무리가 온천을 독차지하고는 마을 사람들의 출입을 막고 있었다."] },
+        { type:"combat", enemy:{name:"온천을 독차지한 무뢰배", hp:34, atk:6}, effectsOnWin:{gold:12, 의리:2}, onWin:"무뢰배들은 뜨거운 물에 데인 채 도망쳤다. 마을은 다시 온천을 되찾았다.", onLoseText:"무환은 다쳤지만, 무뢰배들도 결국 물러갔다." },
+      ]},
+      { id:"on3", repeatable:true, weight:2, nodes:[
+        { type:"text", eyebrow:"온천촌", body:["따뜻한 온천에 몸을 담그며 지친 몸을 달랬다."] },
+      ], effects:{내공:1} },
+      { id:"on4", once:true, nodes:[
+        { type:"text", eyebrow:"온천촌", body:["온천을 관리하는 늙은 의원이, 몸을 다스리는 법과 함께 오래된 내공 심법의 요결을 살짝 알려주었다."] },
+        { type:"choice", eyebrow:"온천촌", prompt:"", options:[
+          { label:"요결을 마음에 새긴다", tag:"기연", effects:{}, onSelect:()=>{ const un=GENERIC_SKILLS.filter(id=>!state.skills.includes(id)); if(un.length){ const id=pick(un); learnSkill(id); pendingResultOverride=`온천 의원의 요결 속에서 무환은 「${SKILLS[id].name}」을(를) 터득했다!`; sfx.get(); } else { pendingResultOverride = masteryConsolation(["내공"]); } }, result:"__DYNAMIC__" },
+        ]},
+      ]},
+    ],
+    mokjang: [
+      { id:"mj1", once:true, nodes:[
+        { type:"text", eyebrow:"목장촌", title:"드넓은 초원", body:["끝없이 펼쳐진 초원 위로 말들이 자유롭게 뛰놀고 있었다. 목장 주인은 무환의 눈빛에서 무언가를 알아본 듯 말을 걸어왔다.", "\"말을 다뤄본 적 있으시오? 마침 손이 부족한데.\""] },
+        { type:"choice", eyebrow:"목장촌", prompt:"", options:[
+          { label:"목장 일을 거들어본다", tag:"의리", effects:{의리:2}, result:"무환은 반나절 동안 말들을 돌보며 땀을 흘렸다. 목장 주인은 소탈하게 웃으며 새참을 내어주었다." },
+          { label:"멀리서 말들을 구경만 한다", tag:"신중", effects:{명성:1}, result:"자유롭게 뛰노는 말들을 보며, 무환은 잠시 여유를 느꼈다." },
+        ]},
+      ]},
+      { id:"mj2", once:true, nodes:[
+        { type:"text", eyebrow:"목장촌", title:"말을 훔치려는 도적", body:["한밤중, 말 울음소리에 놀라 나가보니 도적 무리가 명마들을 훔쳐 달아나려 하고 있었다."] },
+        { type:"combat", enemy:{name:"말을 노리는 도적떼", hp:36, atk:7}, effectsOnWin:{gold:16, 의리:2}, onWin:"도적들은 말도 훔치지 못한 채 줄행랑쳤다. 목장 주인은 크게 안도했다.", onLoseText:"무환은 다쳤지만, 명마 몇 마리는 지켜낼 수 있었다." },
+      ]},
+      { id:"mj3", repeatable:true, weight:2, nodes:[
+        { type:"text", eyebrow:"목장촌", body:["말들을 돌보며 초원 위에서 한가로운 하루를 보냈다."] },
+      ], effects:{무공:1} },
+      { id:"mj4", once:true, nodes:[
+        { type:"text", eyebrow:"목장촌", body:["늙은 마부가 말 위에서 펼치는 독특한 창술을 무환에게 보여주었다. 말과 하나가 된 듯한 움직임이었다."] },
+        { type:"choice", eyebrow:"목장촌", prompt:"", options:[
+          { label:"마상 창술을 유심히 살핀다", tag:"기연", effects:{}, onSelect:()=>{ const un=GENERIC_SKILLS.filter(id=>!state.skills.includes(id)); if(un.length){ const id=pick(un); learnSkill(id); pendingResultOverride=`마상 창술의 움직임 속에서 무환은 「${SKILLS[id].name}」을(를) 터득했다!`; sfx.get(); } else { pendingResultOverride = masteryConsolation(["무공","명성"]); } }, result:"__DYNAMIC__" },
+        ]},
+      ]},
+    ],
   };
 
-  function weightedPickEvent(pool){
+  function eventCategory(id){
+    if(id.endsWith("_duel")) return "combat";
+    if(id.endsWith("_join")) return "social";
+    if(id.endsWith("_train") || id.endsWith("_flavor")) return "train";
+    const map = {
+      w1:"combat", w7:"combat", w8:"combat", w13:"combat", w15:"combat", w16:"combat",
+      s1:"combat", u1:"combat", b1:"combat", n1:"combat",
+      i_sectrivalry:"combat", m_villain1:"combat", m_sectwar:"combat",
+      w4:"train", s3:"train", s4:"train", u3:"train", u4:"train", g3:"train", b2:"train", n2:"train",
+      m_shop:"train", i_heal:"train",
+      m4:"info", m_imperial1:"info", m_imperial2:"info", i3:"info", i5:"info", g4:"info", g5:"info", g6:"info",
+      w5:"info", w6:"info", w9:"info", w10:"info", w11:"info", w12:"info", w14:"info",
+      m2:"info", w2:"info", w3:"info", s5:"info", b3:"info", n3:"info",
+      i_sagongwi:"social", i_sagongwi_flavor:"social", i_sagongwi_past:"social",
+      m_yeon_meet:"social", m_yeon_flavor:"social", m_yeon_past:"social", m_yeon_marry:"social", m_yeon_child:"social",
+      m_teach:"social", w_master:"social", m_sagongwi_flavor:"social", m1:"social",
+      j1:"info", j2:"combat", j3:"train", j4:"info",
+      h1:"social", h2:"combat", h3:"train", h4:"info",
+      se1:"social", se2:"combat", se3:"train", se4:"info",
+      su1:"social", su2:"combat", su3:"train", su4:"info",
+      kf1:"social", kf2:"combat", kf3:"train", kf4:"info",
+      na1:"social", na2:"combat", na3:"train", na4:"info",
+      dh1:"social", dh2:"combat", dh3:"train", dh4:"info",
+      ch1:"social", ch2:"combat", ch3:"train", ch4:"info",
+      jn1:"social", jn2:"combat", jn3:"train", jn4:"info",
+      ec1:"social", ec2:"combat", ec3:"train", ec4:"info",
+      bp1:"social", bp2:"combat", bp3:"train", bp4:"info",
+      mh1:"social", mh2:"combat", mh3:"train", mh4:"info",
+      tg1:"social", tg2:"combat", tg3:"train", tg4:"info",
+      on1:"social", on2:"combat", on3:"train", on4:"info",
+      mj1:"social", mj2:"combat", mj3:"train", mj4:"info",
+    };
+    return map[id] || "general";
+  }
+  function weightedPickEvent(pool, category){
     const eligible = pool.filter(e=>{
       if(e.condition && !e.condition()) return false;
       if(e.once && state.usedEvents.includes(e.id)) return false;
+      if(category && eventCategory(e.id) !== category) return false;
       return true;
     }).filter(e=> pool.length<=1 || e.id !== state.lastEventId[state.location]);
     if(eligible.length===0) return null;
@@ -1022,11 +2019,31 @@
     return pick(weighted);
   }
 
-  function explore(){
+  function explore(category){
     const locId = state.location;
     const pool = EVENT_POOLS[locId] || [];
-    let ev = weightedPickEvent(pool);
+    let ev = weightedPickEvent(pool, category);
     state.turn++;
+    if(state.injuryTurns>0){ state.injuryTurns--; if(state.injuryTurns===0) addJournal("부상이 자연히 나았다."); }
+
+    if(!category && state.turn>0 && state.turn%20===0){
+      const tourneyId = "tourney_"+Math.floor(state.turn/20);
+      if(!state.usedEvents.includes(tourneyId)){
+        state.usedEvents.push(tourneyId);
+        addJournal("무림대회 시즌, 강호의 고수들과 겨루었다.");
+        const nodes = [
+          { type:"text", eyebrow:"무림대회 시즌", title:"강호의 축제", body:[
+            "계절이 바뀌며 각지에서 몰려든 무인들로 저잣거리가 들썩였다. 십 년마다 한 번이라던 비무대회가 어느새 정기 행사가 된 듯했다.",
+            "이름 모를 고수 하나가 무환 앞을 막아섰다. \"이 자리에서 진짜 실력을 겨뤄보지 않겠나?\""
+          ]},
+          { type:"combat", enemy:{name:"무림대회 도전자", hp:42, atk:8}, effectsOnWin:{gold:20, 명성:3},
+            onWin:"관중들의 함성이 쏟아졌다. 주최 측에서 상금과 함께 명성을 인정해주었다.",
+            onLoseText:"아쉽게 패했지만, 강호에 이름을 알리는 좋은 기회가 되었다." },
+        ];
+        startScene(maybeCheonliBonus(nodes), ()=>{ persistSave(); renderHub(); });
+        return;
+      }
+    }
 
     if(ev && ev.dynamicCombat){
       state.usedEvents.push(ev.id+"_"+state.turn);
@@ -1043,6 +2060,112 @@
     state.lastEventId[locId] = ev.id;
     if(ev.once) state.usedEvents.push(ev.id);
     if(ev.effects) applyEffects(ev.effects);
+    if(ev.meetsNPC) meetNPC(ev.meetsNPC);
+    if(ev.isTrain){ state.sectTrainCount++; checkSectRankUp(); }
+
+    let flavorOverrideNodes = null;
+    if(FLAVOR_TEXT_VARIANTS[ev.id]){
+      const text = pick(FLAVOR_TEXT_VARIANTS[ev.id]);
+      flavorOverrideNodes = ev.nodes.map((n,i)=> (i===0 && n.type==="text") ? Object.assign({}, n, { body:[text] }) : n);
+    } else if(ev.id.endsWith("_flavor")){
+      const locName = LOCATIONS[state.location].name;
+      const text = pick(SECT_FLAVOR_TEMPLATES).replace("{loc}", locName);
+      flavorOverrideNodes = ev.nodes.map((n,i)=> (i===0 && n.type==="text") ? Object.assign({}, n, { body:[text] }) : n);
+    }
+    const evNodes = flavorOverrideNodes || ev.nodes;
+
+    if(ev.id === "m_yeon_past"){
+      const nodes = [ ev.nodes[0], Object.assign({}, ev.nodes[1], { options: ev.nodes[1].options.map(o=>{
+        if(o.tag !== "의협") return o;
+        return Object.assign({}, o, {
+          onSelect:()=>{
+            startScene([
+              { type:"text", eyebrow:"낙양 저잣거리", body:["해 질 무렵, 낯선 사내들이 목연의 가게 앞을 서성였다. 무환은 그녀 앞을 막아섰다."] },
+              { type:"combat", enemy:{name:"관아의 추적자", hp:38, atk:8}, effectsOnWin:{의리:2, 명성:2},
+                onWin:"추적자들은 상대가 되지 않음을 깨닫고 물러났다. 목연은 안도의 숨을 내쉬며 무환에게 고개를 숙였다.",
+                onLoseText:"무환은 크게 다쳤지만, 목연을 지켜냈다는 사실만으로도 충분했다." },
+            ], ()=>{ addJournal("목연을 쫓던 추적자들과 맞섰다."); persistSave(); renderHub(); });
+          },
+          result:null,
+        });
+      })}) ];
+      startScene(nodes, ()=>{ persistSave(); renderHub(); });
+      return;
+    }
+
+    if(ev.id === "m_sectwar"){
+      const nodes = [ ev.nodes[0], Object.assign({}, ev.nodes[1], { options: ev.nodes[1].options.map(o=>{
+        if(o.tag !== "의리" || o.label.indexOf("힘을 보탠다")===-1) return o;
+        return Object.assign({}, o, {
+          onSelect:()=>{
+            const supportHwasan = state.sect==="화산" ? true : (state.sect==="청성" ? false : Math.random()<0.5);
+            const mySide = supportHwasan ? "화산파" : "청성파";
+            const rivalName = supportHwasan ? "청성파 정예" : "화산파 정예";
+            startScene([
+              { type:"text", eyebrow:"강호 대사", body:[`무환은 ${mySide} 쪽에 힘을 보태기로 했다. 양측이 뒤엉킨 아수라장 속으로 몸을 던졌다.`] },
+              { type:"combat", enemy:{name:rivalName, hp:44, atk:8}, effectsOnWin:{의리:2, 명성:2},
+                onWin:`${rivalName}이(가) 무너지자, 상대 진영은 결국 화의를 청해왔다. ${mySide}은(는) 무환의 도움을 오래도록 기억했다.`,
+                onLoseText:"무환은 크게 다쳤지만, 그의 참전 자체가 양측의 기세를 꺾는 계기가 되었다." },
+            ], ()=>{ addJournal(`${mySide}을(를) 도와 문파 대전에 참전했다.`); persistSave(); renderHub(); });
+          },
+          result:null,
+        });
+      })}) ];
+      startScene(nodes, ()=>{ persistSave(); renderHub(); });
+      return;
+    }
+    if(ev.id === "b1"){
+      const nodes = [ ev.nodes[0], Object.assign({}, ev.nodes[1], { options: ev.nodes[1].options.map(o=>{
+        if(o.tag !== "기개") return o;
+        return Object.assign({}, o, {
+          onSelect:()=>{
+            startScene([
+              { type:"combat", enemy:{name:"북해검신 한파", hp:48, atk:9}, effectsOnWin:{gold:20, 명성:3},
+                onWin:"한파는 검을 거두며 고개를 끄덕였다. \"…제법이군. 다시 만날 날을 기약하지.\"",
+                onLoseText:"한파의 검은 상상 이상으로 매서웠다. 무환은 패했지만, 그 검리에서 많은 것을 배웠다." },
+            ], ()=>{ addJournal("북해검신 한파와 비무를 나눴다."); persistSave(); renderHub(); });
+          },
+          result:null,
+        });
+      })}) ];
+      startScene(nodes, ()=>{ persistSave(); renderHub(); });
+      return;
+    }
+    if(ev.id === "n1"){
+      const nodes = [ ev.nodes[0], Object.assign({}, ev.nodes[1], { options: ev.nodes[1].options.map(o=>{
+        if(o.tag !== "기개") return o;
+        return Object.assign({}, o, {
+          onSelect:()=>{
+            startScene([
+              { type:"combat", enemy:{name:"남만독후 언랑", hp:46, atk:9}, effectsOnWin:{gold:20, 명성:3},
+                onWin:"언랑은 웃으며 손을 거두었다. \"흥, 생각보다 훨씬 낫군.\"",
+                onLoseText:"독무 속 언랑의 움직임을 끝내 따라잡지 못했다. 무환은 크게 다쳤지만 값진 경험을 얻었다." },
+            ], ()=>{ addJournal("남만독후 언랑과 비무를 나눴다."); persistSave(); renderHub(); });
+          },
+          result:null,
+        });
+      })}) ];
+      startScene(nodes, ()=>{ persistSave(); renderHub(); });
+      return;
+    }
+    if(ev.id === "i_sagongwi_past"){
+      const nodes = [ ev.nodes[0], Object.assign({}, ev.nodes[1], { options: ev.nodes[1].options.map(o=>{
+        if(o.tag !== "의협") return o;
+        return Object.assign({}, o, {
+          onSelect:()=>{
+            startScene([
+              { type:"text", eyebrow:"낙양 인근", body:["사공위와 함께 소문을 좇아 마적단의 은신처를 찾아냈다. 낯익은 얼굴이 그들을 맞이했다."] },
+              { type:"combat", enemy:{name:"사공위의 옛 사형 — 마적두목", hp:42, atk:8}, effectsOnWin:{의리:3},
+                onWin:"사형은 무릎을 꿇으며 오래된 원한을 내려놓았다. 사공위의 표정도 한결 가벼워 보였다.",
+                onLoseText:"둘은 힘을 합쳤음에도 패퇴했지만, 사공위는 오히려 후련한 얼굴이었다. \"…이걸로 됐어.\"" },
+            ], ()=>{ addJournal("사공위의 옛 원한과 마주했다."); persistSave(); renderHub(); });
+          },
+          result:null,
+        });
+      })}) ];
+      startScene(nodes, ()=>{ persistSave(); renderHub(); });
+      return;
+    }
 
     if(ev.id === "i_sectrivalry"){
       const nodes = [ ev.nodes[0], Object.assign({}, ev.nodes[1], { options: ev.nodes[1].options.map(o=>{
@@ -1059,7 +2182,7 @@
       return;
     }
 
-    const nodes = ev.nodes.map(n=>{
+    const nodes = evNodes.map(n=>{
       if(n.type!=="choice") return n;
       return Object.assign({}, n, { options: n.options.map(o=>{
         if(o.result !== "__DYNAMIC__") return o;
@@ -1069,36 +2192,125 @@
     startScene(maybeCheonliBonus(nodes), ()=>{ pendingResultOverride=null; persistSave(); renderHub(); });
   }
 
+  function checkNewAchievements(){
+    let changed = false;
+    ACHIEVEMENTS.forEach(a=>{
+      if(a.cond(state) && !state.earnedAchievements.includes(a.id)){
+        state.earnedAchievements.push(a.id);
+        if(a.reward) applyEffects(a.reward);
+        addJournal(`칭호 「${a.title}」을(를) 획득했다!${a.reward ? ' (보상을 받았다)' : ''}`);
+        changed = true;
+      }
+    });
+    if(changed) persistSave();
+  }
+  const SEASON_FLAVORS = ["새벽 안개가 채 걷히지 않은 이른 봄이다.", "뜨거운 볕이 내리쬐는 한여름이다.", "서늘한 바람이 옷깃을 스치는 늦가을이다.", "눈발이 흩날리는 한겨울이다."];
+  function seasonIndex(){ return Math.floor(state.turn/10) % SEASON_FLAVORS.length; }
+  function seasonFlavor(){ return SEASON_FLAVORS[seasonIndex()]; }
+
+  const SCENE_SVGS = {
+    market: `<svg viewBox="0 0 300 70" preserveAspectRatio="none"><path d="M10,70 L10,38 L35,20 L60,38 L60,70 Z M75,70 L75,30 L105,12 L135,30 L135,70 Z M150,70 L150,40 L172,25 L194,40 L194,70 Z M205,70 L205,35 L232,18 L259,35 L259,70 Z M270,70 L270,42 L285,30 L300,42 L300,70 Z" fill="var(--seal-dark)" opacity="0.18"/></svg>`,
+    inn: `<svg viewBox="0 0 300 70" preserveAspectRatio="none"><path d="M40,70 L40,30 L150,10 L260,30 L260,70 Z M40,30 L260,30 L260,40 L40,40 Z" fill="var(--seal-dark)" opacity="0.18"/><circle cx="150" cy="55" r="6" fill="var(--gold)" opacity="0.4"/></svg>`,
+    wild: `<svg viewBox="0 0 300 70" preserveAspectRatio="none"><path d="M0,70 L45,20 L80,50 L120,5 L165,45 L205,25 L245,55 L300,15 L300,70 Z" fill="var(--seal-dark)" opacity="0.16"/></svg>`,
+    sect: `<svg viewBox="0 0 300 80" preserveAspectRatio="none"><path d="M150,0 L175,18 L125,18 Z M110,18 L190,18 L205,34 L95,34 Z M115,34 L185,34 L185,58 L115,58 Z M90,58 L210,58 L225,74 L75,74 Z M105,74 L195,74 L195,80 L105,80 Z" fill="var(--seal-dark)" opacity="0.18"/></svg>`,
+    quest: `<svg viewBox="0 0 300 80" preserveAspectRatio="none"><path d="M60,80 L60,20 L80,20 L80,80 Z M220,80 L220,20 L240,20 L240,80 Z M55,28 L245,8 L245,28 Z" fill="var(--seal-dark)" opacity="0.22"/></svg>`,
+    frontier: `<svg viewBox="0 0 300 70" preserveAspectRatio="none"><path d="M0,70 L30,10 L60,45 L95,0 L130,40 L170,15 L210,50 L250,20 L300,60 L300,70 Z" fill="var(--jade)" opacity="0.2"/></svg>`,
+    lake: `<svg viewBox="0 0 300 70" preserveAspectRatio="none"><path d="M0,55 Q30,45 60,55 T120,55 T180,55 T240,55 T300,55 L300,70 L0,70 Z" fill="var(--jade)" opacity="0.2"/><path d="M45,8 L45,42 M33,20 L45,14 L57,20 M27,29 L45,21 L63,29" stroke="var(--seal-dark)" stroke-width="2" fill="none" opacity="0.22"/></svg>`,
+    desert: `<svg viewBox="0 0 300 70" preserveAspectRatio="none"><path d="M0,70 L0,50 Q50,30 100,50 T200,50 T300,50 L300,70 Z" fill="var(--gold)" opacity="0.2"/><circle cx="250" cy="18" r="14" fill="var(--gold)" opacity="0.3"/></svg>`,
+    village: `<svg viewBox="0 0 300 70" preserveAspectRatio="none"><path d="M15,70 L15,42 L38,50 L38,70 Z M15,42 L38,25 L61,42 Z M90,70 L90,38 L118,48 L118,70 Z M90,38 L118,18 L146,38 Z M180,70 L180,45 L202,52 L202,70 Z M180,45 L202,30 L224,45 Z M250,70 L250,40 L275,49 L275,70 Z M250,40 L275,22 L300,40 Z" fill="var(--seal-dark)" opacity="0.15"/></svg>`,
+    duel: `<svg viewBox="0 0 300 90" preserveAspectRatio="none"><path d="M90,90 L90,55 Q90,35 105,35 Q120,35 120,55 L120,90 Z" fill="var(--seal-dark)" opacity="0.24"/><circle cx="105" cy="25" r="12" fill="var(--seal-dark)" opacity="0.24"/><path d="M180,90 L180,55 Q180,35 195,35 Q210,35 210,55 L210,90 Z" fill="var(--seal-dark)" opacity="0.24"/><circle cx="195" cy="25" r="12" fill="var(--seal-dark)" opacity="0.24"/><line x1="120" y1="40" x2="185" y2="70" stroke="var(--seal)" stroke-width="3" opacity="0.55"/><line x1="185" y1="40" x2="120" y2="70" stroke="var(--seal)" stroke-width="3" opacity="0.55"/></svg>`,
+  };
+  function locationArtKind(id){
+    if(id==="market") return "market";
+    if(id==="inn") return "inn";
+    if(id==="wild") return "wild";
+    if(id==="heukpungchae" || id==="shadowsect" || id==="taeguk") return "quest";
+    if(id==="bukhae" || id==="nammal") return "frontier";
+    if(id==="hangju") return "lake";
+    if(id==="jangan" || id==="seongdo" || id==="kaifeng" || id==="nanjing") return "market";
+    if(id==="suzhou") return "lake";
+    if(id==="dunhwang") return "desert";
+    if(id==="cheongha" || id==="jungnim" || id==="eochon" || id==="byeonbang" || id==="maehwa" || id==="tangwang" || id==="oncheon" || id==="mokjang") return "village";
+    return "sect";
+  }
+  function sceneArtHTML(kind){
+    return `<div class="scene-art">${SCENE_SVGS[kind] || SCENE_SVGS.wild}</div>`;
+  }
+
   // =========================================================
   // 허브
   // =========================================================
   function renderHub(){
     state.screen = "hub";
+    checkNewAchievements();
     fadeCard();
     const loc = LOCATIONS[state.location];
     sealEl.textContent = state.sect ? state.sect[0] : "俠";
     const canGoRevenge = state.flags.canConfront && !state.flags.revengeDone;
     const canGoAct2 = state.flags.act2Unlocked && !state.flags.act2Done;
+    const canGoAct3 = state.flags.act3Unlocked && !state.flags.act3Done;
 
     cardEl.innerHTML = `
       <div class="chapter-eyebrow">${loc.name} · 제${state.turn}보</div>
       <h2 class="chapter-title">${loc.name}</h2>
-      <div class="loc-desc">${loc.desc}</div>
+      ${sceneArtHTML(locationArtKind(state.location))}
+      <div class="loc-desc">${seasonFlavor()} ${loc.desc}</div>
       ${badgeRowHTML()}
       ${statsRowHTML()}
       <div class="actions">
         <button class="btn primary" id="exploreBtn">이 지역 둘러보기</button>
+        <button class="btn ghost" id="actionMenuBtn">행동 선택 (원하는 이야기 고르기)</button>
         <button class="btn ghost" id="travelBtn">다른 지역으로 이동</button>
         <button class="btn ghost" id="skillsBtn">무공서고 (${state.skills.length}/${ALL_SKILLS.length})</button>
+        <button class="btn ghost" id="recordsBtn">강호기록</button>
+        <button class="btn ghost" id="rankBtn">무림서열</button>
+        <button class="btn ghost" id="profileBtn">무환 프로필</button>
+        ${state.sect ? '<button class="btn ghost" id="sectMgmtBtn">문파 관리</button>' : ''}
         ${canGoRevenge ? '<button class="btn danger-btn" id="revengeBtn">⚔ 흑풍채로 향한다 — 원수를 친다</button>' : ''}
         ${canGoAct2 ? '<button class="btn danger-btn" id="act2Btn">⚔ 천기루로 향한다 — 배후를 캔다</button>' : ''}
+        ${canGoAct3 ? '<button class="btn danger-btn" id="act3Btn">⚔ 태극봉인지로 향한다 — 진실을 마주한다</button>' : ''}
       </div>
     `;
     document.getElementById('exploreBtn').onclick = ()=>{ sfx.click(); explore(); };
+    document.getElementById('actionMenuBtn').onclick = ()=>{ sfx.click(); renderActionMenu(); };
     document.getElementById('travelBtn').onclick = ()=>{ sfx.click(); renderTravel(); };
     document.getElementById('skillsBtn').onclick = ()=>{ sfx.click(); renderSkills(); };
+    document.getElementById('recordsBtn').onclick = ()=>{ sfx.click(); renderRecords(); };
+    document.getElementById('rankBtn').onclick = ()=>{ sfx.click(); renderRanking(); };
+    document.getElementById('profileBtn').onclick = ()=>{ sfx.click(); renderProfile(); };
+    if(state.sect) document.getElementById('sectMgmtBtn').onclick = ()=>{ sfx.click(); renderSectManage(); };
     if(canGoRevenge) document.getElementById('revengeBtn').onclick = ()=>{ sfx.click(); startRevenge(); };
     if(canGoAct2) document.getElementById('act2Btn').onclick = ()=>{ sfx.click(); startAct2(); };
+    if(canGoAct3) document.getElementById('act3Btn').onclick = ()=>{ sfx.click(); startAct3(); };
+  }
+
+  function categoryStats(category){
+    const pool = EVENT_POOLS[state.location] || [];
+    const catEvents = pool.filter(e=>eventCategory(e.id)===category);
+    const onceEvents = catEvents.filter(e=>e.once);
+    const doneCount = onceEvents.filter(e=>state.usedEvents.includes(e.id)).length;
+    return { total: onceEvents.length, done: doneCount };
+  }
+  function renderActionMenu(){
+    fadeCard(); sealEl.textContent="擇";
+    const loc = LOCATIONS[state.location];
+    cardEl.innerHTML = `
+      <div class="chapter-eyebrow">${loc.name}</div>
+      <h2 class="chapter-title">어떤 이야기를 원하는가</h2>
+      <div class="hint">해당 지역에 맞는 이벤트가 없으면 평범한 하루로 대체될 수 있습니다.</div>
+      <div class="actions">
+        <button class="btn" id="catTrain">수련하기${(()=>{const s=categoryStats("train");return s.total?` <span class="tag">${s.done}/${s.total}</span>`:'';})()}<small>스탯 성장 위주의 조용한 이야기</small></button>
+        <button class="btn" id="catInfo">탐문하기${(()=>{const s=categoryStats("info");return s.total?` <span class="tag">${s.done}/${s.total}</span>`:'';})()}<small>소문·단서·기연 위주의 이야기</small></button>
+        <button class="btn" id="catCombat">모험하기${(()=>{const s=categoryStats("combat");return s.total?` <span class="tag">${s.done}/${s.total}</span>`:'';})()}<small>전투와 위험이 뒤따르는 이야기</small></button>
+        <button class="btn" id="catSocial">교류하기${(()=>{const s=categoryStats("social");return s.total?` <span class="tag">${s.done}/${s.total}</span>`:'';})()}<small>인물·인연 위주의 이야기</small></button>
+        <button class="btn ghost" id="backToHub7">뒤로</button>
+      </div>
+    `;
+    document.getElementById('catTrain').onclick = ()=>{ sfx.click(); explore("train"); };
+    document.getElementById('catInfo').onclick = ()=>{ sfx.click(); explore("info"); };
+    document.getElementById('catCombat').onclick = ()=>{ sfx.click(); explore("combat"); };
+    document.getElementById('catSocial').onclick = ()=>{ sfx.click(); explore("social"); };
+    document.getElementById('backToHub7').onclick = ()=>{ sfx.click(); renderHub(); };
   }
 
   function renderTravel(){
@@ -1106,6 +2318,8 @@
     let dests = LOCATION_ORDER.filter(id=>id!==state.location);
     if(state.flags.canConfront) dests.push("heukpungchae");
     if(state.flags.act2Unlocked) dests.push("shadowsect");
+    if(state.flags.act3Unlocked) dests.push("taeguk");
+    if(state.flags.revengeDone){ dests.push("bukhae"); dests.push("nammal"); }
     cardEl.innerHTML = `
       <div class="chapter-eyebrow">이동</div>
       <h2 class="chapter-title">어디로 향할 것인가</h2>
@@ -1118,12 +2332,77 @@
       const b = document.createElement('button'); b.className='btn';
       b.innerHTML = `${l.name}<small>${l.desc}</small>`;
       b.onclick = ()=>{
-        sfx.click(); state.location = id; state.turn++;
+        sfx.click(); state.location = id; state.turn++; markVisited(id);
         startScene([{ type:"text", eyebrow:"이동", body:[`${l.name}(으)로 향하는 길, ${l.desc}`] }], ()=>{ persistSave(); renderHub(); });
       };
       wrap.appendChild(b);
     });
     document.getElementById('backToHub').onclick=()=>{ sfx.click(); renderHub(); };
+  }
+
+  const RIVAL_RANKINGS = [
+    { name:"현천진인(玄天眞人)", power:150 },
+    { name:"북해검신(北海劍神) 한파", power:118 },
+    { name:"남만독후(南蠻毒后) 언랑", power:104 },
+    { name:"냉월(冷月)", power:96 },
+    { name:"동방신니(東方神尼)", power:88 },
+    { name:"사마경(司馬鯨)", power:82 },
+    { name:"사공위(司空衛)", power:58 },
+    { name:"이름 없는 낭인들", power:22 },
+  ];
+  function playerPower(){
+    return state.stats.내공 + state.stats.무공 + state.stats.명성 + state.stats.의리 + state.skills.length*2;
+  }
+  function renderProfile(){
+    fadeCard(); sealEl.textContent="人";
+    const sectLine = state.sect ? `${SECTS[state.sect].name} · ${RANK_TITLES[state.sectRank]}` : "독행협 (무소속)";
+    const partnerLine = state.married ? `${state.partner} (혼인${state.hasChild?' · 슬하에 자녀 있음':''})` : (state.partner ? `${state.partner} (정인)` : "없음");
+    const companionLine = state.companion || "없음";
+    const earned = ACHIEVEMENTS.filter(a=>a.cond(state)).length;
+    cardEl.innerHTML = `
+      <div class="chapter-eyebrow">무환 프로필</div>
+      <h2 class="chapter-title">${state.playerName}</h2>
+      ${statsRowHTML()}
+      <div class="section-label">신분</div>
+      <div class="narrative"><p>${sectLine} · ${reputationTitle(state.stats.명성)}</p></div>
+      <div class="section-label">인연</div>
+      <div class="narrative"><p>의형제: ${companionLine}<br>배필: ${partnerLine}</p></div>
+      <div class="section-label">자산 및 평판</div>
+      <div class="narrative"><p>소지금 ${state.gold}냥 · 악명 ${state.infamy}${state.injuryTurns>0?` · 부상 ${state.injuryTurns}턴 남음`:''}</p></div>
+      <div class="section-label">전투 기록</div>
+      <div class="narrative"><p>현재 연승 ${state.winStreak}회 · 최고 연승 기록 ${state.bestWinStreak}회</p></div>
+      <div class="section-label">진행도</div>
+      <div class="narrative"><p>
+        무공 ${state.skills.length}/${ALL_SKILLS.length}식 · 칭호 ${earned}/${ACHIEVEMENTS.length} · 방문 지역 ${state.visited.length}/${LOCATION_ORDER.length}<br>
+        단서 ${state.clues}/${CLUE_TARGET} (흑풍채)${state.flags.act2Unlocked?` · ${state.act2clues}/${ACT2_CLUE_TARGET} (천기루)`:''}${state.flags.act3Unlocked?` · ${state.act3clues}/${ACT3_CLUE_TARGET} (봉인지)`:''}<br>
+        걸어온 걸음: 제${state.turn}보${state.ngPlusCount>0 ? ` · 환생 ${state.ngPlusCount}회차` : ''}
+      </p></div>
+      <div class="actions"><button class="btn ghost" id="backToHub6">뒤로</button></div>
+    `;
+    document.getElementById('backToHub6').onclick=()=>{ sfx.click(); renderHub(); };
+  }
+
+  function renderRanking(){
+    fadeCard(); sealEl.textContent="序";
+    const list = RIVAL_RANKINGS.map(r=>({ name:r.name, power:r.power, me:false }));
+    list.push({ name:`${state.playerName} (그대)`, power: playerPower(), me:true });
+    list.sort((a,b)=>b.power-a.power);
+    const myRank = list.findIndex(e=>e.me) + 1;
+    cardEl.innerHTML = `
+      <div class="chapter-eyebrow">무림서열</div>
+      <h2 class="chapter-title">강호의 위치</h2>
+      <div class="hint">전설의 고수들과 견주었을 때, 그대는 현재 ${myRank}위다. (수치는 임의의 종합 지표일 뿐, 실제 승패와는 다를 수 있다)</div>
+      <div id="rankList"></div>
+      <div class="actions"><button class="btn ghost" id="backToHub5">뒤로</button></div>
+    `;
+    const wrap = document.getElementById('rankList');
+    list.forEach((e,i)=>{
+      const div = document.createElement('div'); div.className='skill-item';
+      if(e.me) div.style.background = 'rgba(156,43,43,0.08)';
+      div.innerHTML = `<div class="sname">${i+1}위 — ${e.name}${e.me?' ★':''}</div><div class="sdesc">종합 지표 ${e.power}</div>`;
+      wrap.appendChild(div);
+    });
+    document.getElementById('backToHub5').onclick=()=>{ sfx.click(); renderHub(); };
   }
 
   function renderSkills(){
@@ -1144,7 +2423,8 @@
       const owned = state.skills.includes(id);
       const div = document.createElement('div'); div.className='skill-item';
       if(owned){
-        div.innerHTML = `<div class="sname">${s.name}</div><div class="sdesc">${s.desc}</div>`;
+        const lvl = state.skillLevels[id] || 1;
+        div.innerHTML = `<div class="sname">${s.name} ${'★'.repeat(lvl)}${'☆'.repeat(SKILL_MAX_LEVEL-lvl)}</div><div class="sdesc">${s.desc}</div>`;
       } else {
         div.style.opacity = '0.45';
         div.innerHTML = `<div class="sname">??? (미습득)</div><div class="sdesc">강호를 떠돌거나, 인연이 닿는 문파에 입문하면 얻을 수 있다.</div>`;
@@ -1154,10 +2434,105 @@
     document.getElementById('backToHub2').onclick=()=>{ sfx.click(); renderHub(); };
   }
 
+  function renderRecords(){
+    fadeCard(); sealEl.textContent="記";
+    const earned = ACHIEVEMENTS.filter(a=>a.cond(state));
+    cardEl.innerHTML = `
+      <div class="chapter-eyebrow">강호기록</div>
+      <h2 class="chapter-title">무환의 발자취</h2>
+
+      <div class="section-label">칭호 (${earned.length}/${ACHIEVEMENTS.length})</div>
+      <div id="achList"></div>
+
+      <div class="section-label">인물 도감 (${state.metNPCs.length}/${NPC_GALLERY.length})</div>
+      <div id="npcList"></div>
+
+      <div class="section-label">소지품</div>
+      <div id="itemList"></div>
+
+      <div class="section-label">강호 일지</div>
+      <div id="journalList"></div>
+
+      <div class="section-label">결전 기록</div>
+      <div class="hint">승패와 관계없이 이후에도 강호는 계속됩니다.</div>
+      <div id="endingList"></div>
+
+      <div class="actions"><button class="btn ghost" id="backToHub3">뒤로</button></div>
+    `;
+    const achWrap = document.getElementById('achList');
+    ACHIEVEMENTS.forEach(a=>{
+      const on = a.cond(state);
+      const div = document.createElement('div'); div.className='skill-item';
+      const rewardTxt = a.reward ? ` (보상: ${Object.entries(a.reward).map(([k,v])=>`${k} +${v}`).join(', ')})` : '';
+      if(on){ div.innerHTML = `<div class="sname">🏵 ${a.title}</div><div class="sdesc">${a.desc}${rewardTxt}</div>`; }
+      else { div.style.opacity='0.45'; div.innerHTML = `<div class="sname">??? (미달성)</div><div class="sdesc">${a.desc}${rewardTxt}</div>`; }
+      achWrap.appendChild(div);
+    });
+    const npcWrap = document.getElementById('npcList');
+    if(NPC_GALLERY.every(n=>!state.metNPCs.includes(n.id))){
+      npcWrap.innerHTML = `<div class="empty-note">아직 만난 인물이 없다.</div>`;
+    } else {
+      NPC_GALLERY.forEach(n=>{
+        const met = state.metNPCs.includes(n.id);
+        const div = document.createElement('div'); div.className='skill-item';
+        if(met){ div.innerHTML = `<div class="sname">${n.name}</div><div class="sdesc">${n.desc}</div>`; }
+        else { div.style.opacity='0.45'; div.innerHTML = `<div class="sname">??? (미상)</div><div class="sdesc">아직 마주치지 못한 인물이다.</div>`; }
+        npcWrap.appendChild(div);
+      });
+    }
+    const itemWrap = document.getElementById('itemList');
+    const itemEntries = Object.entries(state.items||{}).filter(([,c])=>c>0);
+    if(itemEntries.length===0){
+      itemWrap.innerHTML = `<div class="empty-note">아직 구매한 물품이 없다.</div>`;
+    } else {
+      itemWrap.innerHTML = itemEntries.map(([name,count])=>`<div class="badge" style="margin:2px;">${name} ×${count}</div>`).join('');
+    }
+    const jWrap = document.getElementById('journalList');
+    if(state.journal.length===0){
+      jWrap.innerHTML = `<div class="empty-note">아직 기록된 사건이 없다.</div>`;
+    } else {
+      jWrap.innerHTML = `<div class="log" style="height:auto;max-height:220px;">${state.journal.slice().reverse().map(t=>`<div>${t}</div>`).join('')}</div>`;
+    }
+    const endWrap = document.getElementById('endingList');
+    const endings = [
+      { seen: state.flags.revengeDone, won: state.flags.revengeWon, name:"흑풍채 — 사마경과의 결전", winText:"승리: 원수를 처단하고 청운문의 원한을 풀었다.", loseText:"패퇴: 사마경을 넘어서지 못하고 물러났다." },
+      { seen: state.flags.act2Done, won: state.flags.act2Won, name:"천기루 — 냉월과의 결전", winText:"승리: 배후를 밝혀내고 강호의 그림자를 걷어냈다.", loseText:"패퇴: 냉월을 넘어서지 못하고 물러났다." },
+      { seen: state.flags.act3Done, won: state.flags.act3Won, name:"태극봉인지 — 현천진인과의 결전", winText:"승리: 청운문과 부모의 진실을 완성하고 현천을 넘어섰다.", loseText:"패퇴: 현천진인을 넘어서지 못하고 물러났다." },
+    ];
+    endWrap.innerHTML = endings.map(e=>{
+      if(!e.seen) return `<div class="skill-item" style="opacity:0.45;"><div class="sname">??? (미확인)</div><div class="sdesc">${e.name}</div></div>`;
+      return `<div class="skill-item"><div class="sname">${e.won?'🏵':'⚔'} ${e.name}</div><div class="sdesc">${e.won?e.winText:e.loseText}</div></div>`;
+    }).join('');
+    document.getElementById('backToHub3').onclick=()=>{ sfx.click(); renderHub(); };
+  }
+
+  function renderSectManage(){
+    fadeCard(); sealEl.textContent="門";
+    const sectName = state.sect ? SECTS[state.sect].name : "독행협";
+    const rankName = state.sect ? RANK_TITLES[state.sectRank] : "";
+    cardEl.innerHTML = `
+      <div class="chapter-eyebrow">문파 관리</div>
+      <h2 class="chapter-title">${sectName}</h2>
+      <div class="narrative"><p>현재 ${sectName} 소속으로 강호를 걷고 있다. 문파 내 서열은 <strong>${rankName}</strong>이며, 특훈을 거듭할수록 승급한다 (현재 ${state.sectTrainCount}회 수련, ${RANK_THRESHOLD}회마다 승급). 문파를 탈퇴하면 서열은 초기화되지만, 이미 익힌 무공은 그대로 남는다.</p></div>
+      <div class="actions">
+        <button class="btn danger-btn" id="leaveSectBtn">${sectName} 탈퇴하기</button>
+        <button class="btn ghost" id="backToHub4">뒤로</button>
+      </div>
+    `;
+    document.getElementById('leaveSectBtn').onclick = ()=>{
+      if(confirm(`정말로 ${sectName}을(를) 탈퇴할까요? 서열이 초기화됩니다.`)){
+        sfx.click(); addJournal(`${sectName}을(를) 탈퇴했다.`); state.sect = null; state.sectRank = 0; state.sectTrainCount = 0; persistSave(); renderHub();
+      }
+    };
+    document.getElementById('backToHub4').onclick=()=>{ sfx.click(); renderHub(); };
+  }
+
   // =========================================================
   // 1부 복수 퀘스트라인 (흑풍채)
   // =========================================================
   function startRevenge(){
+    meetNPC("samagyeong");
+    addJournal("흑풍채로 향했다 — 원수와의 결전.");
     const nodes = [
       { type:"text", eyebrow:"흑풍채", title:"원수의 근거지", body:[
         "흑풍채의 본거지, 불타버린 청운문의 옛터. 그 안쪽에서 사마경이 무환을 기다리고 있었다.",
@@ -1172,6 +2547,7 @@
       { type:"combat", enemy:{name:"흑풍채주 사마경", hp:58, atk:9},
         onComplete:(won)=>{
           state.flags.revengeDone = true; state.flags.revengeWon = won;
+          addJournal(won ? "사마경을 처단하고 청운문의 원한을 풀었다." : "사마경에게 패퇴했다.");
           const text = won ? revengeWinText() : revengeLoseText();
           showInlineResult({eyebrow:"흑풍채", title: won ? "결착" : "패퇴"}, withName(text, state.playerName));
           const nb = document.getElementById('nextBtn');
@@ -1190,7 +2566,10 @@
       명성:"사마경은 무너졌다. 무환의 이름은 강호 전역에 울려 퍼졌다 — 이제 그는 풍운아로 불린다.",
       의리:"사마경은 무너졌다. 무환의 곁에는 늘 동료들이 함께했다 — 이제 그는 강호의 큰형님으로 불린다.",
     };
-    return (map[top]||map.무공) + " 청운문의 원한은 풀렸지만, 강호에서의 그의 이야기는 아직 끝나지 않았다.";
+    let text = (map[top]||map.무공) + " 청운문의 원한은 풀렸지만, 강호에서의 그의 이야기는 아직 끝나지 않았다.";
+    if(state.companion) text += ` 그날의 승리는 무환 혼자만의 것이 아니었다 — ${state.companion}이(가) 늘 곁을 지켰다.`;
+    if(state.sect) text += ` ${SECTS[state.sect].name}의 이름 또한 이 승리와 함께 강호에 깊이 새겨졌다.`;
+    return text;
   }
   function revengeLoseText(){
     return "무환은 결국 사마경을 넘어서지 못하고 물러났다. 하지만 목숨은 건졌다 — 언젠가 다시, 더 강해진 모습으로 이곳을 찾으리라.";
@@ -1200,6 +2579,8 @@
   // 2부: 천기루 (복수 완료 후 해금되는 후속 사건)
   // =========================================================
   function startAct2(){
+    meetNPC("naengwol");
+    addJournal("천기루로 향했다 — 배후를 캐기 위해.");
     const nodes = [
       { type:"text", eyebrow:"천기루", title:"어둠 속의 배후", body:[
         "사마경을 넘어선 뒤에도, 강호는 완전히 평온해지지 않았다. 여러 문파의 분쟁 뒤에 항상 같은 그림자가 어른거렸다.",
@@ -1213,10 +2594,58 @@
       { type:"combat", enemy:{name:"천기루주 냉월", hp:66, atk:10},
         onComplete:(won)=>{
           state.flags.act2Done = true; state.flags.act2Won = won;
+          addJournal(won ? "냉월을 처단하고 천기루의 배후를 밝혀냈다." : "냉월에게 패퇴했다.");
           const text = won
             ? "냉월은 무너졌다. 강호를 은밀히 조종해온 그림자가 마침내 걷혔다. 무환의 이름은 이제 전설이 되어 강호 전역에 새겨졌다. 하지만 그의 걸음은 여기서 멈추지 않는다 — 강호는 여전히 넓고, 만날 사람도, 익힐 무공도 끝이 없다."
+              + (state.companion ? ` ${state.companion}이(가) 그 곁에서 함께 전설의 한 페이지를 썼다.` : "")
+              + (state.sect ? ` ${SECTS[state.sect].name}은(는) 이 승리를 두고두고 자랑스러워했다.` : "")
             : "무환은 냉월을 넘어서지 못하고 물러났다. 그러나 진실은 이미 세상에 드러나기 시작했다 — 언젠가 다시 이곳을 찾으리라.";
           showInlineResult({eyebrow:"천기루", title: won ? "결착" : "패퇴"}, withName(text, state.playerName));
+          const nb = document.getElementById('nextBtn');
+          if(nb) nb.onclick = ()=>{ sfx.click(); persistSave(); renderHub(); };
+        }
+      },
+    ];
+    startScene(nodes, ()=>{ persistSave(); renderHub(); });
+  }
+
+  // =========================================================
+  // 3부: 태극봉인지 (청운문과 무환 부모의 진실)
+  // =========================================================
+  function startAct3(){
+    meetNPC("hyeoncheon");
+    addJournal("태극봉인지로 향했다 — 모든 것의 근원을 마주하기 위해.");
+    const nodes = [
+      { type:"text", eyebrow:"태극봉인지", title:"봉인의 땅", body:[
+        "서쪽 협곡 깊은 곳, 세상과 단절된 듯한 기이한 결계가 골짜기 전체를 감싸고 있었다. 발을 들이는 순간부터 단전이 떨려왔다.",
+        "결계 중심, 백발의 노인이 조용히 무환을 기다리고 있었다. 나이를 가늠할 수 없는 눈빛이었다."
+      ]},
+      { type:"text", eyebrow:"태극봉인지", title:"현천진인", body:[
+        "\"드디어 왔구나, 청운(靑雲)의 마지막 핏줄.\" 노인이 입을 열었다. \"사마경도, 냉월도… 모두 나의 그림자였다. 이 몸이 바로 현천(玄天)이다.\"",
+        "\"본디 나는 멸절심공(滅絶心功)을 완성하려 했으나, 그대의 부모가 목숨을 걸고 이 땅에 나를 봉인했지. 십오 년 전 청운문을 친 것도 그 봉인을 풀기 위해서였다.\""
+      ]},
+      { type:"text", eyebrow:"태극봉인지", title:"부모의 유지", body:[
+        "무환의 머릿속에 흐릿한 기억 한 조각이 스쳤다 — 어머니 임소해(林素海)의 마지막 목소리, 아버지 선우강(鮮于岡)이 남긴 한 마디. \"…이 아이가, 마지막 열쇠다…\"",
+        "그제야 모든 것이 이어졌다. 무환 자신의 존재가, 곧 부모가 남긴 마지막 봉인이었던 것이다. 그는 목검을 고쳐 쥐었다."
+      ]},
+      { type:"combat", enemy:{name:"봉인을 지키는 그림자 수호령", hp:50, atk:9}, effectsOnWin:{gold:25},
+        onWin:"그림자 수호령이 흩어지듯 스러지자, 결계 전체가 낮게 진동했다.", onLoseText:"무환은 그림자의 기세에 크게 밀려났지만, 물러서지 않았다." },
+      { type:"text", eyebrow:"태극봉인지", body:[
+        "\"제법이구나. 하나 여기까지다.\" 현천의 눈빛이 차갑게 가라앉았다. 그의 몸에서 억눌려 있던 진짜 기운이 뿜어져 나오기 시작했다.",
+        "십오 년 전 시작된 이야기가, 마침내 이 한 번의 격돌로 매듭지어진다."
+      ]},
+      { type:"combat", enemy:{name:"현천진인", hp:85, atk:12},
+        onComplete:(won)=>{
+          state.flags.act3Done = true; state.flags.act3Won = won;
+          addJournal(won ? "현천진인을 넘어서고 청운문의 진실을 완성했다." : "현천진인에게 패퇴했다.");
+          const text = won
+            ? "현천은 무너졌다. 십오 년 전 시작된 봉인은, 부모가 아닌 무환 자신의 손으로 마침내 완성되었다. 청운문의 이름은 이제 전설이 되어 강호 곳곳에 새겨졌다."
+              + (state.companion ? ` ${state.companion}이(가) 그 곁에서 마지막까지 함께했다.` : "")
+              + (state.married && state.partner ? ` ${state.partner}이(가) 눈물을 훔치며 무환을 맞이했다.` : "")
+              + (state.sect ? ` ${SECTS[state.sect].name} 또한 이 위업을 대대로 전했다.` : "")
+              + " 하지만 무환의 이야기는 여기서 멈추지 않는다 — 강호는 여전히 넓고, 그가 걸어야 할 길은 아직 많이 남아 있다."
+            : "무환은 현천진인을 넘어서지 못하고 물러났다. 그러나 봉인은 아직 완전히 풀리지 않았다 — 언젠가 다시, 더 강해진 모습으로 이곳을 찾으리라.";
+          showInlineResult({eyebrow:"태극봉인지", title: won ? "결착" : "패퇴"}, withName(text, state.playerName));
           const nb = document.getElementById('nextBtn');
           if(nb) nb.onclick = ()=>{ sfx.click(); persistSave(); renderHub(); };
         }
